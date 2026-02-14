@@ -10,84 +10,87 @@
         :root {
             --primary: #ff4757;
             --accent: #ff6b6b;
+            --sun: #FFD700;
             --bg-grad: linear-gradient(135deg, #ffafbd 0%, #ffc3a0 100%);
         }
 
-        * { box-sizing: border-box; touch-action: manipulation; -webkit-tap-highlight-color: transparent; }
+        * { box-sizing: border-box; touch-action: manipulation; }
         html, body { height: 100%; margin: 0; padding: 0; background: #ffafbd; font-family: 'Poppins', sans-serif; overflow: hidden; position: fixed; width: 100%; }
-        body { display: flex; justify-content: center; align-items: center; background: var(--bg-grad); transition: background 0.3s; }
+        body { display: flex; justify-content: center; align-items: center; background: var(--bg-grad); transition: background 1s ease; }
 
-        /* --- Envelope Styles --- */
-        #envelope-page {
-            position: absolute; width: 100%; height: 100%; display: flex;
-            flex-direction: column; justify-content: center; align-items: center;
-            z-index: 1000; transition: opacity 0.8s ease, transform 0.8s ease;
-        }
-
+        /* --- Envelope --- */
+        #envelope-page { position: absolute; width: 100%; height: 100%; display: flex; flex-direction: column; justify-content: center; align-items: center; z-index: 1000; transition: 0.8s; }
         .envelope-wrapper { cursor: pointer; position: relative; width: 280px; height: 180px; background: #fff; border-bottom-left-radius: 10px; border-bottom-right-radius: 10px; box-shadow: 0 10px 30px rgba(0,0,0,0.1); }
-        .envelope-wrapper::before {
-            content: ""; position: absolute; top: 0; z-index: 2;
-            border-top: 100px solid #f9f9f9; border-left: 140px solid transparent; border-right: 140px solid transparent;
-            transform-origin: top; transition: all 0.5s ease 0.1s;
-        }
-        
-        .envelope-text { font-family: 'Dancing Script', cursive; color: var(--primary); font-size: 1.2rem; margin-top: 20px; text-align: center; }
-
-        /* When Open */
+        .envelope-wrapper::before { content: ""; position: absolute; top: 0; z-index: 2; border-top: 100px solid #fdfdfd; border-left: 140px solid transparent; border-right: 140px solid transparent; transform-origin: top; transition: 0.5s ease; }
         .envelope-wrapper.open::before { transform: rotateX(180deg); z-index: 0; }
-        .letter-preview {
-            position: absolute; bottom: 0; left: 10px; width: 260px; height: 160px;
-            background: #fff; z-index: 1; transition: all 0.5s ease 0.4s;
-            padding: 20px; text-align: center; border: 1px solid #eee;
-        }
-        .envelope-wrapper.open .letter-preview { transform: translateY(-100px); height: 200px; box-shadow: 0 -5px 15px rgba(0,0,0,0.05); }
+        .letter-preview { position: absolute; bottom: 0; left: 10px; width: 260px; height: 160px; background: #fff; z-index: 1; transition: 0.5s ease 0.3s; padding: 20px; text-align: center; border: 1px solid #eee; }
+        .envelope-wrapper.open .letter-preview { transform: translateY(-100px); height: 200px; }
 
-        /* --- Main App Container --- */
+        /* --- Main Container --- */
         .container {
-            width: 95%; max-width: 380px; background: rgba(255, 255, 255, 0.4);
+            width: 90%; max-width: 380px; background: rgba(255, 255, 255, 0.4);
             backdrop-filter: blur(15px); -webkit-backdrop-filter: blur(15px);
-            padding: 25px; border-radius: 30px; border: 1px solid rgba(255, 255, 255, 0.4);
-            text-align: center; z-index: 10; position: relative; min-height: 420px;
-            display: flex; flex-direction: column; justify-content: center;
-            box-shadow: 0 15px 35px rgba(255, 71, 87, 0.2);
+            padding: 25px; border-radius: 30px; text-align: center; z-index: 10; position: relative; min-height: 480px;
+            display: flex; flex-direction: column; justify-content: center; box-shadow: 0 15px 35px rgba(255, 71, 87, 0.2);
         }
 
-        /* Utilities */
         .hidden { display: none !important; }
-        .celebration-title { font-family: 'Dancing Script', cursive; font-size: 2.2rem; color: var(--primary); margin: 0 0 10px 0; }
-        .cute-btn { display: inline-block; padding: 12px 24px; margin: 8px; border: none; border-radius: 50px; background: var(--accent); color: white; font-size: 14px; font-weight: 600; cursor: pointer; box-shadow: 0 4px 15px rgba(255, 71, 87, 0.3); z-index: 10; }
-        .btn-yellow { color: #FFD700 !important; background: #333; }
-        .btn-blue { color: #00BFFF !important; background: #333; }
-        .btn-green { color: #32CD32 !important; background: #333; }
+        .celebration-title { font-family: 'Dancing Script', cursive; font-size: 2.2rem; color: var(--primary); margin-bottom: 10px; }
+        .husband-gold { color: #d4af37; font-weight: bold; text-shadow: 0 0 8px rgba(212, 175, 55, 0.5); animation: pulse 1.5s infinite; }
+        @keyframes pulse { 0% { opacity: 0.8; } 50% { opacity: 1; } 100% { opacity: 0.8; } }
 
-        /* Breakable Slider */
+        .cute-btn { 
+            padding: 12px 24px; margin: 8px; border: none; border-radius: 50px; 
+            background: var(--accent); color: white; font-weight: 600; cursor: pointer;
+            box-shadow: 0 4px 15px rgba(255, 71, 87, 0.3); transition: 0.3s;
+        }
+
+        /* --- Question 1 Logic --- */
+        .btn-zone { position: relative; width: 100%; height: 250px; }
+        #floatingLoveBtn {
+            position: absolute; z-index: 99; white-space: nowrap; font-size: 0.9rem;
+            background: #ff4757; color: white; padding: 10px 15px; border-radius: 50px;
+            box-shadow: 0 5px 15px rgba(255, 71, 87, 0.4); cursor: pointer;
+        }
+
+        /* --- Slider --- */
         .slider-container { position: relative; padding: 40px 0; width: 80%; margin: 0 auto; }
-        .slider-track { height: 6px; background: rgba(255,255,255,0.6); border-radius: 10px; width: 100%; position: relative; }
+        .slider-track { height: 4px; background: rgba(255,255,255,0.8); border-radius: 10px; width: 100%; position: relative; }
         #sliderThumb { width: 45px; height: 45px; position: absolute; top: 50%; left: 0; transform: translate(-50%, -50%); cursor: grab; background: url('data:image/svg+xml;utf8,<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="%23ff4757"><path d="M12 21.35l-1.45-1.32C5.4 15.36 2 12.28 2 8.5 2 5.42 4.42 3 7.5 3c1.74 0 3.41.81 4.5 2.09C13.09 3.81 14.76 3 16.5 3 19.58 3 22 5.42 22 8.5c0 3.78-3.4 6.86-8.55 11.54L12 21.35z"/></svg>') no-repeat center; background-size: contain; z-index: 20; }
 
+        /* --- New Future Page --- */
+        .check-item { text-align: left; margin: 10px 0; font-size: 0.9rem; display: flex; align-items: center; }
+        .check-item input { margin-right: 10px; accent-color: var(--primary); width: 18px; height: 18px; }
+
+        /* --- Rainbow Buttons --- */
+        .txt-yellow { color: #FFD700 !important; background: #333; }
+        .txt-blue { color: #00BFFF !important; background: #333; }
+        .txt-green { color: #32CD32 !important; background: #333; }
+
         .photo-grid { display: grid; grid-template-columns: 1fr 1fr; gap: 10px; margin: 15px 0; }
-        .photo-box { width: 100%; aspect-ratio: 1/1; border-radius: 15px; overflow: hidden; border: 3px solid white; }
+        .photo-box { width: 100%; aspect-ratio: 1/1; border-radius: 10px; overflow: hidden; border: 3px solid white; }
         .photo-box img { width: 100%; height: 100%; object-fit: cover; }
-        .btn-wrapper-large { position: relative; width: 100%; height: 250px; display: flex; flex-wrap: wrap; justify-content: center; }
-        
-        .burst-heart { position: absolute; pointer-events: none; z-index: 50; animation: burst 0.8s ease-out forwards; font-size: 20px; }
-        @keyframes burst { 0% { transform: translate(0,0) scale(1); opacity: 1; } 100% { transform: translate(var(--tx), var(--ty)) scale(0); opacity: 0; } }
+
+        /* Trail & Floating */
+        .trail { position: fixed; pointer-events: none; font-size: 20px; z-index: 9999; animation: fadeTrail 1s forwards; }
+        @keyframes fadeTrail { 0% { opacity: 1; transform: scale(1); } 100% { opacity: 0; transform: scale(0.5) translateY(-20px); } }
         .heart-float { position: absolute; pointer-events: none; z-index: 1; animation: floatUp 5s linear infinite; }
         @keyframes floatUp { 0% { transform: translateY(110vh) rotate(0); opacity: 1; } 100% { transform: translateY(-10vh) rotate(360deg); opacity: 0; } }
     </style>
 </head>
 <body>
 
+    <div id="musicToggle" style="position:fixed; top:20px; right:20px; z-index:2000; font-size:25px; cursor:pointer;">🌻</div>
+
     <div id="envelope-page">
         <div class="envelope-wrapper" onclick="openLetter(this)">
             <div class="letter-preview">
-                <p style="font-family: 'Dancing Script', cursive; font-size: 1.5rem; margin-top: 20px; color: #ff4757;">Happy Valentine's Day! ❤️</p>
-                <p style="font-size: 0.8rem; color: #666;">Tap to read...</p>
+                <p style="font-family:'Dancing Script'; color:var(--primary); font-size:1.4rem;">Click to Open ❤️</p>
             </div>
         </div>
-        <div class="envelope-text">
-            <p style="margin: 5px 0;">To my twin,</p>
-            <p style="margin: 5px 0; font-size: 0.9rem; opacity: 0.8;">From your sunshine 🌻</p>
+        <div style="font-family:'Dancing Script'; margin-top:20px; text-align:center;">
+            <p style="margin:0; font-size:1.5rem;">To my twin,</p>
+            <p style="margin:0; opacity:0.7;">From your sunshine 🌻</p>
         </div>
     </div>
 
@@ -96,23 +99,25 @@
 
         <div id="pageDate">
             <h2 class="celebration-title">27 / 12 / 2025</h2>
-            <p>Our journey officially began. ❤️</p>
+            <p>The day my world got a lot brighter. ❤️</p>
             <button class="cute-btn" onclick="nextPage('pageDate', 'pageCounter')">Continue ➡️</button>
         </div>
 
         <div id="pageCounter" class="hidden">
             <h2 class="celebration-title">338 Days Met</h2>
-            <p>Every single day has been a blessing, Twin. ✨</p>
+            <p>338 days of laughs, twin energy, and growing together. ✨</p>
+            <div style="font-size: 2rem;">💖 <span style="animation: pulse 1s infinite;">🔗</span> 💖</div>
             <button class="cute-btn" onclick="nextPage('pageCounter', 'question1')">Next ➡️</button>
         </div>
 
         <div id="question1" class="hidden">
             <h2 class="celebration-title">Do you like me?</h2>
-            <div class="btn-wrapper-large" id="wrap1">
-                <button class="cute-btn" id="yesBtn1" style="position: absolute; left: 10%; top: 40px;">Yes</button>
-                <button class="cute-btn" id="noBtn1" style="position: absolute; right: 10%; top: 40px;">No</button>
+            <p style="font-size:0.8rem;">Try clicking 'No' if you dare...</p>
+            <div class="btn-zone" id="zone1">
+                <button class="cute-btn" id="yesBtn1" style="position: absolute; left: 10%; top: 20%;">Yes</button>
+                <button class="cute-btn" id="noBtn1" style="position: absolute; right: 10%; top: 20%;">No</button>
+                <button id="floatingLoveBtn" class="hidden" onclick="nextPage('question1', 'pageGallery')">I don't like... I LOVE YOU! ❤️</button>
             </div>
-            <button class="cute-btn hidden" id="secretAnswerBtn" style="width:100%">I LOVE YOU! ❤️</button>
         </div>
 
         <div id="pageGallery" class="hidden">
@@ -123,16 +128,24 @@
                 <div class="photo-box"><img src="pic3.jpg.jpg"></div>
                 <div class="photo-box"><img src="pic4.jpg.jpg"></div>
             </div>
-            <button class="cute-btn" onclick="nextPage('pageGallery', 'question2')">Proceed ➡️</button>
+            <button class="cute-btn" onclick="nextPage('pageGallery', 'pageFuture')">Our Future ➡️</button>
+        </div>
+
+        <div id="pageFuture" class="hidden">
+            <h2 class="celebration-title">Future Checklist</h2>
+            <div class="check-item"><input type="checkbox"> Travel the world together ✈️</div>
+            <div class="check-item"><input type="checkbox"> Infinite late night talks 🌙</div>
+            <div class="check-item"><input type="checkbox"> Build our fairytale home 🏡</div>
+            <div class="check-item"><input type="checkbox"> Become Husband & Wife 💍</div>
+            <p style="font-size:0.7rem; margin-top:15px; font-style:italic;">Check them all to proceed...</p>
+            <button class="cute-btn" id="futureBtn" disabled style="opacity:0.5;">Next 🔒</button>
         </div>
 
         <div id="question2" class="hidden">
             <h2 class="celebration-title">Love Meter</h2>
-            <p id="meterStatus" style="font-weight: 600; color: #555;">Slide to 100%... or more? 😉</p>
+            <p id="meterStatus" style="font-size: 0.8rem;">Show me the intensity... 💖</p>
             <div class="slider-container" id="sliderArea">
-                <div class="slider-track" id="track">
-                    <div id="sliderThumb"></div>
-                </div>
+                <div class="slider-track" id="track"><div id="sliderThumb"></div></div>
             </div>
             <h1 id="loveValue" style="font-size: 3rem; margin: 0; color: var(--primary);">0%</h1>
             <button class="cute-btn" id="nextBtn" disabled style="background:#bbb; opacity:0.5; width: 100%;">LOCKED 🔒</button>
@@ -140,143 +153,141 @@
 
         <div id="question3" class="hidden">
             <h2 class="celebration-title">Be my Valentine?</h2>
-            <div class="btn-wrapper-large" id="wrap3">
-                <button class="cute-btn yes-grow-final" onclick="nextPage('question3', 'pageLetter1')">Yes (Red)</button>
-                <button class="cute-btn btn-yellow yes-grow-final" onclick="nextPage('question3', 'pageLetter1')">Yes (Yellow)</button>
-                <button class="cute-btn btn-blue yes-grow-final" onclick="nextPage('question3', 'pageLetter1')">Yes (Blue)</button>
-                <button class="cute-btn btn-green yes-grow-final" onclick="nextPage('question3', 'pageLetter1')">Yes (Green)</button>
-                <button class="cute-btn" id="noBtn3" style="position: absolute; bottom: 20px;">No</button>
+            <div class="btn-zone" id="zone3">
+                <button class="cute-btn" onclick="nextPage('question3', 'pageLetter1')">Yes (Red)</button>
+                <button class="cute-btn txt-yellow" onclick="nextPage('question3', 'pageLetter1')">Yes (Yellow)</button>
+                <button class="cute-btn txt-blue" onclick="nextPage('question3', 'pageLetter1')">Yes (Blue)</button>
+                <button class="cute-btn txt-green" onclick="nextPage('question3', 'pageLetter1')">Yes (Green)</button>
+                <button class="cute-btn" id="noBtn3" style="position: absolute; bottom: 10px; left:35%;">No</button>
             </div>
         </div>
 
         <div id="pageLetter1" class="hidden">
-            <h2 class="celebration-title">For You, Princess</h2>
-            <div style="background: white; padding: 15px; border-radius: 15px; text-align: left; font-size: 0.9rem;">
-                To my fairytale princess, I won’t ask you to be my valentine—I’m not trying to be your boyfriend, just your husband someday. No matter where life takes you, whenever the sun rises, I’ll think of you.
+            <h2 class="celebration-title">To my Princess</h2>
+            <div style="background:white; padding:15px; border-radius:15px; text-align:left; font-size:0.9rem;">
+                I’m not just asking you to be my valentine. I’m not trying to be your boyfriend—I’m trying to be your <span class="husband-gold">Husband</span> someday. 
+                <br><br>Wherever the sun rises, I’ll think of you. You’re my first love, and if Allah wills, my last. 
+                <br><br><b>Loveyou 3000 always.</b>
             </div>
-            <button class="cute-btn" onclick="nextPage('pageLetter1', 'pageLetter2')">Read more ➡️</button>
-        </div>
-
-        <div id="pageLetter2" class="hidden">
-            <div style="background: white; padding: 15px; border-radius: 15px; text-align: left; font-size: 0.9rem;">
-                You’re my first love, and if Allah wills, my last. Like a compass, what’s meant for you always finds its way back. Keep smiling freely. I’ll grow into your dream man. <br><br><b>Loveyou 3000 always.</b>
-            </div>
-            <button class="cute-btn" onclick="nextPage('pageLetter2', 'celebration')">Finish ✨</button>
+            <button class="cute-btn" onclick="finalCelebrate()">Finish ✨</button>
         </div>
 
         <div id="celebration" class="hidden">
-            <h1 class="celebration-title">Date Confirmed! 🥳</h1>
-            <p>I'm the luckiest twin ever! ❤️</p>
-            <div style="font-size: 3.5rem;">💖✨🌻</div>
-            <p style="font-size: 0.8rem; opacity: 0.8;">Love, Your Sunshine 🌻</p>
+            <h1 class="celebration-title">Confirmed! 🥳</h1>
+            <p>I'm the luckiest twin ever!</p>
+            <div style="font-size: 4rem;">💖✨🌻</div>
+            <p style="font-size: 0.8rem;">See you soon, Faria.</p>
         </div>
     </div>
 
     <script>
         const container = document.getElementById('mainContainer');
         const music = document.getElementById('bgMusic');
-        let clickCount = 0; let yesScale = 1;
+        let isMuted = false;
+
+        // Music Toggle
+        document.getElementById('musicToggle').onclick = function() {
+            isMuted = !isMuted;
+            music.muted = isMuted;
+            this.innerText = isMuted ? "🔈" : "🌻";
+        };
+
+        // Trail effect
+        window.addEventListener('touchmove', (e) => {
+            const trail = document.createElement('div');
+            trail.className = 'trail';
+            trail.innerText = '🌻';
+            trail.style.left = e.touches[0].clientX + 'px';
+            trail.style.top = e.touches[0].clientY + 'px';
+            document.body.appendChild(trail);
+            setTimeout(() => trail.remove(), 1000);
+        });
 
         function openLetter(el) {
             el.classList.add('open');
-            if(navigator.vibrate) navigator.vibrate(50);
             music.play().catch(()=>{});
-            
             setTimeout(() => {
                 document.getElementById('envelope-page').style.opacity = '0';
-                document.getElementById('envelope-page').style.transform = 'scale(1.2)';
                 setTimeout(() => {
                     document.getElementById('envelope-page').classList.add('hidden');
                     container.classList.remove('hidden');
-                    setInterval(createHeart, 450);
+                    setInterval(createHeart, 500);
                 }, 800);
-            }, 1800);
+            }, 1500);
         }
 
         function nextPage(curr, next) {
             document.getElementById(curr).classList.add('hidden');
             document.getElementById(next).classList.remove('hidden');
-            if(next === 'celebration') startMegaConfetti();
         }
 
-        // --- Breakable Slider Logic ---
-        const thumb = document.getElementById('sliderThumb');
-        const track = document.getElementById('track');
-        const loveValue = document.getElementById('loveValue');
-        const meterStatus = document.getElementById('meterStatus');
-        const nextBtn = document.getElementById('nextBtn');
-        let isDragging = false;
-
-        const startDrag = () => { isDragging = true; thumb.style.scale = "1.3"; };
-        const endDrag = () => { isDragging = false; thumb.style.scale = "1"; };
-
-        const onDrag = (e) => {
-            if (!isDragging) return;
-            const clientX = e.touches ? e.touches[0].clientX : e.clientX;
-            const trackRect = track.getBoundingClientRect();
-            let x = clientX - trackRect.left;
-            let percent = Math.round((x / trackRect.width) * 100);
-            thumb.style.left = x + "px";
-            if (percent < 0) percent = 0;
-            loveValue.innerText = percent + "%";
-
-            if (percent <= 100) {
-                document.body.style.background = `linear-gradient(135deg, #ffafbd 0%, rgba(255, 71, 87, ${percent/100}) 100%)`;
-                meterStatus.innerText = percent < 50 ? "Is that all? 🤨" : "Almost there... 🔥";
-            } else {
-                let overload = percent - 100;
-                meterStatus.innerText = "⚠️ SYSTEM OVERLOAD: LIMITLESS LOVE!! ⚠️";
-                container.style.transform = `translate(${(Math.random()-0.5)*overload/3}px, ${(Math.random()-0.5)*overload/3}px)`;
-                if(percent % 10 === 0) createBurst();
-            }
-
-            if (percent >= 100) {
-                nextBtn.disabled = false; nextBtn.innerText = "CONTINUE ✨";
-                nextBtn.style.background = "#ff4757"; nextBtn.style.opacity = "1";
-            }
+        // --- Question 1 Logic ---
+        const noBtn1 = document.getElementById('noBtn1');
+        const loveBtn = document.getElementById('floatingLoveBtn');
+        noBtn1.onclick = () => {
+            noBtn1.style.display = 'none';
+            loveBtn.classList.remove('hidden');
+            animateFloatingBtn();
         };
 
-        thumb.addEventListener('mousedown', startDrag);
-        window.addEventListener('mouseup', endDrag);
-        window.addEventListener('mousemove', onDrag);
-        thumb.addEventListener('touchstart', startDrag);
-        window.addEventListener('touchend', endDrag);
-        window.addEventListener('touchmove', onDrag);
-
-        function createBurst() {
-            const b = document.createElement('div');
-            b.className = 'burst-heart'; b.innerText = '💖';
-            b.style.left = thumb.getBoundingClientRect().left + "px";
-            b.style.top = thumb.getBoundingClientRect().top + "px";
-            b.style.setProperty('--tx', (Math.random()-0.5)*200 + "px");
-            b.style.setProperty('--ty', (Math.random()-0.5)*200 + "px");
-            document.body.appendChild(b);
-            setTimeout(() => b.remove(), 800);
+        function animateFloatingBtn() {
+            const x = Math.random() * (container.offsetWidth - 100);
+            const y = Math.random() * (200);
+            loveBtn.style.left = x + "px";
+            loveBtn.style.top = y + "px";
+            if(!document.getElementById('question1').classList.contains('hidden')) {
+                setTimeout(animateFloatingBtn, 1000);
+            }
         }
 
-        // --- Button Chaos ---
-        function moveBtn(btn, wrapper) {
-            clickCount++;
-            const rect = wrapper.getBoundingClientRect();
-            const bRect = btn.getBoundingClientRect();
-            btn.style.position = 'absolute';
-            btn.style.left = Math.max(0, Math.random() * (rect.width - bRect.width)) + "px";
-            btn.style.top = Math.max(0, Math.random() * (rect.height - bRect.height)) + "px";
-            yesScale += 0.3;
-            if(btn.id === 'noBtn1') document.getElementById('yesBtn1').style.transform = `scale(${yesScale})`;
-            if(btn.id === 'noBtn3') document.querySelectorAll('.yes-grow-final').forEach(b => b.style.transform = `scale(${yesScale})`);
-        }
+        // --- Future Checklist Logic ---
+        const checks = document.querySelectorAll('.check-item input');
+        checks.forEach(c => c.onchange = () => {
+            const allChecked = Array.from(checks).every(i => i.checked);
+            const btn = document.getElementById('futureBtn');
+            btn.disabled = !allChecked;
+            btn.style.opacity = allChecked ? "1" : "0.5";
+        });
+        document.getElementById('futureBtn').onclick = () => nextPage('pageFuture', 'question2');
 
-        document.getElementById('noBtn1').onclick = function() { moveBtn(this, document.getElementById('wrap1')); };
-        document.getElementById('noBtn3').onclick = function() { moveBtn(this, document.getElementById('wrap3')); };
-        document.getElementById('yesBtn1').onclick = () => nextPage('question1', 'pageGallery');
-        nextBtn.onclick = () => nextPage('question2', 'question3');
+        // --- Slider Logic ---
+        const thumb = document.getElementById('sliderThumb');
+        const track = document.getElementById('track');
+        let isDragging = false;
+        thumb.ontouchstart = () => isDragging = true;
+        window.ontouchend = () => isDragging = false;
+        window.ontouchmove = (e) => {
+            if (!isDragging) return;
+            const rect = track.getBoundingClientRect();
+            let x = e.touches[0].clientX - rect.left;
+            thumb.style.left = x + "px";
+            let p = Math.round((x / rect.width) * 100);
+            document.getElementById('loveValue').innerText = p + "%";
+            if(p > 100) document.getElementById('meterStatus').innerText = "LIMITLESS LOVE DETECTED! ⚠️";
+            if(p >= 100) {
+                const btn = document.getElementById('nextBtn');
+                btn.disabled = false; btn.innerText = "CONTINUE ✨"; btn.style.background = "#ff4757"; btn.style.opacity = "1";
+            }
+        };
+        document.getElementById('nextBtn').onclick = () => nextPage('question2', 'question3');
+
+        // --- Final No Button Logic ---
+        document.getElementById('noBtn3').ontouchstart = function(e) {
+            e.preventDefault();
+            this.style.left = Math.random() * 80 + "%";
+            this.style.top = Math.random() * 80 + "%";
+        };
+
+        function finalCelebrate() {
+            nextPage('pageLetter1', 'celebration');
+            startMegaConfetti();
+        }
 
         function createHeart() {
             const h = document.createElement('div');
             h.className = 'heart-float'; h.innerText = Math.random() > 0.5 ? '❤️' : '🌻';
             h.style.left = Math.random() * 100 + "vw";
-            h.style.fontSize = (Math.random() * 10 + 15) + "px";
+            h.style.fontSize = Math.random() * 15 + 15 + "px";
             document.body.appendChild(h);
             setTimeout(() => h.remove(), 5000);
         }
@@ -284,11 +295,10 @@
         function startMegaConfetti() {
             for(let i=0; i<100; i++) {
                 const c = document.createElement('div');
-                c.className = 'confetti-piece';
-                c.style.background = ['#ff4757', '#FFD700', '#00BFFF', '#32CD32'][Math.floor(Math.random()*4)];
-                c.style.left = Math.random()*100+"vw"; c.style.top = "-10px";
+                c.style.position = 'fixed'; c.style.background = ['#ff4757','#FFD700','#00BFFF','#32CD32'][Math.floor(Math.random()*4)];
+                c.style.width = '10px'; c.style.height = '10px'; c.style.left = Math.random()*100+"vw"; c.style.top = "-10px";
                 document.body.appendChild(c);
-                c.animate([{transform:'translateY(0)'},{transform:`translate(${(Math.random()-0.5)*500}px, 105vh) rotate(720deg)`}], {duration: 2500, easing:'ease-out'});
+                c.animate([{transform:'translateY(0)'},{transform:`translate(${(Math.random()-0.5)*500}px, 100vh) rotate(720deg)`}], {duration: 3000, easing:'ease-out'});
             }
         }
     </script>
