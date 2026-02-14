@@ -20,134 +20,163 @@
             overflow: hidden; width: 100vw;
             background: linear-gradient(135deg, var(--bg-1) 0%, var(--bg-2) 100%);
             display: flex; justify-content: center; align-items: center;
-            transition: background 1s ease;
+            transition: background 1.2s ease-in-out;
+            font-family: 'Poppins', sans-serif;
         }
+
+        /* --- ELEGANT TRANSITIONS --- */
+        .page {
+            animation: slideIn 0.8s cubic-bezier(0.23, 1, 0.32, 1) forwards;
+            width: 100%;
+        }
+
+        @keyframes slideIn {
+            0% { opacity: 0; transform: translateY(30px); filter: blur(10px); }
+            100% { opacity: 1; transform: translateY(0); filter: blur(0); }
+        }
+
+        @keyframes fadeOut {
+            from { opacity: 1; transform: translateY(0); filter: blur(0); }
+            to { opacity: 0; transform: translateY(-30px); filter: blur(10px); }
+        }
+
+        .exit { animation: fadeOut 0.5s ease forwards !important; }
 
         .container {
             width: calc(100% - 40px); max-width: 360px; 
-            background: rgba(255, 255, 255, 0.7);
-            backdrop-filter: blur(15px); -webkit-backdrop-filter: blur(15px);
-            padding: 25px; border-radius: 35px; text-align: center;
-            min-height: 600px; display: flex; flex-direction: column; justify-content: center;
-            box-shadow: 0 15px 35px rgba(0,0,0,0.1); border: 1px solid rgba(255,255,255,0.4);
+            background: rgba(255, 255, 255, 0.75);
+            backdrop-filter: blur(20px); -webkit-backdrop-filter: blur(20px);
+            padding: 30px; border-radius: 40px; text-align: center;
+            min-height: 580px; display: flex; flex-direction: column; justify-content: center;
+            box-shadow: 0 25px 50px rgba(0,0,0,0.1); border: 1px solid rgba(255,255,255,0.4);
             z-index: 10;
         }
 
         .hidden { display: none !important; }
-        .title { font-family: 'Dancing Script', cursive; font-size: 2.2rem; color: var(--primary); margin: 0 0 10px 0; }
+        .title { font-family: 'Dancing Script', cursive; font-size: 2.4rem; color: var(--primary); margin-bottom: 15px; }
+        
         .cute-btn { 
-            padding: 16px; margin: 8px 0; border: none; border-radius: 50px; 
+            padding: 16px; margin: 10px 0; border: none; border-radius: 50px; 
             background: var(--primary); color: white; font-weight: 600; width: 100%;
-            box-shadow: 0 5px 15px rgba(255, 71, 87, 0.2); font-size: 0.95rem;
+            box-shadow: 0 8px 20px rgba(255, 71, 87, 0.3); font-size: 0.95rem;
+            transition: transform 0.2s;
         }
+        .cute-btn:active { transform: scale(0.96); }
 
+        /* Nuclear State */
         @keyframes nuclear {
-            0% { transform: translate(0,0) rotate(0); }
-            25% { transform: translate(-10px, 10px) rotate(-3deg); }
-            50% { transform: translate(10px, -10px) rotate(3deg); }
-            75% { transform: translate(-10px, -10px) rotate(-1deg); }
-            100% { transform: translate(0,0) rotate(0); }
+            0%, 100% { transform: translate(0,0); }
+            10%, 30%, 50%, 70%, 90% { transform: translate(-5px, 5px); }
+            20%, 40%, 60%, 80% { transform: translate(5px, -5px); }
         }
-        .nuclear-mode { animation: nuclear 0.08s infinite !important; background: #ff3333 !important; }
+        .nuclear-mode { animation: nuclear 0.1s infinite !important; background: #ff3333 !important; }
 
+        /* Slider Decor */
         .slider-box { position: relative; padding: 40px 0; width: 100%; }
-        .track { height: 12px; background: rgba(255,255,255,0.8); border-radius: 10px; width: 100%; }
+        .track { height: 10px; background: rgba(255,255,255,0.8); border-radius: 10px; width: 100%; }
         #thumb { 
-            width: 60px; height: 60px; position: absolute; top: 50%; left: 0; transform: translate(-50%, -50%); 
+            width: 50px; height: 50px; position: absolute; top: 50%; left: 0; transform: translate(-50%, -50%); 
             background: url('data:image/svg+xml;utf8,<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="%23ff4757"><path d="M12 21.35l-1.45-1.32C5.4 15.36 2 12.28 2 8.5 2 5.42 4.42 3 7.5 3c1.74 0 3.41.81 4.5 2.09C13.09 3.81 14.76 3 16.5 3 19.58 3 22 5.42 22 8.5c0 3.78-3.4 6.86-8.55 11.54L12 21.35z"/></svg>') no-repeat center;
             background-size: contain; z-index: 10;
         }
 
-        .portrait { width: 100%; height: 320px; background: white; border-radius: 20px; padding: 8px; margin: 10px 0; overflow: hidden; }
+        .portrait { width: 100%; height: 320px; background: white; border-radius: 20px; padding: 8px; margin: 10px 0; overflow: hidden; box-shadow: 0 10px 20px rgba(0,0,0,0.05); }
         .portrait img { width: 100%; height: 100%; object-fit: cover; border-radius: 12px; }
+
+        #secretNote {
+            position: fixed; inset: 0; background: rgba(0,0,0,0.8);
+            z-index: 10002; display: flex; align-items: center; justify-content: center;
+            opacity: 0; pointer-events: none; transition: 0.5s;
+        }
+        #secretNote.show { opacity: 1; pointer-events: auto; }
     </style>
 </head>
 <body>
 
-    <button id="musicBtn" style="position:fixed; top:15px; right:15px; z-index:10001; background:white; border:none; width:40px; height:40px; border-radius:50%;" onclick="toggleMute()">🔊</button>
+    <button id="musicBtn" style="position:fixed; top:20px; right:20px; z-index:10001; background:rgba(255,255,255,0.8); border:none; width:45px; height:45px; border-radius:50%; box-shadow: 0 4px 10px rgba(0,0,0,0.1);" onclick="toggleMute()">🔊</button>
     <audio id="bgMusic" loop preload="auto"><source src="music.mp3" type="audio/mpeg"></audio>
 
-    <div id="opener" onclick="begin()" style="position:fixed; inset:0; z-index:9999; display:flex; flex-direction:column; align-items:center; justify-content:center; background:var(--bg-1); transition: 0.8s;">
-        <div style="width:280px; height:180px; background:#fff3f5; border-radius:0 0 15px 15px; position:relative; display:flex; align-items:center; justify-content:center;">
+    <div id="opener" onclick="begin()" style="position:fixed; inset:0; z-index:9999; display:flex; flex-direction:column; align-items:center; justify-content:center; background:linear-gradient(135deg, #ffafbd 0%, #ffc3a0 100%); transition: 1s cubic-bezier(0.4, 0, 0.2, 1);">
+        <div style="width:280px; height:180px; background:#fff3f5; border-radius:0 0 20px 20px; position:relative; display:flex; align-items:center; justify-content:center; box-shadow: 0 30px 60px rgba(0,0,0,0.12);">
             <div style="position:absolute; top:-100px; left:0; border-left:140px solid transparent; border-right:140px solid transparent; border-bottom:100px solid #ffe4e8;"></div>
-            <div style="font-size:30px;">❤️</div>
+            <div style="font-size:35px; animation: pulse 2s infinite;">❤️</div>
         </div>
-        <p style="font-family:'Dancing Script'; font-size:1.8rem; margin-top:30px; color: white;">Open for a surprise, Twin</p>
+        <p style="font-family:'Dancing Script'; font-size:2rem; margin-top:40px; color: white; text-shadow: 0 2px 10px rgba(0,0,0,0.1);">Open for a surprise, Twin</p>
     </div>
 
     <div id="main" class="container hidden">
         
-        <div id="p1">
+        <div id="p1" class="page">
             <h2 class="title">27 / 12 / 2024</h2>
-            <p>The day my life changed. ❤️</p>
+            <p>The day my life changed forever. ❤️</p>
             <button class="cute-btn" onclick="go('p1','p2')">Continue ➡️</button>
         </div>
 
-        <div id="p2" class="hidden">
+        <div id="p2" class="page hidden">
             <h2 class="title">338 Days Met</h2>
             <p>Every second counts with you. ✨</p>
-            <div style="font-size: 3rem; margin: 10px;">🔗❤️🔗</div>
+            <div style="font-size: 3.5rem; margin: 15px;">🔗❤️🔗</div>
             <button class="cute-btn" onclick="go('p2','p3')">Next ➡️</button>
         </div>
 
-        <div id="p3" class="hidden">
+        <div id="p3" class="page hidden">
             <h2 class="title">Do you like me?</h2>
             <div id="btnArea" style="height: 250px; position: relative;">
-                <button class="cute-btn" id="yes1" style="width: 140px; position: absolute; left: 50%; top: 50%; transform: translate(-50%, -50%);" onclick="handleChoice()">Yes</button>
-                <button class="cute-btn" id="no1" style="width: 140px; background: #999; position: absolute; left: 50%; top: 75%; transform: translate(-50%, -50%);" onclick="handleChoice()">No</button>
-                <button id="floatingLove" class="hidden" style="position:absolute; background:var(--primary); color:white; padding:15px 25px; border-radius:50px; border:2px solid white;" onclick="go('p3','p4')">I LOVE YOU! ❤️</button>
+                <button class="cute-btn" id="yes1" style="width: 140px; position: absolute; left: 50%; top: 50%; transform: translate(-50%, -50%); z-index: 5;" onclick="handleChoice()">Yes</button>
+                <button class="cute-btn" id="no1" style="width: 140px; background: #bbb; position: absolute; left: 50%; top: 75%; transform: translate(-50%, -50%);" onclick="handleChoice()">No</button>
+                <button id="floatingLove" class="hidden" style="position:absolute; background:var(--primary); color:white; padding:15px 30px; border-radius:50px; border:3px solid white; box-shadow: 0 10px 30px rgba(255, 71, 87, 0.4); font-weight:bold;" onclick="go('p3','p4')">I LOVE YOU! ❤️</button>
             </div>
         </div>
 
-        <div id="p4" class="hidden">
+        <div id="p4" class="page hidden">
             <h2 class="title">Our Memories</h2>
-            <div style="display: grid; grid-template-columns: 1fr 1fr; gap: 8px; margin: 10px 0;">
-                <div style="background:white; padding:4px; transform:rotate(-3deg);"><img src="pic1.jpg.jpg" style="width:100%; aspect-ratio:1/1; object-fit:cover;"></div>
-                <div style="background:white; padding:4px; transform:rotate(2deg);"><img src="pic2.jpg.jpg" style="width:100%; aspect-ratio:1/1; object-fit:cover;"></div>
-                <div style="background:white; padding:4px; transform:rotate(-2deg);"><img src="pic3.jpg.jpg" style="width:100%; aspect-ratio:1/1; object-fit:cover;"></div>
-                <div style="background:white; padding:4px; transform:rotate(4deg);"><img src="pic4.jpg.jpg" style="width:100%; aspect-ratio:1/1; object-fit:cover;"></div>
+            <div style="display: grid; grid-template-columns: 1fr 1fr; gap: 12px; margin: 15px 0;">
+                <div style="background:white; padding:5px; transform:rotate(-4deg); box-shadow: 0 5px 15px rgba(0,0,0,0.1);"><img src="pic1.jpg.jpg" style="width:100%; aspect-ratio:1/1; object-fit:cover;"></div>
+                <div style="background:white; padding:5px; transform:rotate(3deg); box-shadow: 0 5px 15px rgba(0,0,0,0.1);"><img src="pic2.jpg.jpg" style="width:100%; aspect-ratio:1/1; object-fit:cover;"></div>
+                <div style="background:white; padding:5px; transform:rotate(-2deg); box-shadow: 0 5px 15px rgba(0,0,0,0.1);"><img src="pic3.jpg.jpg" style="width:100%; aspect-ratio:1/1; object-fit:cover;"></div>
+                <div style="background:white; padding:5px; transform:rotate(5deg); box-shadow: 0 5px 15px rgba(0,0,0,0.1);"><img src="pic4.jpg.jpg" style="width:100%; aspect-ratio:1/1; object-fit:cover;"></div>
             </div>
             <button class="cute-btn" onclick="go('p4','p5')">Favorite View ➡️</button>
         </div>
 
-        <div id="p5" class="hidden">
+        <div id="p5" class="page hidden">
             <h2 class="title">My Divine Twin</h2>
             <div class="portrait"><img src="her_face.jpg.jpg"></div>
-            <p style="font-size: 0.75rem;">I see the mother of our children in your soul. 🌻</p>
+            <p style="font-size: 0.8rem; font-style: italic;">I see the mother of our children in your soul. 🌻</p>
             <button class="cute-btn" onclick="go('p5','p6')">Our Goals ➡️</button>
         </div>
 
-        <div id="p6" class="hidden">
+        <div id="p6" class="page hidden">
             <h2 class="title">Our Goals</h2>
-            <div style="text-align: left; display: inline-block;">
-                <div style="margin: 8px 0;"><input type="checkbox" class="req"> Boards Golden 🏅</div>
-                <div style="margin: 8px 0;"><input type="checkbox" class="req"> Good College 🎓</div>
-                <div style="margin: 8px 0;"><input type="checkbox" class="req"> Independence 💼</div>
-                <div style="margin: 8px 0;"><input type="checkbox"> Become Husband & Wife (hopefully one day) 💍</div>
+            <div style="text-align: left; display: inline-block; width: 80%;">
+                <div style="margin: 12px 0;"><input type="checkbox" class="req"> Boards Golden 🏅</div>
+                <div style="margin: 12px 0;"><input type="checkbox" class="req"> Good College 🎓</div>
+                <div style="margin: 12px 0;"><input type="checkbox" class="req"> Independence 💼</div>
+                <div style="margin: 12px 0; opacity: 0.7;"><input type="checkbox"> Husband & Wife (someday) 💍</div>
             </div>
-            <button class="cute-btn" id="goalNext" disabled style="opacity:0.5;" onclick="go('p6','p7')">Locked 🔒</button>
+            <button class="cute-btn" id="goalNext" disabled style="opacity:0.4;" onclick="go('p6','p7')">Locked 🔒</button>
         </div>
 
-        <div id="p7" class="hidden">
+        <div id="p7" class="page hidden">
             <h2 class="title">Love Meter</h2>
-            <p id="meterHint" style="font-weight:bold; color:var(--primary);">Slide to see my love level...</p>
+            <p id="meterHint" style="font-size: 0.9rem; color: var(--primary);">Slide to see my heart level...</p>
             <div class="slider-box">
                 <div class="track"><div id="thumb"></div></div>
             </div>
             <h1 id="val" style="font-size: 3rem; margin: 0; color: var(--primary);">0%</h1>
-            <button class="cute-btn" id="meterNext" disabled style="background:#bbb;" onclick="go('p7','p8')">Locked 🔒</button>
+            <button class="cute-btn" id="meterNext" disabled style="background:#ccc;" onclick="go('p7','p8')">Locked 🔒</button>
         </div>
 
-        <div id="p8" class="hidden">
+        <div id="p8" class="page hidden">
             <h2 class="title">Be my Valentine?</h2>
             <button class="cute-btn" onclick="go('p8','p9')">YES - Forever & Always ❤️</button>
             <button class="cute-btn" onclick="go('p8','p9')" style="background:#333; color:gold;">YES - I am yours 💍</button>
-            <button id="noFinal" class="cute-btn" style="width:auto; position:absolute; bottom:20px; left:40%; background:#888; padding: 10px 20px;">No</button>
+            <button id="noFinal" class="cute-btn" style="width:auto; position:absolute; bottom:20px; left:40%; background:#888; padding: 10px 25px;">No</button>
         </div>
 
-        <div id="p9" class="hidden">
+        <div id="p9" class="page hidden">
             <h2 class="title">My Promise</h2>
-            <div style="background:white; padding:15px; border-radius:15px; text-align:left; font-size:0.85rem; line-height:1.5; max-height: 260px; overflow-y: auto;">
+            <div style="background:rgba(255,255,255,0.5); padding:20px; border-radius:20px; text-align:left; font-size:0.85rem; line-height:1.6; max-height: 260px; overflow-y: auto; border: 1px solid white;">
                 To my fairytale princess, happy Valentine’s Day. I won’t ask you to be my valentine—I’m not trying to be your boyfriend, just your husband someday. 
                 <br><br>
                 No matter where life takes you, whenever the sun rises, I’ll think of you and love you completely. I’m better with words in texts, but my feelings are real. You’re my first love, and if Allah wills, my last. 
@@ -159,40 +188,69 @@
             <button class="cute-btn" onclick="go('p9', 'p10'); celebrate();">One last thing... ✨</button>
         </div>
 
-        <div id="p10" class="hidden">
+        <div id="p10" class="page hidden">
             <h2 class="title">Thank You, Twin</h2>
             <p>For being my home.</p>
-            <div id="flowerClicker" style="font-size: 5rem; margin: 10px; cursor: pointer;">🌻❤️🌻</div>
-            <p style="font-size: 0.6rem; color: #ff4757;">(Tap our flowers 3 times for a secret...)</p>
+            <div id="flowerClicker" style="font-size: 5rem; margin: 15px; cursor: pointer; transition: transform 0.2s;">🥀❤️🌻</div>
+            <p style="font-size: 0.65rem; color: #ff4757; opacity: 0.8;">(Tap the icons 3 times for a secret...)</p>
             <button class="cute-btn" onclick="location.reload()">Replay ✨</button>
-            <p style="font-size: 0.65rem; color: #777; font-style: italic; margin-top: -5px;">(had to be nerd enough to build this😭)</p>
+            <p style="font-size: 0.65rem; color: #888; font-style: italic; margin-top: -5px;">(had to be nerd enough to build this😭)</p>
+        </div>
+    </div>
+
+    <div id="secretNote" onclick="this.classList.remove('show')">
+        <div class="note-card" style="background:white; padding:35px; border-radius:30px; width:85%; max-width:320px; text-align:center;" onclick="event.stopPropagation()">
+            <p style="font-family:'Dancing Script'; font-size:1.5rem;">"Every day I spend with you, I realize more and more that you aren't just my twin... you're my home. I can't wait to grow old with you. ❤️"</p>
+            <button class="cute-btn" onclick="document.getElementById('secretNote').classList.remove('show')" style="padding: 10px;">Close</button>
         </div>
     </div>
 
     <script>
         const audio = document.getElementById('bgMusic');
         const main = document.getElementById('main');
-        let clicks = 0; let ySize = 1;
+        let clicks = 0, ySize = 1, flowerClicks = 0;
+
+        function toggleMute() {
+            audio.muted = !audio.muted;
+            document.getElementById('musicBtn').innerText = audio.muted ? '🔇' : '🔊';
+        }
 
         function begin() {
             audio.play().catch(() => {});
-            document.getElementById('opener').style.opacity = '0';
-            setTimeout(() => { document.getElementById('opener').classList.add('hidden'); main.classList.remove('hidden'); }, 600);
+            document.getElementById('opener').style.transform = 'translateY(-100%)';
+            setTimeout(() => { 
+                document.getElementById('opener').classList.add('hidden'); 
+                main.classList.remove('hidden'); 
+            }, 800);
         }
 
-        function go(c, n) {
-            document.getElementById(c).classList.add('hidden');
-            document.getElementById(n).classList.remove('hidden');
+        function go(curr, next) {
+            const currentEl = document.getElementById(curr);
+            const nextEl = document.getElementById(next);
+            
+            currentEl.classList.add('exit');
+            setTimeout(() => {
+                currentEl.classList.add('hidden');
+                currentEl.classList.remove('exit');
+                nextEl.classList.remove('hidden');
+                // Smooth background shift
+                const colors = [['#ffafbd', '#ffc3a0'], ['#a1c4fd', '#c2e9fb'], ['#fbc2eb', '#a6c1ee'], ['#fdcbf1', '#e6dee9']];
+                const rand = colors[Math.floor(Math.random() * colors.length)];
+                document.body.style.background = `linear-gradient(135deg, ${rand[0]} 0%, ${rand[1]} 100%)`;
+            }, 500);
         }
 
         function handleChoice() {
-            clicks++; ySize += 0.5;
+            clicks++; ySize += 0.4;
             const yes = document.getElementById('yes1');
             yes.style.transform = `translate(-50%, -50%) scale(${ySize})`;
             if (clicks >= 4) {
                 yes.classList.add('hidden'); document.getElementById('no1').classList.add('hidden');
                 const f = document.getElementById('floatingLove'); f.classList.remove('hidden');
-                setInterval(() => { f.style.left = Math.random() * 50 + 5 + "%"; f.style.top = Math.random() * 60 + 10 + "%"; }, 700);
+                setInterval(() => { 
+                    f.style.left = Math.random() * 50 + 5 + "%"; 
+                    f.style.top = Math.random() * 60 + 10 + "%"; 
+                }, 700);
             }
         }
 
@@ -212,10 +270,11 @@
             } else {
                 document.getElementById('val').innerText = p + "%";
                 thumb.style.left = p + "%";
+                document.body.classList.remove('nuclear-mode');
             }
             if (p >= 100) {
                 const btn = document.getElementById('meterNext');
-                btn.disabled = false; btn.innerText = "Unlock The Truth ✨"; btn.style.background = "red";
+                btn.disabled = false; btn.innerText = "Unlock The Truth ✨"; btn.style.background = "#ff3333"; btn.style.opacity = "1";
             }
         };
 
@@ -227,7 +286,7 @@
             i.onchange = () => {
                 const ok = Array.from(document.querySelectorAll('.req')).every(r => r.checked);
                 const b = document.getElementById('goalNext');
-                b.disabled = !ok; b.style.opacity = ok ? "1" : "0.5";
+                b.disabled = !ok; b.style.opacity = ok ? "1" : "0.4";
                 b.innerText = ok ? "Continue ➡️" : "Locked 🔒";
             };
         });
@@ -236,6 +295,14 @@
             e.preventDefault();
             this.style.left = Math.random() * 70 + "%";
             this.style.top = Math.random() * 60 + 10 + "%";
+        });
+
+        document.getElementById('flowerClicker').addEventListener('click', () => {
+            flowerClicks++;
+            if(flowerClicks === 3) { 
+                document.getElementById('secretNote').classList.add('show'); 
+                flowerClicks = 0; 
+            }
         });
 
         function celebrate() { confetti({ particleCount: 150, spread: 70, origin: { y: 0.6 } }); }
