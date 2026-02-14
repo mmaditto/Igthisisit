@@ -1,0 +1,160 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
+    <title>Valentine's Surprise ❤️</title>
+    <link href="https://fonts.googleapis.com/css2?family=Dancing+Script:wght@700&family=Poppins:wght@400;600&display=swap" rel="stylesheet">
+    
+    <style>
+        * { box-sizing: border-box; touch-action: manipulation; }
+        body {
+            margin: 0; padding: 0; font-family: 'Poppins', sans-serif;
+            display: flex; justify-content: center; align-items: center;
+            height: 100vh; background: #ffafbd; overflow: hidden;
+        }
+        .bg-layer {
+            position: fixed; top: 0; left: 0; width: 100%; height: 100%;
+            background: linear-gradient(135deg, #ffafbd 0%, #ffc3a0 100%);
+            z-index: -1;
+        }
+        .container {
+            width: 85%; max-width: 350px; background: rgba(255, 255, 255, 0.25);
+            backdrop-filter: blur(10px); -webkit-backdrop-filter: blur(10px);
+            padding: 25px; border-radius: 25px; border: 1px solid rgba(255, 255, 255, 0.3);
+            text-align: center; z-index: 10;
+        }
+        .hidden { display: none !important; }
+        .celebration-title { font-family: 'Dancing Script', cursive; font-size: 2.2rem; color: #ff4757; }
+        .cute-btn {
+            padding: 15px 25px; margin: 10px; border: none; border-radius: 50px;
+            background: #ff6b6b; color: white; font-size: 16px; font-weight: 600;
+            cursor: pointer; box-shadow: 0 4px 15px rgba(255, 71, 87, 0.3);
+            transition: transform 0.2s ease;
+        }
+        #yesBtn1, #noBtn1, #noBtn3 { transition: all 0.4s cubic-bezier(0.175, 0.885, 0.32, 1.275); z-index: 100; }
+        #secretAnswerBtn { display: block; width: 100%; background: #ff4757; margin-top: 20px; animation: pulse 1.5s infinite; }
+        @keyframes pulse { 0%, 100% { transform: scale(1); } 50% { transform: scale(1.05); } }
+        .slider { width: 100%; margin: 20px 0; }
+    </style>
+</head>
+<body>
+    <div class="bg-layer"></div>
+    <div class="container">
+        <audio id="bgMusic" loop preload="auto">
+            <source src="music.mp3" type="audio/mpeg">
+        </audio>
+
+        <div id="page0">
+            <h1 class="celebration-title">Happy Valentine's Day! ❤️</h1>
+            <button class="cute-btn" id="startValentine">Enter ✨</button>
+        </div>
+
+        <div id="question1" class="hidden">
+            <h2 id="questionText">Do you like me twin?</h2>
+            <div class="btn-group">
+                <button class="cute-btn" id="yesBtn1">Yes</button>
+                <button class="cute-btn" id="noBtn1">No</button>
+            </div>
+            <button class="cute-btn hidden" id="secretAnswerBtn">I LOVE YOU! ❤️</button>
+        </div>
+
+        <div id="question2" class="hidden">
+            <h2 id="q2Title">How much do you love me?</h2>
+            <input type="range" min="0" max="10000" value="100" class="slider" id="loveMeter">
+            <p>Love: <span id="loveValue">100</span></p>
+            <p id="extraLove" class="hidden" style="font-weight: bold;"></p>
+            <button class="cute-btn" id="nextBtn">Next</button>
+        </div>
+
+        <div id="question3" class="hidden">
+            <h2 id="q3Title">Will you be my Valentine?</h2>
+            <div class="btn-group">
+                <button class="cute-btn" id="yesBtn3">Yes!</button>
+                <button class="cute-btn" id="noBtn3">No</button>
+            </div>
+        </div>
+
+        <div id="celebration" class="hidden">
+            <h1 class="celebration-title">Yay! Date Confirmed! 🥳</h1>
+            <p>I'm the luckiest twin ever! ❤️</p>
+            <div style="font-size: 3rem;">💖✨🌹</div>
+        </div>
+    </div>
+
+    <script>
+        const music = document.getElementById('bgMusic');
+        let totalClicks = 0;
+        let yesScale = 1;
+
+        // START BUTTON
+        document.getElementById('startValentine').onclick = function() {
+            music.play().catch(() => console.log("Music blocked by browser."));
+            document.getElementById('page0').classList.add('hidden');
+            document.getElementById('question1').classList.remove('hidden');
+        };
+
+        // CHAOS LOGIC
+        function handleChaos() {
+            totalClicks++;
+            if (navigator.vibrate) navigator.vibrate(50);
+            if (music.paused) music.play();
+
+            const yesBtn = document.getElementById('yesBtn1');
+            const noBtn = document.getElementById('noBtn1');
+
+            if (yesScale < 1.6) {
+                yesScale += 0.2;
+                yesBtn.style.transform = `scale(${yesScale})`;
+            }
+
+            [yesBtn, noBtn].forEach(btn => {
+                btn.style.position = 'fixed';
+                btn.style.left = (Math.random() * 50 + 20) + 'vw';
+                btn.style.top = (Math.random() * 50 + 25) + 'vh';
+            });
+
+            if (totalClicks >= 3) {
+                document.getElementById('secretAnswerBtn').classList.remove('hidden');
+            }
+        }
+
+        document.getElementById('yesBtn1').onclick = handleChaos;
+        document.getElementById('noBtn1').onclick = handleChaos;
+
+        // SECRET BUTTON -> PAGE 2
+        document.getElementById('secretAnswerBtn').onclick = function() {
+            document.getElementById('question1').classList.add('hidden');
+            document.getElementById('question2').classList.remove('hidden');
+        };
+
+        // LOVE METER -> PAGE 3
+        document.getElementById('loveMeter').oninput = function(e) {
+            const val = e.target.value;
+            document.getElementById('loveValue').innerText = val;
+            const extra = document.getElementById('extraLove');
+            extra.classList.remove('hidden');
+            if (val > 8000) extra.innerText = "EXTREME LOVE! 💖🔥";
+            else if (val > 2000) extra.innerText = "That's a lot! 🥰";
+            else extra.innerText = "Aww! 😊";
+        };
+
+        document.getElementById('nextBtn').onclick = function() {
+            document.getElementById('question2').classList.add('hidden');
+            document.getElementById('question3').classList.remove('hidden');
+        };
+
+        // FINAL QUESTION
+        document.getElementById('noBtn3').onclick = function() {
+            this.style.position = 'fixed';
+            this.style.left = (Math.random() * 50 + 20) + 'vw';
+            this.style.top = (Math.random() * 50 + 20) + 'vh';
+        };
+
+        document.getElementById('yesBtn3').onclick = function() {
+            document.getElementById('question3').classList.add('hidden');
+            document.getElementById('celebration').classList.remove('hidden');
+        };
+    </script>
+</body>
+</html>
