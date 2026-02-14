@@ -7,75 +7,37 @@
     <link href="https://fonts.googleapis.com/css2?family=Dancing+Script:wght@700&family=Poppins:wght@400;600&display=swap" rel="stylesheet">
     
     <style>
-        * { box-sizing: border-box; touch-action: manipulation; -webkit-tap-highlight-color: transparent; }
-        
-        html, body {
-            height: 100%; margin: 0; padding: 0;
-            background: #ffafbd; font-family: 'Poppins', sans-serif;
-            overflow: hidden; position: fixed; width: 100%;
-        }
-
+        /* --- CSS STYLING --- */
+        * { box-sizing: border-box; touch-action: manipulation; }
+        html, body { height: 100%; margin: 0; padding: 0; background: #ffafbd; font-family: 'Poppins', sans-serif; overflow: hidden; }
         body { display: flex; justify-content: center; align-items: center; }
-
-        .bg-layer {
-            position: fixed; top: 0; left: 0; width: 100%; height: 100%;
-            background: linear-gradient(135deg, #ffafbd 0%, #ffc3a0 100%);
-            z-index: -1;
-        }
-
-        .container {
-            width: 92%; max-width: 360px;
-            background: rgba(255, 255, 255, 0.25);
-            backdrop-filter: blur(10px); -webkit-backdrop-filter: blur(10px);
-            padding: 20px; border-radius: 20px;
-            border: 1px solid rgba(255, 255, 255, 0.3);
-            text-align: center; z-index: 10;
-        }
-
+        .bg-layer { position: fixed; top: 0; left: 0; width: 100%; height: 100%; background: linear-gradient(135deg, #ffafbd 0%, #ffc3a0 100%); z-index: -1; }
+        .container { width: 92%; max-width: 360px; background: rgba(255, 255, 255, 0.25); backdrop-filter: blur(10px); -webkit-backdrop-filter: blur(10px); padding: 20px; border-radius: 20px; border: 1px solid rgba(255, 255, 255, 0.3); text-align: center; z-index: 10; display: flex; flex-direction: column; justify-content: center; }
         .hidden { display: none !important; }
-
         .celebration-title { font-family: 'Dancing Script', cursive; font-size: 1.8rem; color: #ff4757; margin: 0 0 10px 0; }
-        .poetic-text { font-style: italic; font-size: 0.9rem; line-height: 1.4; color: #d63031; margin-bottom: 10px; }
+        .poetic-text { font-style: italic; font-size: 0.85rem; line-height: 1.4; color: #d63031; margin-bottom: 10px; }
+        #musicToggle { position: fixed; top: 15px; right: 15px; z-index: 2000; background: rgba(255,255,255,0.6); border: none; border-radius: 50%; width: 40px; height: 40px; cursor: pointer; font-size: 20px; }
+        .cute-btn { padding: 10px 18px; margin: 5px; border: none; border-radius: 50px; background: #ff6b6b; color: white; font-size: 14px; font-weight: 600; cursor: pointer; box-shadow: 0 4px 10px rgba(255, 71, 87, 0.2); }
         
-        #musicToggle {
-            position: fixed; top: 15px; right: 15px; z-index: 2000;
-            background: rgba(255,255,255,0.6); border: none; border-radius: 50%;
-            width: 40px; height: 40px; cursor: pointer; font-size: 20px;
-        }
-
-        .cute-btn {
-            display: inline-block; padding: 12px 24px; margin: 8px; border: none; 
-            border-radius: 50px; background: #ff6b6b; color: white; 
-            font-size: 14px; font-weight: 600; cursor: pointer;
-            box-shadow: 0 4px 10px rgba(255, 71, 87, 0.2);
-        }
-
+        /* Portrait Focus Style */
+        .portrait-frame { width: 180px; height: 240px; margin: 0 auto 10px; border-radius: 90px 90px 15px 15px; overflow: hidden; border: 3px solid white; box-shadow: 0 8px 15px rgba(0,0,0,0.1); }
+        .portrait-frame img { width: 100%; height: 100%; object-fit: cover; }
+        
         .photo-grid { display: grid; grid-template-columns: 1fr 1fr; gap: 8px; margin: 10px 0; }
-        .photo-box {
-            width: 100%; aspect-ratio: 1/1; background: rgba(255,255,255,0.3); 
-            border-radius: 10px; overflow: hidden; border: 2px solid white;
-        }
+        .photo-box { width: 100%; aspect-ratio: 1/1; background: rgba(255,255,255,0.3); border-radius: 10px; overflow: hidden; border: 2px solid white; }
         .photo-box img { width: 100%; height: 100%; object-fit: cover; }
-
-        .slider { width: 100%; margin: 15px 0; accent-color: #ff4757; }
+        
+        #yesBtn1, #noBtn1, #noBtn3 { transition: all 0.3s ease-out; }
+        .slider { width: 100%; margin: 10px 0; accent-color: #ff4757; }
         .confetti { position: fixed; width: 10px; height: 10px; z-index: 9999; pointer-events: none; }
-
-        .letter-content {
-            text-align: left; font-size: 0.85rem; color: #444; line-height: 1.5;
-            background: rgba(255, 255, 255, 0.4); padding: 15px; border-radius: 12px;
-            border-left: 3px solid #ff4757; margin-bottom: 10px;
-        }
+        .letter-content { text-align: left; font-size: 0.8rem; color: #444; line-height: 1.5; background: rgba(255, 255, 255, 0.4); padding: 12px; border-radius: 12px; border-left: 3px solid #ff4757; margin-bottom: 10px; }
     </style>
 </head>
 <body>
-
     <button id="musicToggle">🎵</button>
     <div class="bg-layer"></div>
-    
     <div class="container">
-        <audio id="bgMusic" loop preload="auto">
-            <source src="music.mp3" type="audio/mpeg">
-        </audio>
+        <audio id="bgMusic" loop preload="auto"><source src="music.mp3" type="audio/mpeg"></audio>
 
         <div id="page0">
             <h1 class="celebration-title">Happy Valentine's Day! ❤️</h1>
@@ -92,12 +54,21 @@
         <div id="pageCounter" class="hidden">
             <h2 class="celebration-title">338 Days Met</h2>
             <p style="font-size: 0.9rem;">Every day has been a blessing, Twin. ✨</p>
-            <button class="cute-btn" onclick="nextPage('pageCounter', 'question1')">Next ➡️</button>
+            <button class="cute-btn" onclick="nextPage('pageCounter', 'pageHerFace')">Next ➡️</button>
+        </div>
+
+        <div id="pageHerFace" class="hidden">
+            <h2 class="celebration-title">The Most Beautiful View</h2>
+            <div class="portrait-frame">
+                <img src="her_face.jpg.jpg" alt="Faria">
+            </div>
+            <p class="poetic-text">Everything is art when I'm looking at you.</p>
+            <button class="cute-btn" onclick="nextPage('pageHerFace', 'question1')">Next ➡️</button>
         </div>
 
         <div id="question1" class="hidden">
             <h2 class="celebration-title">Do you like me?</h2>
-            <div id="btn-area" style="height: 100px; position: relative;">
+            <div class="btn-group" style="height: 100px; position: relative;">
                 <button class="cute-btn" id="yesBtn1">Yes</button>
                 <button class="cute-btn" id="noBtn1">No</button>
             </div>
@@ -105,7 +76,7 @@
         </div>
 
         <div id="pageGallery" class="hidden">
-            <h2 class="celebration-title">Our Moments</h2>
+            <h2 class="celebration-title">Our Memories</h2>
             <div class="photo-grid">
                 <div class="photo-box"><img src="pic1.jpg.jpg"></div>
                 <div class="photo-box"><img src="pic2.jpg.jpg"></div>
@@ -125,14 +96,14 @@
         <div id="question3" class="hidden">
             <h2 class="celebration-title">Final Question</h2>
             <p style="font-size: 0.9rem;">Be my Valentine, Faria?</p>
-            <div id="final-btn-area">
+            <div class="btn-group">
                 <button class="cute-btn" id="yesBtn3">Yes!</button>
                 <button class="cute-btn" id="noBtn3">No</button>
             </div>
         </div>
 
         <div id="pageLetter1" class="hidden">
-            <h2 class="celebration-title">For You...</h2>
+            <h2 class="celebration-title">For You, Princess</h2>
             <div class="letter-content">
                 To my fairytale princess, I won’t ask you to be my valentine—I’m not trying to be your boyfriend, just your husband someday. No matter where life takes you, whenever the sun rises, I’ll think of you.
             </div>
@@ -148,97 +119,73 @@
 
         <div id="celebration" class="hidden">
             <h1 class="celebration-title">Date Confirmed! 🥳</h1>
-            <p style="font-size: 0.8rem;">(just kidding)</p>
+            <p style="font-size: 0.75rem; margin-top: -10px;">(just kidding)</p>
             <p style="font-size: 0.9rem;">I'm the luckiest twin ever! ❤️</p>
             <div style="font-size: 2.5rem;">💖✨🌹</div>
         </div>
     </div>
 
     <script>
+        /* --- JAVASCRIPT LOGIC --- */
         const music = document.getElementById('bgMusic');
         const musicToggle = document.getElementById('musicToggle');
-        let totalClicks = 0;
-        let yesScale = 1;
+        let totalClicks = 0; let yesScale = 1;
 
-        function nextPage(current, next) {
-            document.getElementById(current).classList.add('hidden');
-            document.getElementById(next).classList.remove('hidden');
-            if(next === 'celebration') launchConfetti();
+        function nextPage(current, next) { 
+            document.getElementById(current).classList.add('hidden'); 
+            document.getElementById(next).classList.remove('hidden'); 
+            if(next === 'celebration') launchConfetti(); 
         }
 
-        // Music toggle
-        musicToggle.onclick = (e) => {
-            e.stopPropagation();
-            if (music.paused) { music.play(); musicToggle.innerText = "🎵"; }
-            else { music.pause(); musicToggle.innerText = "🔇"; }
+        musicToggle.onclick = () => { 
+            if (music.paused) { music.play(); musicToggle.innerText = "🎵"; } 
+            else { music.pause(); musicToggle.innerText = "🔇"; } 
         };
 
-        // FIXED ENTER BUTTON
-        document.getElementById('startValentine').addEventListener('click', function() {
-            // Start music but don't wait for it
-            music.play().catch(e => console.log("Music play blocked, waiting for interaction"));
-            nextPage('page0', 'pageDate');
-        });
+        document.getElementById('startValentine').onclick = function() { 
+            music.play(); 
+            nextPage('page0', 'pageDate'); 
+        };
 
-        function handleChaos(e) {
-            totalClicks++;
-            const yesBtn = document.getElementById('yesBtn1');
-            const noBtn = document.getElementById('noBtn1');
-            
-            if (yesScale < 1.4) { 
-                yesScale += 0.12; 
-                yesBtn.style.transform = `scale(${yesScale})`; 
-            }
-            
-            [yesBtn, noBtn].forEach(btn => {
-                btn.style.position = 'fixed';
-                btn.style.left = (Math.floor(Math.random() * 40) + 25) + 'vw';
-                btn.style.top = (Math.floor(Math.random() * 30) + 35) + 'vh';
+        function handleChaos() {
+            totalClicks++; const yesBtn = document.getElementById('yesBtn1'); const noBtn = document.getElementById('noBtn1');
+            if (yesScale < 1.4) { yesScale += 0.12; yesBtn.style.transform = `scale(${yesScale})`; }
+            [yesBtn, noBtn].forEach(btn => { 
+                btn.style.position = 'fixed'; 
+                btn.style.left = (Math.floor(Math.random() * 40) + 25) + 'vw'; 
+                btn.style.top = (Math.floor(Math.random() * 30) + 35) + 'vh'; 
             });
-            
-            if (totalClicks >= 3) {
-                document.getElementById('secretAnswerBtn').classList.remove('hidden');
-            }
+            if (totalClicks >= 3) document.getElementById('secretAnswerBtn').classList.remove('hidden');
         }
 
-        document.getElementById('yesBtn1').onclick = handleChaos;
+        document.getElementById('yesBtn1').onclick = handleChaos; 
         document.getElementById('noBtn1').onclick = handleChaos;
 
-        document.getElementById('secretAnswerBtn').onclick = function() {
-            document.getElementById('yesBtn1').style.display = 'none';
-            document.getElementById('noBtn1').style.display = 'none';
-            nextPage('question1', 'pageGallery');
+        document.getElementById('secretAnswerBtn').onclick = function() { 
+            document.getElementById('yesBtn1').style.display = 'none'; 
+            document.getElementById('noBtn1').style.display = 'none'; 
+            nextPage('question1', 'pageGallery'); 
         };
 
-        document.getElementById('loveMeter').oninput = function(e) {
-            document.getElementById('loveValue').innerText = e.target.value;
-        };
-
+        document.getElementById('loveMeter').oninput = function(e) { document.getElementById('loveValue').innerText = e.target.value; };
         document.getElementById('nextBtn').onclick = () => nextPage('question2', 'question3');
 
-        document.getElementById('noBtn3').onclick = function() {
-            this.style.position = 'fixed';
-            this.style.left = (Math.random() * 40 + 25) + 'vw';
-            this.style.top = (Math.random() * 30 + 35) + 'vh';
+        document.getElementById('noBtn3').onclick = function() { 
+            this.style.position = 'fixed'; 
+            this.style.left = (Math.random() * 40 + 25) + 'vw'; 
+            this.style.top = (Math.random() * 30 + 35) + 'vh'; 
         };
 
         document.getElementById('yesBtn3').onclick = () => nextPage('question3', 'pageLetter1');
 
         function launchConfetti() {
             const colors = ['#ff4757', '#ff6b6b', '#ffafbd', '#ffffff', '#ffdada'];
-            for (let i = 0; i < 80; i++) {
-                const confetti = document.createElement('div');
-                confetti.style.cssText = `
-                    position: fixed; width: 10px; height: 10px; z-index: 9999;
-                    background-color: ${colors[Math.floor(Math.random() * colors.length)]};
-                    left: ${Math.random() * 100}vw; top: -10px; pointer-events: none;
-                `;
-                document.body.appendChild(confetti);
+            for (let i = 0; i < 100; i++) {
+                const confetti = document.createElement('div'); confetti.className = 'confetti'; 
+                confetti.style.backgroundColor = colors[Math.floor(Math.random() * colors.length)];
+                confetti.style.left = Math.random() * 100 + 'vw'; confetti.style.top = '-10px'; document.body.appendChild(confetti);
                 const fallDuration = Math.random() * 2 + 2;
-                confetti.animate([
-                    { transform: 'translate3d(0, 0, 0) rotate(0deg)', opacity: 1 },
-                    { transform: `translate3d(${(Math.random()*160)-80}px, 100vh, 0) rotate(${Math.random()*720}deg)`, opacity: 0 }
-                ], { duration: fallDuration * 1000, easing: 'linear' });
+                confetti.animate([{ transform: 'translate3d(0, 0, 0) rotate(0deg)', opacity: 1 }, { transform: `translate3d(${(Math.random()*160)-80}px, 100vh, 0) rotate(${Math.random()*720}deg)`, opacity: 0 }], { duration: fallDuration * 1000, easing: 'linear' });
                 setTimeout(() => confetti.remove(), fallDuration * 1000);
             }
         }
