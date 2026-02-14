@@ -23,34 +23,6 @@
             transition: background 1s ease;
         }
 
-        /* --- ENVELOPE --- */
-        #opener {
-            position: fixed; inset: 0; z-index: 9999; 
-            display: flex; flex-direction: column; align-items: center; justify-content: center;
-            transition: all 0.8s ease-in-out;
-        }
-
-        .envelope-wrapper {
-            position: relative; width: 280px; height: 180px; background: #fff3f5;
-            border-radius: 0 0 15px 15px; box-shadow: 0 20px 40px rgba(0,0,0,0.15);
-            display: flex; align-items: center; justify-content: center; cursor: pointer;
-        }
-
-        .envelope-wrapper::before {
-            content: ""; position: absolute; top: -100px; left: 0;
-            border-left: 140px solid transparent; border-right: 140px solid transparent;
-            border-bottom: 100px solid #ffe4e8;
-        }
-
-        .wax-seal {
-            position: absolute; bottom: 70px; width: 60px; height: 60px;
-            background: var(--primary); border-radius: 50%; z-index: 10;
-            display: flex; align-items: center; justify-content: center;
-            font-size: 25px; box-shadow: 0 5px 15px rgba(255, 71, 87, 0.4);
-            animation: pulse 2s infinite;
-        }
-
-        /* --- MAIN CONTAINER --- */
         .container {
             width: calc(100% - 40px); max-width: 360px; 
             background: rgba(255, 255, 255, 0.7);
@@ -63,48 +35,31 @@
 
         .hidden { display: none !important; }
         .title { font-family: 'Dancing Script', cursive; font-size: 2.2rem; color: var(--primary); margin: 0 0 10px 0; }
-        
         .cute-btn { 
             padding: 16px; margin: 8px 0; border: none; border-radius: 50px; 
             background: var(--primary); color: white; font-weight: 600; width: 100%;
             box-shadow: 0 5px 15px rgba(255, 71, 87, 0.2); font-size: 0.95rem;
         }
 
-        /* --- PORTRAIT --- */
-        .single-portrait-frame {
-            width: 100%; height: 340px; background: white; border-radius: 20px;
-            padding: 8px; box-shadow: 0 8px 20px rgba(0,0,0,0.1);
-            margin: 10px 0; overflow: hidden;
+        @keyframes nuclear {
+            0% { transform: translate(0,0) rotate(0); }
+            25% { transform: translate(-10px, 10px) rotate(-3deg); }
+            50% { transform: translate(10px, -10px) rotate(3deg); }
+            75% { transform: translate(-10px, -10px) rotate(-1deg); }
+            100% { transform: translate(0,0) rotate(0); }
         }
-        .single-portrait-frame img {
-            width: 100%; height: 100%; object-fit: cover; border-radius: 12px;
-            animation: breath 8s ease-in-out infinite;
-        }
+        .nuclear-mode { animation: nuclear 0.08s infinite !important; background: #ff3333 !important; }
 
-        /* --- SLIDER --- */
         .slider-box { position: relative; padding: 40px 0; width: 100%; }
-        .track { height: 10px; background: rgba(255,255,255,0.8); border-radius: 10px; width: 100%; }
+        .track { height: 12px; background: rgba(255,255,255,0.8); border-radius: 10px; width: 100%; }
         #thumb { 
             width: 60px; height: 60px; position: absolute; top: 50%; left: 0; transform: translate(-50%, -50%); 
             background: url('data:image/svg+xml;utf8,<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="%23ff4757"><path d="M12 21.35l-1.45-1.32C5.4 15.36 2 12.28 2 8.5 2 5.42 4.42 3 7.5 3c1.74 0 3.41.81 4.5 2.09C13.09 3.81 14.76 3 16.5 3 19.58 3 22 5.42 22 8.5c0 3.78-3.4 6.86-8.55 11.54L12 21.35z"/></svg>') no-repeat center;
             background-size: contain; z-index: 10;
         }
 
-        /* --- SECRET MODAL --- */
-        #secretNote {
-            position: fixed; inset: 0; background: rgba(0,0,0,0.8);
-            z-index: 10002; display: flex; align-items: center; justify-content: center;
-            opacity: 0; pointer-events: none; transition: 0.5s;
-        }
-        #secretNote.show { opacity: 1; pointer-events: auto; }
-        .note-card {
-            background: white; padding: 30px; border-radius: 20px; width: 85%; max-width: 300px;
-            font-family: 'Dancing Script', cursive; font-size: 1.5rem; color: #333;
-        }
-
-        @keyframes breath { 0%, 100% { transform: scale(1); } 50% { transform: scale(1.06); } }
-        @keyframes pulse { 0%, 100% {transform: scale(1);} 50% {transform: scale(1.1);} }
-        @keyframes hintPulse { 0%, 100% { opacity: 0.3; } 50% { opacity: 1; } }
+        .portrait { width: 100%; height: 320px; background: white; border-radius: 20px; padding: 8px; margin: 10px 0; overflow: hidden; }
+        .portrait img { width: 100%; height: 100%; object-fit: cover; border-radius: 12px; }
     </style>
 </head>
 <body>
@@ -112,12 +67,12 @@
     <button id="musicBtn" style="position:fixed; top:15px; right:15px; z-index:10001; background:white; border:none; width:40px; height:40px; border-radius:50%;" onclick="toggleMute()">🔊</button>
     <audio id="bgMusic" loop preload="auto"><source src="music.mp3" type="audio/mpeg"></audio>
 
-    <div id="opener" onclick="begin()">
-        <div class="envelope-wrapper">
-            <div class="wax-seal">❤️</div>
-            <p style="margin-top: 100px; color: #ff8e9b; font-weight: bold; font-size: 0.8rem;">CLICK TO UNSEAL</p>
+    <div id="opener" onclick="begin()" style="position:fixed; inset:0; z-index:9999; display:flex; flex-direction:column; align-items:center; justify-content:center; background:var(--bg-1); transition: 0.8s;">
+        <div style="width:280px; height:180px; background:#fff3f5; border-radius:0 0 15px 15px; position:relative; display:flex; align-items:center; justify-content:center;">
+            <div style="position:absolute; top:-100px; left:0; border-left:140px solid transparent; border-right:140px solid transparent; border-bottom:100px solid #ffe4e8;"></div>
+            <div style="font-size:30px;">❤️</div>
         </div>
-        <p style="font-family:'Dancing Script'; font-size:1.8rem; margin-top:30px; color: white;">For My Twin</p>
+        <p style="font-family:'Dancing Script'; font-size:1.8rem; margin-top:30px; color: white;">Open for a surprise, Twin</p>
     </div>
 
     <div id="main" class="container hidden">
@@ -137,52 +92,49 @@
 
         <div id="p3" class="hidden">
             <h2 class="title">Do you like me?</h2>
-            <div id="btnArea" style="height: 250px; position: relative; width: 100%;">
+            <div id="btnArea" style="height: 250px; position: relative;">
                 <button class="cute-btn" id="yes1" style="width: 140px; position: absolute; left: 50%; top: 50%; transform: translate(-50%, -50%);" onclick="handleChoice()">Yes</button>
                 <button class="cute-btn" id="no1" style="width: 140px; background: #999; position: absolute; left: 50%; top: 75%; transform: translate(-50%, -50%);" onclick="handleChoice()">No</button>
-                <button id="floatingLove" class="hidden" style="position:absolute; z-index:100; background:var(--primary); color:white; padding:15px 25px; border-radius:50px; border:2px solid white; font-weight: bold;" onclick="go('p3','p4')">I LOVE YOU! ❤️</button>
+                <button id="floatingLove" class="hidden" style="position:absolute; background:var(--primary); color:white; padding:15px 25px; border-radius:50px; border:2px solid white;" onclick="go('p3','p4')">I LOVE YOU! ❤️</button>
             </div>
         </div>
 
         <div id="p4" class="hidden">
             <h2 class="title">Our Memories</h2>
-            <div style="display: grid; grid-template-columns: 1fr 1fr; gap: 10px; margin: 15px 0;">
-                <div style="background:white; padding:4px; box-shadow:0 4px 8px rgba(0,0,0,0.1); transform:rotate(-3deg);"><img src="pic1.jpg.jpg" style="width:100%; aspect-ratio:1/1; object-fit:cover;"></div>
-                <div style="background:white; padding:4px; box-shadow:0 4px 8px rgba(0,0,0,0.1); transform:rotate(2deg);"><img src="pic2.jpg.jpg" style="width:100%; aspect-ratio:1/1; object-fit:cover;"></div>
-                <div style="background:white; padding:4px; box-shadow:0 4px 8px rgba(0,0,0,0.1); transform:rotate(-2deg);"><img src="pic3.jpg.jpg" style="width:100%; aspect-ratio:1/1; object-fit:cover;"></div>
-                <div style="background:white; padding:4px; box-shadow:0 4px 8px rgba(0,0,0,0.1); transform:rotate(4deg);"><img src="pic4.jpg.jpg" style="width:100%; aspect-ratio:1/1; object-fit:cover;"></div>
+            <div style="display: grid; grid-template-columns: 1fr 1fr; gap: 8px; margin: 10px 0;">
+                <div style="background:white; padding:4px; transform:rotate(-3deg);"><img src="pic1.jpg.jpg" style="width:100%; aspect-ratio:1/1; object-fit:cover;"></div>
+                <div style="background:white; padding:4px; transform:rotate(2deg);"><img src="pic2.jpg.jpg" style="width:100%; aspect-ratio:1/1; object-fit:cover;"></div>
+                <div style="background:white; padding:4px; transform:rotate(-2deg);"><img src="pic3.jpg.jpg" style="width:100%; aspect-ratio:1/1; object-fit:cover;"></div>
+                <div style="background:white; padding:4px; transform:rotate(4deg);"><img src="pic4.jpg.jpg" style="width:100%; aspect-ratio:1/1; object-fit:cover;"></div>
             </div>
             <button class="cute-btn" onclick="go('p4','p5')">Favorite View ➡️</button>
         </div>
 
         <div id="p5" class="hidden">
             <h2 class="title">My Divine Twin</h2>
-            <div class="single-portrait-frame">
-                <img src="her_face.jpg.jpg">
-            </div>
-            <p style="font-size: 0.75rem; font-style: italic; line-height: 1.4;">
-                I see the mother of our children in your soul. 🌻
-            </p>
+            <div class="portrait"><img src="her_face.jpg.jpg"></div>
+            <p style="font-size: 0.75rem;">I see the mother of our children in your soul. 🌻</p>
             <button class="cute-btn" onclick="go('p5','p6')">Our Goals ➡️</button>
         </div>
 
         <div id="p6" class="hidden">
             <h2 class="title">Our Goals</h2>
             <div style="text-align: left; display: inline-block;">
-                <div style="margin: 10px 0;"><input type="checkbox" class="req"> Boards Golden 🏅</div>
-                <div style="margin: 10px 0;"><input type="checkbox" class="req"> Good College 🎓</div>
-                <div style="margin: 10px 0;"><input type="checkbox" class="req"> Independence 💼</div>
-                <div style="margin: 10px 0;"><input type="checkbox"> Become Husband & Wife (hopefully one day) 💍</div>
+                <div style="margin: 8px 0;"><input type="checkbox" class="req"> Boards Golden 🏅</div>
+                <div style="margin: 8px 0;"><input type="checkbox" class="req"> Good College 🎓</div>
+                <div style="margin: 8px 0;"><input type="checkbox" class="req"> Independence 💼</div>
+                <div style="margin: 8px 0;"><input type="checkbox"> Become Husband & Wife (hopefully one day) 💍</div>
             </div>
-            <button class="cute-btn" id="goalNext" disabled style="opacity:0.5; margin-top:15px;" onclick="go('p6','p7')">Locked 🔒</button>
+            <button class="cute-btn" id="goalNext" disabled style="opacity:0.5;" onclick="go('p6','p7')">Locked 🔒</button>
         </div>
 
         <div id="p7" class="hidden">
             <h2 class="title">Love Meter</h2>
+            <p id="meterHint" style="font-weight:bold; color:var(--primary);">Slide to see my love level...</p>
             <div class="slider-box">
                 <div class="track"><div id="thumb"></div></div>
             </div>
-            <h1 id="val" style="font-size: 4rem; margin: 0; color: var(--primary);">0%</h1>
+            <h1 id="val" style="font-size: 3rem; margin: 0; color: var(--primary);">0%</h1>
             <button class="cute-btn" id="meterNext" disabled style="background:#bbb;" onclick="go('p7','p8')">Locked 🔒</button>
         </div>
 
@@ -190,32 +142,30 @@
             <h2 class="title">Be my Valentine?</h2>
             <button class="cute-btn" onclick="go('p8','p9')">YES - Forever & Always ❤️</button>
             <button class="cute-btn" onclick="go('p8','p9')" style="background:#333; color:gold;">YES - I am yours 💍</button>
-            <button class="cute-btn" onclick="go('p8','p9')" style="background:white; color:var(--primary); border: 1px solid var(--primary);">YES - Take my heart 🌻</button>
             <button id="noFinal" class="cute-btn" style="width:auto; position:absolute; bottom:20px; left:40%; background:#888; padding: 10px 20px;">No</button>
         </div>
 
         <div id="p9" class="hidden">
             <h2 class="title">My Promise</h2>
-            <div style="background:white; padding:15px; border-radius:15px; text-align:left; font-size:0.8rem; line-height:1.5; max-height: 220px; overflow-y: auto;">
-                Faria, I'm trying to be your <b style="color:#d4af37">Husband</b> someday. 
-                Wherever the sun rises, I'll think of you. You're my first and my last.
-                <b>I love you 3000.</b>
+            <div style="background:white; padding:15px; border-radius:15px; text-align:left; font-size:0.85rem; line-height:1.5; max-height: 260px; overflow-y: auto;">
+                To my fairytale princess, happy Valentine’s Day. I won’t ask you to be my valentine—I’m not trying to be your boyfriend, just your husband someday. 
+                <br><br>
+                No matter where life takes you, whenever the sun rises, I’ll think of you and love you completely. I’m better with words in texts, but my feelings are real. You’re my first love, and if Allah wills, my last. 
+                <br><br>
+                I fear losing you, yet I believe what’s meant for you always finds its way back, like a compass (need to be nerd enough). Keep smiling freely. I’ll grow into your dream man. Your twin will be by your side in every challenge you face. 
+                <br><br>
+                <b>Loveyou 3000 always.</b>
             </div>
-            <button class="cute-btn" onclick="go('p9','p10'); celebrate();">Final Note ✨</button>
+            <button class="cute-btn" onclick="go('p9', 'p10'); celebrate();">One last thing... ✨</button>
         </div>
 
         <div id="p10" class="hidden">
             <h2 class="title">Thank You, Twin</h2>
-            <p>For being my everything.</p>
+            <p>For being my home.</p>
             <div id="flowerClicker" style="font-size: 5rem; margin: 10px; cursor: pointer;">🌻❤️🌻</div>
-            <p style="font-size: 0.6rem; color: #ff4757; animation: hintPulse 1.5s infinite;">(Tap our flowers 3 times for a secret...)</p>
-            <button class="cute-btn" onclick="location.reload()" style="margin-top:20px;">Replay ✨</button>
-        </div>
-    </div>
-
-    <div id="secretNote" onclick="this.classList.remove('show')">
-        <div class="note-card">
-            "Every day I spend with you, I realize more and more that you aren't just my twin... you're my home. I can't wait to grow old with you. ❤️"
+            <p style="font-size: 0.6rem; color: #ff4757;">(Tap our flowers 3 times for a secret...)</p>
+            <button class="cute-btn" onclick="location.reload()">Replay ✨</button>
+            <p style="font-size: 0.65rem; color: #777; font-style: italic; margin-top: -5px;">(had to be nerd enough to build this😭)</p>
         </div>
     </div>
 
@@ -223,15 +173,6 @@
         const audio = document.getElementById('bgMusic');
         const main = document.getElementById('main');
         let clicks = 0; let ySize = 1;
-        let flowerClicks = 0;
-        
-        const colors = [['#ffafbd', '#ffc3a0'], ['#2193b0', '#6dd5ed'], ['#ee9ca7', '#ffdde1'], ['#7b4397', '#dc2430'], ['#ff9a9e', '#fad0c4'], ['#a18cd1', '#fbc2eb']];
-        let colorIdx = 0;
-
-        function toggleMute() {
-            audio.muted = !audio.muted;
-            document.getElementById('musicBtn').innerText = audio.muted ? '🔇' : '🔊';
-        }
 
         function begin() {
             audio.play().catch(() => {});
@@ -242,8 +183,6 @@
         function go(c, n) {
             document.getElementById(c).classList.add('hidden');
             document.getElementById(n).classList.remove('hidden');
-            colorIdx = (colorIdx + 1) % colors.length;
-            document.body.style.background = `linear-gradient(135deg, ${colors[colorIdx][0]} 0%, ${colors[colorIdx][1]} 100%)`;
         }
 
         function handleChoice() {
@@ -251,13 +190,38 @@
             const yes = document.getElementById('yes1');
             yes.style.transform = `translate(-50%, -50%) scale(${ySize})`;
             if (clicks >= 4) {
-                yes.classList.add('hidden');
-                document.getElementById('no1').classList.add('hidden');
-                const f = document.getElementById('floatingLove');
-                f.classList.remove('hidden');
+                yes.classList.add('hidden'); document.getElementById('no1').classList.add('hidden');
+                const f = document.getElementById('floatingLove'); f.classList.remove('hidden');
                 setInterval(() => { f.style.left = Math.random() * 50 + 5 + "%"; f.style.top = Math.random() * 60 + 10 + "%"; }, 700);
             }
         }
+
+        const thumb = document.getElementById('thumb');
+        const track = document.querySelector('.track');
+        let active = false;
+        const move = (x) => {
+            if (!active) return;
+            const rect = track.getBoundingClientRect();
+            let p = Math.round(((x - rect.left) / rect.width) * 100);
+            p = Math.max(0, p);
+            if (p > 100) {
+                document.getElementById('val').innerText = "NUCLEAR OVERLOAD! ⚠️";
+                document.getElementById('val').style.color = "red";
+                document.body.classList.add('nuclear-mode');
+                thumb.style.left = "110%";
+            } else {
+                document.getElementById('val').innerText = p + "%";
+                thumb.style.left = p + "%";
+            }
+            if (p >= 100) {
+                const btn = document.getElementById('meterNext');
+                btn.disabled = false; btn.innerText = "Unlock The Truth ✨"; btn.style.background = "red";
+            }
+        };
+
+        thumb.addEventListener('touchstart', () => active = true);
+        window.addEventListener('touchend', () => { active = false; document.body.classList.remove('nuclear-mode'); });
+        window.addEventListener('touchmove', (e) => move(e.touches[0].clientX));
 
         document.querySelectorAll('.req').forEach(i => {
             i.onchange = () => {
@@ -268,48 +232,13 @@
             };
         });
 
-        const thumb = document.getElementById('thumb');
-        const track = document.querySelector('.track');
-        let active = false;
-        const move = (x) => {
-            if (!active) return;
-            const rect = track.getBoundingClientRect();
-            let p = Math.round(((x - rect.left) / rect.width) * 100);
-            p = Math.max(0, p);
-            thumb.style.left = Math.min(p, 100) + "%";
-            if (p > 100) { document.getElementById('val').innerText = "∞%"; document.getElementById('val').style.color = "gold"; }
-            else { document.getElementById('val').innerText = p + "%"; }
-            if (p >= 100) { const btn = document.getElementById('meterNext'); btn.disabled = false; btn.innerText = "Unlock ✨"; btn.style.background = "var(--primary)"; }
-        };
-
-        thumb.addEventListener('touchstart', () => active = true);
-        window.addEventListener('touchend', () => active = false);
-        window.addEventListener('touchmove', (e) => move(e.touches[0].clientX));
-
         document.getElementById('noFinal').addEventListener('touchstart', function(e) {
             e.preventDefault();
             this.style.left = Math.random() * 70 + "%";
             this.style.top = Math.random() * 60 + 10 + "%";
         });
 
-        document.getElementById('flowerClicker').addEventListener('click', () => {
-            flowerClicks++;
-            if(flowerClicks === 3) { document.getElementById('secretNote').classList.add('show'); flowerClicks = 0; }
-        });
-
-        function celebrate() {
-            var duration = 5 * 1000;
-            var animationEnd = Date.now() + duration;
-            var defaults = { startVelocity: 30, spread: 360, ticks: 60, zIndex: 0 };
-            function randomInRange(min, max) { return Math.random() * (max - min) + min; }
-            var interval = setInterval(function() {
-                var timeLeft = animationEnd - Date.now();
-                if (timeLeft <= 0) { return clearInterval(interval); }
-                var particleCount = 50 * (timeLeft / duration);
-                confetti(Object.assign({}, defaults, { particleCount, origin: { x: randomInRange(0.1, 0.3), y: Math.random() - 0.2 } }));
-                confetti(Object.assign({}, defaults, { particleCount, origin: { x: randomInRange(0.7, 0.9), y: Math.random() - 0.2 } }));
-            }, 250);
-        }
+        function celebrate() { confetti({ particleCount: 150, spread: 70, origin: { y: 0.6 } }); }
     </script>
 </body>
 </html>
