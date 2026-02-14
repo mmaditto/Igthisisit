@@ -14,108 +14,62 @@
         }
 
         * { box-sizing: border-box; touch-action: manipulation; -webkit-tap-highlight-color: transparent; }
-        
-        html, body {
-            height: 100%; margin: 0; padding: 0;
-            background: #ffafbd; font-family: 'Poppins', sans-serif;
-            overflow: hidden; position: fixed; width: 100%;
-        }
-
-        body { display: flex; justify-content: center; align-items: center; background: var(--bg-grad); }
-
-        .page-transition { animation: fadeIn 0.5s ease-out forwards; }
-        @keyframes fadeIn { from { opacity: 0; transform: scale(0.95); } to { opacity: 1; transform: scale(1); } }
+        html, body { height: 100%; margin: 0; padding: 0; background: #ffafbd; font-family: 'Poppins', sans-serif; overflow: hidden; position: fixed; width: 100%; }
+        body { display: flex; justify-content: center; align-items: center; background: var(--bg-grad); transition: background 0.5s ease; }
 
         .container {
-            width: 90%; max-width: 360px;
-            background: rgba(255, 255, 255, 0.35);
+            width: 95%; max-width: 380px; background: rgba(255, 255, 255, 0.35);
             backdrop-filter: blur(15px); -webkit-backdrop-filter: blur(15px);
-            padding: 25px; border-radius: 30px;
-            border: 1px solid rgba(255, 255, 255, 0.4);
-            text-align: center; z-index: 10;
-            position: relative; min-height: 320px;
+            padding: 20px; border-radius: 30px; border: 1px solid rgba(255, 255, 255, 0.4);
+            text-align: center; z-index: 10; position: relative; min-height: 420px;
             display: flex; flex-direction: column; justify-content: center;
             box-shadow: 0 15px 35px rgba(255, 71, 87, 0.2);
         }
 
+        .shake-ani { animation: shake 0.2s ease-in-out; }
+        @keyframes shake { 0%, 100% { transform: translateX(0); } 25% { transform: translateX(-6px); } 75% { transform: translateX(6px); } }
+
         .hint-window {
-            background: white; color: var(--primary);
-            padding: 6px 12px; border-radius: 12px;
-            font-size: 0.75rem; font-weight: 600;
-            position: absolute; top: -35px; left: 50%;
-            transform: translateX(-50%);
-            box-shadow: 0 4px 10px rgba(0,0,0,0.1);
-            animation: bounce 2s infinite;
-            white-space: nowrap; z-index: 100;
+            background: white; color: var(--primary); padding: 5px 12px; border-radius: 12px;
+            font-size: 0.75rem; font-weight: 600; position: absolute; top: -10px; left: 50%;
+            transform: translateX(-50%); box-shadow: 0 4px 10px rgba(0,0,0,0.1);
+            animation: bounce 2s infinite; white-space: nowrap; z-index: 100;
         }
-        .hint-window::after {
-            content: ''; position: absolute; bottom: -5px; left: 50%;
-            transform: translateX(-50%); border-width: 5px 5px 0;
-            border-style: solid; border-color: white transparent transparent;
-        }
-        @keyframes bounce {
-            0%, 100% { transform: translateX(-50%) translateY(0); }
-            50% { transform: translateX(-50%) translateY(-5px); }
-        }
+        @keyframes bounce { 0%, 100% { transform: translateX(-50%) translateY(0); } 50% { transform: translateX(-50%) translateY(-5px); } }
 
         .hidden { display: none !important; }
         .celebration-title { font-family: 'Dancing Script', cursive; font-size: 2.2rem; color: var(--primary); margin: 0 0 10px 0; }
         
-        #musicToggle {
-            position: fixed; top: 15px; right: 15px; z-index: 2000;
-            background: rgba(255,255,255,0.7); border: none; border-radius: 50%;
-            width: 44px; height: 44px; font-size: 20px;
-        }
-
         .cute-btn {
-            display: inline-block; padding: 12px 24px; margin: 8px; border: none; 
-            border-radius: 50px; background: var(--accent); color: white; 
-            font-size: 14px; font-weight: 600; cursor: pointer;
-            transition: all 0.2s cubic-bezier(0.175, 0.885, 0.32, 1.275);
-            box-shadow: 0 4px 15px rgba(255, 71, 87, 0.3);
+            display: inline-block; padding: 10px 20px; margin: 5px; border: none; border-radius: 50px; 
+            background: var(--accent); color: white; font-size: 14px; font-weight: 600; cursor: pointer;
+            transition: all 0.3s cubic-bezier(0.175, 0.885, 0.32, 1.275);
+            box-shadow: 0 4px 15px rgba(255, 71, 87, 0.3); z-index: 5;
         }
 
-        #secretAnswerBtn {
-            background: #ff0040;
-            box-shadow: 0 0 5px #ff0040;
-            transition: all 0.4s ease;
-        }
+        /* Rainbow Yes Buttons */
+        .btn-yellow { color: #FFD700 !important; background: #555; }
+        .btn-blue { color: #00BFFF !important; background: #555; }
+        .btn-green { color: #32CD32 !important; background: #555; }
 
-        .photo-grid { display: grid; grid-template-columns: 1fr 1fr; gap: 10px; margin: 15px 0; }
-        .photo-box {
-            width: 100%; aspect-ratio: 1/1; border-radius: 15px; overflow: hidden; border: 3px solid white;
-        }
+        .slider { -webkit-appearance: none; width: 100%; height: 12px; border-radius: 10px; background: #eee; outline: none; margin: 20px 0; }
+        .slider::-webkit-slider-thumb { -webkit-appearance: none; appearance: none; width: 28px; height: 28px; border-radius: 50%; background: var(--primary); cursor: pointer; border: 3px solid white; }
+
+        .photo-grid { display: grid; grid-template-columns: 1fr 1fr; gap: 8px; margin: 10px 0; }
+        .photo-box { width: 100%; aspect-ratio: 1/1; border-radius: 15px; overflow: hidden; border: 3px solid white; }
         .photo-box img { width: 100%; height: 100%; object-fit: cover; }
 
-        .letter-content {
-            text-align: left; font-size: 0.88rem; color: #333; line-height: 1.6;
-            background: rgba(255, 255, 255, 0.5); padding: 18px; border-radius: 18px;
-            border-left: 5px solid var(--primary); margin-bottom: 15px;
-        }
+        .btn-wrapper-large { position: relative; width: 100%; height: 220px; margin-top: 10px; display: flex; flex-wrap: wrap; justify-content: center; align-items: flex-start; }
 
-        .btn-wrapper { position: relative; width: 100%; height: 130px; margin-top: 10px; }
-
-        .heart-float {
-            position: absolute; color: rgba(255, 255, 255, 0.7);
-            pointer-events: none; z-index: 1; animation: floatUp 5s linear infinite;
-        }
-        @keyframes floatUp { 0% { transform: translateY(110vh); opacity: 1; } 100% { transform: translateY(-10vh); opacity: 0; } }
-
-        .confetti-piece {
-            position: fixed; width: 10px; height: 10px; z-index: 9999;
-            pointer-events: none; border-radius: 2px;
-        }
+        .heart-float { position: absolute; pointer-events: none; z-index: 1; animation: floatUp 5s linear infinite; }
+        @keyframes floatUp { 0% { transform: translateY(110vh) rotate(0); opacity: 1; } 100% { transform: translateY(-10vh) rotate(360deg); opacity: 0; } }
+        .confetti-piece { position: fixed; width: 10px; height: 10px; z-index: 9999; pointer-events: none; border-radius: 2px; }
     </style>
 </head>
 <body>
 
-    <button id="musicToggle">🎵</button>
-    <div class="bg-layer"></div>
-    
-    <div class="container page-transition">
-        <audio id="bgMusic" loop preload="auto">
-            <source src="music.mp3" type="audio/mpeg">
-        </audio>
+    <div class="container page-transition" id="mainContainer">
+        <audio id="bgMusic" loop preload="auto"><source src="music.mp3" type="audio/mpeg"></audio>
 
         <div id="page0">
             <h1 class="celebration-title">Happy Valentine's Day! ❤️</h1>
@@ -137,16 +91,16 @@
 
         <div id="question1" class="hidden">
             <h2 class="celebration-title">Do you like me?</h2>
-            <div class="btn-wrapper" id="wrap1">
-                <div class="hint-window" id="hint1">Psst... try pressing 'No' 😉</div>
-                <button class="cute-btn" id="yesBtn1" style="position: absolute; left: 10%; top: 20px;">Yes</button>
-                <button class="cute-btn" id="noBtn1" style="position: absolute; right: 10%; top: 20px;">No</button>
+            <div class="btn-wrapper-large" id="wrap1">
+                <div class="hint-window">Psst... try pressing 'No' 😉</div>
+                <button class="cute-btn" id="yesBtn1" style="position: absolute; left: 10%; top: 40px;">Yes</button>
+                <button class="cute-btn" id="noBtn1" style="position: absolute; right: 10%; top: 40px;">No</button>
             </div>
             <button class="cute-btn hidden" id="secretAnswerBtn" style="width:100%">I LOVE YOU! ❤️</button>
         </div>
 
         <div id="pageGallery" class="hidden">
-            <h2 class="celebration-title">Our Moments</h2>
+            <h2 class="celebration-title">Our Memories</h2>
             <div class="photo-grid">
                 <div class="photo-box"><img src="pic1.jpg.jpg"></div>
                 <div class="photo-box"><img src="pic2.jpg.jpg"></div>
@@ -158,55 +112,57 @@
 
         <div id="question2" class="hidden">
             <h2 class="celebration-title">Love Meter</h2>
-            <input type="range" min="0" max="10000" value="100" class="slider" id="loveMeter" style="width:100%; accent-color: var(--primary);">
-            <p>Level: <span id="loveValue" style="color:var(--primary); font-weight:bold;">100</span></p>
-            <button class="cute-btn" id="nextBtn">Next ➡️</button>
+            <p id="meterStatus" style="font-size: 0.8rem;">Prove it! Slide to the max... 💖</p>
+            <input type="range" min="0" max="10000" value="0" class="slider" id="loveMeter">
+            <p style="font-size: 1.5rem; font-weight: bold; color: var(--primary);"><span id="loveValue">0</span>%</p>
+            <button class="cute-btn" id="nextBtn" disabled style="background:#bbb; opacity:0.6;">Not enough love! 🔒</button>
         </div>
 
         <div id="question3" class="hidden">
             <h2 class="celebration-title">Be my Valentine?</h2>
-            <div class="btn-wrapper" id="wrap3">
-                <div class="hint-window" id="hint2">Don't you dare! 😤</div>
-                <button class="cute-btn" id="yesBtn3" style="position: absolute; left: 10%; top: 20px;">Yes!</button>
-                <button class="cute-btn" id="noBtn3" style="position: absolute; right: 10%; top: 20px;">No</button>
+            <div class="btn-wrapper-large" id="wrap3">
+                <div class="hint-window">Pick a color! ❤️</div>
+                <button class="cute-btn" onclick="nextPage('question3', 'pageLetter1')">Yes (Red)</button>
+                <button class="cute-btn btn-yellow" onclick="nextPage('question3', 'pageLetter1')">Yes (Yellow)</button>
+                <button class="cute-btn btn-blue" onclick="nextPage('question3', 'pageLetter1')">Yes (Blue)</button>
+                <button class="cute-btn btn-green" onclick="nextPage('question3', 'pageLetter1')">Yes (Green)</button>
+                <button class="cute-btn" id="noBtn3" style="position: absolute; bottom: 10px;">No</button>
             </div>
         </div>
 
         <div id="pageLetter1" class="hidden">
             <h2 class="celebration-title">For You, Princess</h2>
-            <div class="letter-content">
-                To my fairytale princess, I won’t ask you to be my valentine—I’m not trying to be your boyfriend, just your husband someday. No matter where life takes you, whenever the sun rises, I’ll think of you.
-            </div>
+            <div class="letter-content">To my fairytale princess, I won’t ask you to be my valentine—I’m not trying to be your boyfriend, just your husband someday. No matter where life takes you, whenever the sun rises, I’ll think of you.</div>
             <button class="cute-btn" onclick="nextPage('pageLetter1', 'pageLetter2')">Read more ➡️</button>
         </div>
 
         <div id="pageLetter2" class="hidden">
-            <div class="letter-content">
-                You’re my first love, and if Allah wills, my last. Like a compass, what’s meant for you always finds its way back. Keep smiling freely. I’ll grow into your dream man. <br><br><b>Loveyou 3000 always.</b>
-            </div>
+            <div class="letter-content">You’re my first love, and if Allah wills, my last. Like a compass, what’s meant for you always finds its way back. Keep smiling freely. I’ll grow into your dream man. <br><br><b>Loveyou 3000 always.</b></div>
             <button class="cute-btn" onclick="nextPage('pageLetter2', 'celebration')">Finish ✨</button>
         </div>
 
         <div id="celebration" class="hidden">
             <h1 class="celebration-title">Date Confirmed! 🥳</h1>
-            <p style="margin: 0; font-size: 0.9rem;">(just kidding)</p>
-            <p style="margin-top: 5px;">I'm the luckiest twin ever! ❤️</p>
-            <div style="font-size: 3.5rem; margin-top: 10px;">💖✨🌻</div>
-            <p style="font-size: 0.8rem; opacity: 0.8;">Love, Your Sunshine</p>
+            <p>I'm the luckiest twin ever! ❤️</p>
+            <div style="font-size: 3.5rem;">💖✨🌻</div>
+            <p style="font-size: 0.8rem; opacity: 0.8;">Love, Your Sunshine 🌻</p>
         </div>
     </div>
 
     <script>
+        const container = document.getElementById('mainContainer');
         const music = document.getElementById('bgMusic');
-        const phrases = ["Give me another chance", "I'm not that bad 😞", "Hey that's rude", "Pleaseeee", "Don't do this", "Think again!"];
+        const phrases = ["Try again", "Rude! 😞", "Nope", "Wait!", "Wrong button"];
         let clickCount = 0;
-        let scaleYes = 1;
-        let scaleNo = 1;
 
-        function vibrate(ms = 40) { if(navigator.vibrate) navigator.vibrate(ms); }
+        function triggerHaptics() {
+            if(navigator.vibrate) navigator.vibrate(50);
+            container.classList.add('shake-ani');
+            setTimeout(() => container.classList.remove('shake-ani'), 200);
+        }
 
         function nextPage(curr, next) {
-            vibrate();
+            triggerHaptics();
             document.getElementById(curr).classList.add('hidden');
             document.getElementById(next).classList.remove('hidden');
             if(next === 'celebration') startMegaConfetti();
@@ -218,56 +174,41 @@
             setInterval(createHeart, 450);
         };
 
-        function moveBtn(btn, wrapper) {
-            vibrate(50);
-            clickCount++;
-            
-            const hint = wrapper.querySelector('.hint-window');
-            if(hint) hint.classList.add('hidden');
-
-            if(btn.id.includes('no')) {
-                btn.innerText = phrases[clickCount % phrases.length];
+        const loveMeter = document.getElementById('loveMeter');
+        loveMeter.oninput = function() {
+            const val = this.value;
+            const percent = Math.floor(val / 100);
+            document.getElementById('loveValue').innerText = percent;
+            document.body.style.background = `linear-gradient(135deg, #ffafbd 0%, rgba(255, 71, 87, ${val/10000}) 100%)`;
+            if (val >= 10000) {
+                const btn = document.getElementById('nextBtn');
+                btn.disabled = false; btn.innerText = "Proceed ➡️"; btn.style.background = "#ff4757"; btn.style.opacity = "1";
             }
+        };
 
-            scaleYes += 0.22;
-            scaleNo *= 0.8;
-            
-            const yesBtn = btn.id.includes('1') ? document.getElementById('yesBtn1') : document.getElementById('yesBtn3');
-            const noBtn = btn.id.includes('1') ? document.getElementById('noBtn1') : document.getElementById('noBtn3');
-            
-            yesBtn.style.transform = `scale(${scaleYes})`;
-            noBtn.style.transform = `scale(${scaleNo})`;
+        document.getElementById('nextBtn').onclick = () => nextPage('question2', 'question3');
 
-            if(btn.id.includes('1')) {
+        function moveBtn(btn, wrapper) {
+            triggerHaptics(); clickCount++;
+            if(btn.id.includes('no')) btn.innerText = phrases[clickCount % phrases.length];
+            
+            const rect = wrapper.getBoundingClientRect();
+            const bRect = btn.getBoundingClientRect();
+            btn.style.position = 'absolute';
+            btn.style.left = Math.max(0, Math.random() * (rect.width - bRect.width)) + "px";
+            btn.style.top = Math.max(0, Math.random() * (rect.height - bRect.height)) + "px";
+
+            if(btn.id === 'noBtn1') {
                 const secret = document.getElementById('secretAnswerBtn');
                 secret.classList.remove('hidden');
-                secret.style.boxShadow = `0 0 ${clickCount * 12}px #ff0040`;
-                secret.style.background = `rgba(255, 0, 64, ${Math.min(0.5 + (clickCount * 0.1), 1)})`;
+                secret.style.boxShadow = `0 0 ${clickCount * 10}px #ff0040`;
             }
-
-            const rect = wrapper.getBoundingClientRect();
-            const bRect = noBtn.getBoundingClientRect();
-            const maxX = rect.width - bRect.width;
-            const maxY = rect.height - bRect.height;
-            
-            noBtn.style.left = Math.max(0, Math.random() * maxX) + "px";
-            noBtn.style.top = Math.max(0, Math.random() * maxY) + "px";
         }
 
         document.getElementById('noBtn1').onclick = function() { moveBtn(this, document.getElementById('wrap1')); };
         document.getElementById('noBtn3').onclick = function() { moveBtn(this, document.getElementById('wrap3')); };
         document.getElementById('yesBtn1').onclick = function() { moveBtn(this, document.getElementById('wrap1')); };
-        document.getElementById('yesBtn3').onclick = function() { nextPage('question3', 'pageLetter1'); };
-        
-        document.getElementById('secretAnswerBtn').onclick = () => {
-            vibrate(100);
-            nextPage('question1', 'pageGallery');
-        };
-
-        document.getElementById('loveMeter').oninput = (e) => {
-            document.getElementById('loveValue').innerText = e.target.value;
-        };
-        document.getElementById('nextBtn').onclick = () => nextPage('question2', 'question3');
+        document.getElementById('secretAnswerBtn').onclick = () => nextPage('question1', 'pageGallery');
 
         function createHeart() {
             const h = document.createElement('div');
@@ -280,26 +221,21 @@
 
         function startMegaConfetti() {
             for(let i=0; i<150; i++) spawnConfetti();
-            const interval = setInterval(spawnConfetti, 50);
+            const interval = setInterval(spawnConfetti, 60);
             setTimeout(() => clearInterval(interval), 6000); 
         }
 
         function spawnConfetti() {
-            const colors = ['#ff4757', '#ff6b6b', '#ffafbd', '#ffffff', '#ffdada', '#FFD700', '#FFA500'];
+            const colors = ['#ff4757', '#FFD700', '#00BFFF', '#32CD32', '#FFA500'];
             const c = document.createElement('div');
             c.className = 'confetti-piece';
             c.style.background = colors[Math.floor(Math.random() * colors.length)];
             c.style.left = Math.random() * 100 + "vw";
             c.style.top = "-10px";
             document.body.appendChild(c);
-
-            const fallDuration = Math.random() * 3 + 2;
-            c.animate([
-                { transform: `translateY(0) rotate(0deg)`, opacity: 1 },
-                { transform: `translate(${(Math.random() * 400) - 200}px, 105vh) rotate(${Math.random() * 1000}deg)`, opacity: 0 }
-            ], { duration: fallDuration * 1000, easing: 'cubic-bezier(0.1, 0.5, 0.5, 1)' });
-
-            setTimeout(() => c.remove(), fallDuration * 1000);
+            const fallDur = Math.random() * 3 + 2;
+            c.animate([{ transform: `translateY(0) rotate(0deg)`, opacity: 1 }, { transform: `translate(${(Math.random() * 400) - 200}px, 105vh) rotate(${Math.random() * 800}deg)`, opacity: 0 }], { duration: fallDur * 1000, easing: 'ease-out' });
+            setTimeout(() => c.remove(), fallDur * 1000);
         }
     </script>
 </body>
