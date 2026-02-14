@@ -17,7 +17,6 @@
         body, html { height: 100%; margin: 0; padding: 0; overflow: hidden; font-family: 'Poppins', sans-serif; background: #ffafbd; }
         body { display: flex; justify-content: center; align-items: center; background: var(--bg-grad); }
 
-        /* --- PRE-LOADER / ENVELOPE --- */
         #opener {
             position: fixed; inset: 0; z-index: 9999; background: var(--bg-grad);
             display: flex; flex-direction: column; align-items: center; justify-content: center;
@@ -26,19 +25,17 @@
 
         .premium-card {
             width: 280px; padding: 40px; background: white; border-radius: 25px;
-            box-shadow: 0 20px 40px rgba(0,0,0,0.1); text-align: center;
-            cursor: pointer; position: relative;
+            box-shadow: 0 20px 40px rgba(0,0,0,0.1); text-align: center; cursor: pointer;
         }
 
         .heart-icon { font-size: 50px; display: block; margin-bottom: 15px; animation: heartBeat 1.5s infinite; }
         @keyframes heartBeat { 0% {transform: scale(1);} 14% {transform: scale(1.1);} 28% {transform: scale(1);} }
 
-        /* --- MAIN CONTAINER --- */
         .container {
-            width: 90%; max-width: 380px; background: rgba(255, 255, 255, 0.5);
-            backdrop-filter: blur(10px); -webkit-backdrop-filter: blur(10px);
-            padding: 30px; border-radius: 30px; text-align: center;
-            min-height: 500px; display: flex; flex-direction: column; justify-content: center;
+            width: 92%; max-width: 380px; background: rgba(255, 255, 255, 0.5);
+            backdrop-filter: blur(12px); -webkit-backdrop-filter: blur(12px);
+            padding: 25px; border-radius: 30px; text-align: center;
+            min-height: 550px; display: flex; flex-direction: column; justify-content: center;
             box-shadow: 0 10px 30px rgba(0,0,0,0.05); transition: transform 0.1s;
         }
 
@@ -46,12 +43,20 @@
         .title { font-family: 'Dancing Script', cursive; font-size: 2.3rem; color: var(--primary); margin-bottom: 10px; }
         
         .cute-btn { 
-            padding: 15px 25px; margin: 10px 0; border: none; border-radius: 50px; 
+            padding: 15px 20px; margin: 8px 0; border: none; border-radius: 50px; 
             background: var(--primary); color: white; font-weight: 600; width: 100%;
-            box-shadow: 0 5px 15px rgba(255, 71, 87, 0.3);
+            box-shadow: 0 5px 15px rgba(255, 71, 87, 0.3); font-size: 0.9rem;
         }
 
-        /* --- LOVE METER (BREAKABLE) --- */
+        /* --- PHOTO GALLERY --- */
+        .photo-grid { display: grid; grid-template-columns: 1fr 1fr; gap: 12px; margin: 15px 0; }
+        .photo-frame { 
+            background: white; padding: 5px 5px 15px 5px; box-shadow: 0 4px 10px rgba(0,0,0,0.1);
+            transform: rotate(var(--r)); transition: 0.3s;
+        }
+        .photo-frame img { width: 100%; aspect-ratio: 1/1; object-fit: cover; display: block; }
+
+        /* --- LOVE METER --- */
         .slider-box { position: relative; padding: 40px 0; width: 100%; }
         .track { height: 8px; background: rgba(255,255,255,0.8); border-radius: 10px; width: 100%; }
         #thumb { 
@@ -60,8 +65,8 @@
             background-size: contain; z-index: 10;
         }
 
-        .check-row { display: flex; align-items: center; text-align: left; margin: 12px 0; font-size: 0.9rem; }
-        .check-row input { width: 20px; height: 20px; margin-right: 12px; accent-color: var(--primary); }
+        .check-row { display: flex; align-items: center; text-align: left; margin: 10px 0; font-size: 0.85rem; }
+        .check-row input { width: 18px; height: 18px; margin-right: 12px; accent-color: var(--primary); }
 
         #floatingLove {
             position: absolute; z-index: 2000; padding: 12px 20px; border-radius: 50px;
@@ -86,21 +91,21 @@
     <div id="opener" onclick="begin()">
         <div class="premium-card">
             <span class="heart-icon">💌</span>
-            <p style="font-family:'Dancing Script'; font-size:1.5rem; margin:0; color:#444;">To my twin,</p>
-            <p style="font-size:0.8rem; color:#888; margin-top:10px;">Tap to unlock my heart</p>
+            <p style="font-family:'Dancing Script'; font-size:1.6rem; margin:0; color:#444;">To my twin,</p>
+            <p style="font-size:0.8rem; color:#888; margin-top:10px;">Tap to unlock my feelings</p>
         </div>
     </div>
 
     <div id="main" class="container hidden">
         <div id="p1">
-            <h2 class="title">27 / 12 / 2025</h2>
-            <p>Our journey began. ❤️</p>
+            <h2 class="title">27 / 12 / 2024</h2>
+            <p>The day the stars aligned for us. ❤️</p>
             <button class="cute-btn" onclick="go('p1','p2')">Continue ➡️</button>
         </div>
 
         <div id="p2" class="hidden">
             <h2 class="title">338 Days Met</h2>
-            <p>A bond that stays forever. ✨</p>
+            <p>Every second spent with you is a memory I'll cherish forever. ✨</p>
             <div style="font-size: 3rem; margin: 15px;">❤️🔗❤️</div>
             <button class="cute-btn" onclick="go('p2','p3')">Next ➡️</button>
         </div>
@@ -115,7 +120,18 @@
         </div>
 
         <div id="p4" class="hidden">
-            <h2 class="title">Our Goals</h2>
+            <h2 class="title">My Favorite View</h2>
+            <div class="photo-grid">
+                <div class="photo-frame" style="--r: -3deg;"><img src="pic1.jpg.jpg"></div>
+                <div class="photo-frame" style="--r: 2deg;"><img src="pic2.jpg.jpg"></div>
+                <div class="photo-frame" style="--r: -2deg;"><img src="pic3.jpg.jpg"></div>
+                <div class="photo-frame" style="--r: 4deg;"><img src="pic4.jpg.jpg"></div>
+            </div>
+            <button class="cute-btn" onclick="go('p4','p5')">Our Goals ➡️</button>
+        </div>
+
+        <div id="p5" class="hidden">
+            <h2 class="title">Our Promises</h2>
             <div class="check-row"><input type="checkbox" class="req"> Get golden in boards 🏅</div>
             <div class="check-row"><input type="checkbox" class="req"> Get into a good college 🎓</div>
             <div class="check-row"><input type="checkbox" class="req"> Become independent 💼</div>
@@ -123,9 +139,9 @@
             <button class="cute-btn" id="goalNext" disabled style="opacity:0.5;">Locked 🔒</button>
         </div>
 
-        <div id="p5" class="hidden">
+        <div id="p6" class="hidden">
             <h2 class="title">Love Meter</h2>
-            <p id="meterHint" style="font-size: 0.75rem;">Break the limit... 😉</p>
+            <p id="meterHint" style="font-size: 0.75rem;">Can you slide past the limit? 😉</p>
             <div class="slider-box">
                 <div class="track"><div id="thumb"></div></div>
             </div>
@@ -133,21 +149,25 @@
             <button class="cute-btn" id="meterNext" disabled style="background:#bbb;">Locked 🔒</button>
         </div>
 
-        <div id="p6" class="hidden">
-            <h2 class="title">Be my Valentine?</h2>
-            <div style="height: 150px; position: relative;">
-                <button class="cute-btn" onclick="go('p6','p7')" style="background:red;">Yes (Red)</button>
-                <button class="cute-btn" onclick="go('p6','p7')" style="background:#333; color:gold;">Yes (Yellow)</button>
-                <button id="noFinal" class="cute-btn" style="width:auto; position:absolute; bottom:0; left:35%;">No</button>
-            </div>
+        <div id="p7" class="hidden">
+            <h2 class="title">Will you be mine?</h2>
+            <p style="font-size: 0.8rem; margin-bottom: 20px;">Pick the one that says it best:</p>
+            <button class="cute-btn" onclick="go('p7','p8')">Yes, a thousand times! ❤️</button>
+            <button class="cute-btn" onclick="go('p7','p8')" style="background:#333; color:gold;">I'm yours forever 💍</button>
+            <button class="cute-btn" onclick="go('p7','p8')" style="background:white; color:var(--primary);">You had me at hello 🌻</button>
+            <button id="noFinal" class="cute-btn" style="width:auto; position:absolute; bottom:-10px; left:35%; background:#888;">No</button>
         </div>
 
-        <div id="p7" class="hidden">
-            <h2 class="title">My Promise</h2>
-            <div style="background:white; padding:15px; border-radius:15px; text-align:left; font-size:0.85rem; line-height:1.5;">
-                I'm trying to be your <b style="color:#d4af37">Husband</b> someday. 
-                <br><br>Wherever the sun rises, I'll think of you. You're my first love, and if Allah wills, my last. 
-                <br><br><b>Loveyou 3000, Faria.</b>
+        <div id="p8" class="hidden">
+            <h2 class="title">My Promise to You</h2>
+            <div style="background:white; padding:20px; border-radius:15px; text-align:left; font-size:0.85rem; line-height:1.6; max-height: 300px; overflow-y: auto; border: 1px solid #ffebeb;">
+                Faria, I'm not trying to be just your boyfriend—I'm trying to be your <b style="color:#d4af37">Husband</b> someday. 
+                <br><br>
+                From the moment we met, you've been the sunshine that brightens my darkest days. You're my twin, my better half, and my greatest blessing. No matter what life throws at us, I want to be the one standing by your side.
+                <br><br>
+                Wherever the sun rises, I'll think of you. You're my first real love, and if Allah wills, I want you to be my last. I promise to support you in your goals, to be there for every board exam and every victory.
+                <br><br>
+                <b>I love you 3000, always and forever.</b>
             </div>
             <button class="cute-btn" onclick="location.reload()" style="margin-top:20px;">Finished ✨</button>
         </div>
@@ -176,7 +196,6 @@
             document.getElementById(n).classList.remove('hidden');
         }
 
-        // Floating Trap Logic
         function trap() {
             document.getElementById('no1').classList.add('hidden');
             const f = document.getElementById('floatingLove');
@@ -187,7 +206,6 @@
             }, 800);
         }
 
-        // Checklist Logic
         document.querySelectorAll('input').forEach(i => {
             i.onchange = () => {
                 const ok = Array.from(document.querySelectorAll('.req')).every(r => r.checked);
@@ -196,9 +214,7 @@
                 b.innerText = ok ? "Continue ➡️" : "Locked 🔒";
             };
         });
-        document.getElementById('goalNext').onclick = () => go('p4','p5');
 
-        // BREAKABLE METER LOGIC
         const thumb = document.getElementById('thumb');
         const track = document.querySelector('.track');
         let active = false;
@@ -227,16 +243,13 @@
         thumb.addEventListener('touchstart', () => active = true);
         window.addEventListener('touchend', () => { active = false; main.style.transform = "translate(0,0)"; });
         window.addEventListener('touchmove', (e) => move(e.touches[0].clientX));
-        document.getElementById('meterNext').onclick = () => go('p5','p6');
 
-        // No Run logic for final screen
         document.getElementById('noFinal').addEventListener('touchstart', function(e) {
             e.preventDefault();
             this.style.left = Math.random() * 70 + "%";
-            this.style.top = Math.random() * 60 + 20 + "%";
+            this.style.top = Math.random() * 50 + 20 + "%";
         });
 
-        // Sunflower Trail
         window.addEventListener('touchmove', (e) => {
             const t = document.createElement('div');
             t.className = 'trail'; t.innerText = '🌻';
