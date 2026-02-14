@@ -98,7 +98,7 @@
         </div>
 
         <div id="pageGallery" class="hidden">
-            <h2 class="celebration-title">Our Memories</h2>
+            <h2 class="celebration-title">Our Moments</h2>
             <div class="photo-grid">
                 <div class="photo-box"><img src="pic1.jpg.jpg"></div>
                 <div class="photo-box"><img src="pic2.jpg.jpg"></div>
@@ -138,6 +138,7 @@
 
         <div id="celebration" class="hidden">
             <h1 class="celebration-title">Yay! Date Confirmed! 🥳</h1>
+            <p>(just kidding)</p>
             <p>I'm the luckiest twin ever! ❤️</p>
             <div style="font-size: 3.5rem;">💖✨🌹</div>
         </div>
@@ -152,6 +153,7 @@
         function nextPage(current, next) {
             document.getElementById(current).classList.add('hidden');
             document.getElementById(next).classList.remove('hidden');
+            if(next === 'celebration') launchConfetti();
         }
 
         musicToggle.onclick = () => {
@@ -159,7 +161,6 @@
             else { music.pause(); musicToggle.innerText = "🔇"; }
         };
 
-        // Music now starts immediately on the very first "Enter" click
         document.getElementById('startValentine').onclick = function() {
             music.play();
             nextPage('page0', 'pageDate');
@@ -227,14 +228,6 @@
                 setTimeout(() => confetti.remove(), fallDuration * 1000);
             }
         }
-        
-        // Trigger confetti on the very final screen
-        const finalNext = document.querySelector("#pageLetter .cute-btn");
-        const originalNextPage = nextPage;
-        nextPage = function(current, next) {
-            originalNextPage(current, next);
-            if(next === 'celebration') launchConfetti();
-        };
     </script>
 </body>
 </html>
