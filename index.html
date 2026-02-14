@@ -3,7 +3,7 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
-    <title>For Faria ❤️</title>
+    <title>For My Fairytale Princess ❤️</title>
     <link href="https://fonts.googleapis.com/css2?family=Dancing+Script:wght@700&family=Poppins:wght@400;600&display=swap" rel="stylesheet">
     
     <style>
@@ -26,7 +26,7 @@
         }
         .hidden { display: none !important; }
         .celebration-title { font-family: 'Dancing Script', cursive; font-size: 2.2rem; color: #ff4757; margin-bottom: 5px; }
-        .poetic-text { font-style: italic; font-size: 1.1rem; line-height: 1.5; color: #d63031; margin: 15px 0; }
+        .poetic-text { font-style: italic; font-size: 1rem; line-height: 1.6; color: #d63031; margin: 15px 0; }
         
         #musicToggle {
             position: fixed; top: 20px; right: 20px; z-index: 2000;
@@ -40,20 +40,22 @@
             cursor: pointer; box-shadow: 0 4px 15px rgba(255, 71, 87, 0.3);
         }
 
-        /* Image Gallery */
-        .photo-grid {
-            display: grid; grid-template-columns: 1fr 1fr; gap: 10px; margin: 15px 0;
-        }
+        .photo-grid { display: grid; grid-template-columns: 1fr 1fr; gap: 10px; margin: 15px 0; }
         .photo-box {
             width: 100%; aspect-ratio: 1/1; background: rgba(255,255,255,0.3); 
             border-radius: 12px; overflow: hidden; border: 3px solid white;
-            box-shadow: 0 4px 10px rgba(0,0,0,0.1);
         }
         .photo-box img { width: 100%; height: 100%; object-fit: cover; }
 
         #yesBtn1, #noBtn1, #noBtn3 { transition: all 0.35s ease-out; }
         .slider { width: 100%; margin: 20px 0; accent-color: #ff4757; }
         .confetti { position: fixed; width: 12px; height: 12px; z-index: 9999; pointer-events: none; }
+
+        .letter-content {
+            text-align: left; font-size: 0.95rem; color: #444; line-height: 1.7;
+            background: rgba(255, 255, 255, 0.4); padding: 20px; border-radius: 15px;
+            border-left: 4px solid #ff4757; margin-top: 10px;
+        }
     </style>
 </head>
 <body>
@@ -96,12 +98,12 @@
         </div>
 
         <div id="pageGallery" class="hidden">
-            <h2 class="celebration-title">Our Moments</h2>
+            <h2 class="celebration-title">Our Memories</h2>
             <div class="photo-grid">
-                <div class="photo-box"><img src="pic1.jpg.jpg" alt="Memory 1"></div>
-                <div class="photo-box"><img src="pic2.jpg.jpg" alt="Memory 2"></div>
-                <div class="photo-box"><img src="pic3.jpg.jpg" alt="Memory 3"></div>
-                <div class="photo-box"><img src="pic4.jpg.jpg" alt="Memory 4"></div>
+                <div class="photo-box"><img src="pic1.jpg.jpg"></div>
+                <div class="photo-box"><img src="pic2.jpg.jpg"></div>
+                <div class="photo-box"><img src="pic3.jpg.jpg"></div>
+                <div class="photo-box"><img src="pic4.jpg.jpg"></div>
             </div>
             <p>You make every moment better. 🥰</p>
             <button class="cute-btn" onclick="nextPage('pageGallery', 'question2')">Proceed ➡️</button>
@@ -109,10 +111,9 @@
 
         <div id="question2" class="hidden">
             <h2 class="celebration-title">Love Meter</h2>
-            <p>How much do you love me?</p>
             <input type="range" min="0" max="10000" value="100" class="slider" id="loveMeter">
-            <p style="font-size: 1.2rem;">Love Level: <span id="loveValue" style="color:#ff4757; font-weight:bold;">100</span></p>
-            <p id="extraLove" class="hidden" style="font-weight: bold; color: #ff4757; min-height: 25px;"></p>
+            <p>Love Level: <span id="loveValue" style="color:#ff4757; font-weight:bold;">100</span></p>
+            <p id="extraLove" class="hidden" style="font-weight: bold; color: #ff4757;"></p>
             <button class="cute-btn" id="nextBtn">Next ➡️</button>
         </div>
 
@@ -123,6 +124,16 @@
                 <button class="cute-btn" id="yesBtn3">Yes!</button>
                 <button class="cute-btn" id="noBtn3">No</button>
             </div>
+        </div>
+
+        <div id="pageLetter" class="hidden">
+            <h2 class="celebration-title">For You, Princess</h2>
+            <div class="letter-content">
+                To my fairytale princess, happy Valentine’s Day. I won’t ask you to be my valentine—I’m not trying to be your boyfriend, just your husband someday. No matter where life takes you, whenever the sun rises, I’ll think of you and love you completely. <br><br>
+                I’m better with words in texts, but my feelings are real. You’re my first love, and if Allah wills, my last. I fear losing you, yet I believe what’s meant for you always finds its way back, like a compass. Keep smiling freely. I’ll grow into your dream man. Your twin will stay. <br><br>
+                <b>Loveyou 3000 always.</b>
+            </div>
+            <button class="cute-btn" onclick="nextPage('pageLetter', 'celebration')">One last thing... ✨</button>
         </div>
 
         <div id="celebration" class="hidden">
@@ -148,8 +159,9 @@
             else { music.pause(); musicToggle.innerText = "🔇"; }
         };
 
+        // Music now starts immediately on the very first "Enter" click
         document.getElementById('startValentine').onclick = function() {
-            music.play().catch(() => {});
+            music.play();
             nextPage('page0', 'pageDate');
         };
 
@@ -164,9 +176,7 @@
                 btn.style.left = (Math.floor(Math.random() * 45) + 20) + 'vw';
                 btn.style.top = (Math.random() * 40 + 30) + 'vh';
             });
-            if (totalClicks >= 3) {
-                document.getElementById('secretAnswerBtn').classList.remove('hidden');
-            }
+            if (totalClicks >= 3) document.getElementById('secretAnswerBtn').classList.remove('hidden');
         }
 
         document.getElementById('yesBtn1').onclick = handleChaos;
@@ -197,8 +207,7 @@
         };
 
         document.getElementById('yesBtn3').onclick = function() {
-            nextPage('question3', 'celebration');
-            launchConfetti();
+            nextPage('question3', 'pageLetter');
         };
 
         function launchConfetti() {
@@ -218,6 +227,14 @@
                 setTimeout(() => confetti.remove(), fallDuration * 1000);
             }
         }
+        
+        // Trigger confetti on the very final screen
+        const finalNext = document.querySelector("#pageLetter .cute-btn");
+        const originalNextPage = nextPage;
+        nextPage = function(current, next) {
+            originalNextPage(current, next);
+            if(next === 'celebration') launchConfetti();
+        };
     </script>
 </body>
 </html>
