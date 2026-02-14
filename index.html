@@ -3,7 +3,7 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
-    <title>Valentine's Surprise ❤️</title>
+    <title>For Faria ❤️</title>
     <link href="https://fonts.googleapis.com/css2?family=Dancing+Script:wght@700&family=Poppins:wght@400;600&display=swap" rel="stylesheet">
     
     <style>
@@ -19,41 +19,45 @@
             z-index: -1;
         }
         .container {
-            width: 85%; max-width: 350px; background: rgba(255, 255, 255, 0.25);
+            width: 90%; max-width: 380px; background: rgba(255, 255, 255, 0.25);
             backdrop-filter: blur(10px); -webkit-backdrop-filter: blur(10px);
             padding: 25px; border-radius: 25px; border: 1px solid rgba(255, 255, 255, 0.3);
-            text-align: center; z-index: 10; position: relative;
+            text-align: center; z-index: 10; position: relative; max-height: 95vh; overflow-y: auto;
         }
         .hidden { display: none !important; }
-        .celebration-title { font-family: 'Dancing Script', cursive; font-size: 2.2rem; color: #ff4757; }
+        .celebration-title { font-family: 'Dancing Script', cursive; font-size: 2.2rem; color: #ff4757; margin-bottom: 5px; }
+        .poetic-text { font-style: italic; font-size: 1.1rem; line-height: 1.5; color: #d63031; margin: 15px 0; }
         
         #musicToggle {
             position: fixed; top: 20px; right: 20px; z-index: 2000;
             background: rgba(255,255,255,0.6); border: none; border-radius: 50%;
-            width: 40px; height: 40px; cursor: pointer; font-size: 20px;
+            width: 45px; height: 45px; cursor: pointer; font-size: 22px;
         }
 
         .cute-btn {
-            padding: 15px 25px; margin: 10px; border: none; border-radius: 50px;
-            background: #ff6b6b; color: white; font-size: 16px; font-weight: 600;
+            padding: 12px 20px; margin: 10px; border: none; border-radius: 50px;
+            background: #ff6b6b; color: white; font-size: 15px; font-weight: 600;
             cursor: pointer; box-shadow: 0 4px 15px rgba(255, 71, 87, 0.3);
-            transition: transform 0.2s ease;
         }
-        
-        #yesBtn1, #noBtn1, #noBtn3 { transition: all 0.3s ease-out; z-index: 100; }
-        #secretAnswerBtn { display: block; width: 100%; background: #ff4757; margin-top: 20px; font-weight: bold; animation: pulse 1.5s infinite; }
 
-        @keyframes pulse { 0%, 100% { transform: scale(1); } 50% { transform: scale(1.05); } }
+        /* Image Gallery */
+        .photo-grid {
+            display: grid; grid-template-columns: 1fr 1fr; gap: 10px; margin: 15px 0;
+        }
+        .photo-box {
+            width: 100%; aspect-ratio: 1/1; background: rgba(255,255,255,0.3); 
+            border-radius: 12px; overflow: hidden; border: 3px solid white;
+            box-shadow: 0 4px 10px rgba(0,0,0,0.1);
+        }
+        .photo-box img { width: 100%; height: 100%; object-fit: cover; }
+
+        #yesBtn1, #noBtn1, #noBtn3 { transition: all 0.35s ease-out; }
         .slider { width: 100%; margin: 20px 0; accent-color: #ff4757; }
-
-        /* Confetti Styling */
-        .confetti {
-            position: fixed; width: 10px; height: 10px; z-index: 999;
-            pointer-events: none;
-        }
+        .confetti { position: fixed; width: 12px; height: 12px; z-index: 9999; pointer-events: none; }
     </style>
 </head>
 <body>
+
     <button id="musicToggle">🎵</button>
     <div class="bg-layer"></div>
     
@@ -64,20 +68,156 @@
 
         <div id="page0">
             <h1 class="celebration-title">Happy Valentine's Day! ❤️</h1>
+            <p class="poetic-text">Faria, they say an <b>Angel</b> is the only one who could ever light up the <b>Sun</b>. Thank you for being my light.</p>
             <button class="cute-btn" id="startValentine">Enter ✨</button>
+        </div>
+
+        <div id="pageDate" class="hidden">
+            <h2 class="celebration-title">Where it all began...</h2>
+            <p style="font-size: 1.8rem; color: #ff4757; font-weight: bold; margin: 10px 0;">27 / 12 / 2025</p>
+            <p>The day we officially started our journey together. ❤️</p>
+            <button class="cute-btn" onclick="nextPage('pageDate', 'pageCounter')">Continue ➡️</button>
+        </div>
+
+        <div id="pageCounter" class="hidden">
+            <h2 class="celebration-title">Days we've met...</h2>
+            <div style="font-size: 3.5rem; color: #ff4757; margin: 15px 0; font-weight: bold;">338</div>
+            <p>Every single day with you has been a blessing, Twin. ✨</p>
+            <button class="cute-btn" onclick="nextPage('pageCounter', 'question1')">Next ➡️</button>
         </div>
 
         <div id="question1" class="hidden">
             <h2 id="questionText">Do you like me twin?</h2>
-            <div class="btn-group" style="height: 100px;">
+            <div class="btn-group" style="height: 120px; position: relative;">
                 <button class="cute-btn" id="yesBtn1">Yes</button>
                 <button class="cute-btn" id="noBtn1">No</button>
             </div>
-            <button class="cute-btn hidden" id="secretAnswerBtn">I LOVE YOU! ❤️</button>
+            <button class="cute-btn hidden" id="secretAnswerBtn" style="width:100%">I LOVE YOU! ❤️</button>
+        </div>
+
+        <div id="pageGallery" class="hidden">
+            <h2 class="celebration-title">Our Moments</h2>
+            <div class="photo-grid">
+                <div class="photo-box"><img src="pic1.jpg.jpg" alt="Memory 1"></div>
+                <div class="photo-box"><img src="pic2.jpg.jpg" alt="Memory 2"></div>
+                <div class="photo-box"><img src="pic3.jpg.jpg" alt="Memory 3"></div>
+                <div class="photo-box"><img src="pic4.jpg.jpg" alt="Memory 4"></div>
+            </div>
+            <p>You make every moment better. 🥰</p>
+            <button class="cute-btn" onclick="nextPage('pageGallery', 'question2')">Proceed ➡️</button>
         </div>
 
         <div id="question2" class="hidden">
-            <h2 id="q2Title">How much do you love me?</h2>
+            <h2 class="celebration-title">Love Meter</h2>
+            <p>How much do you love me?</p>
             <input type="range" min="0" max="10000" value="100" class="slider" id="loveMeter">
-            <p>Love: <span id="loveValue">100</span></p>
-            <p id="extraLove" class="hidden" style="font-weight: bold; color: #ff4757;"></p>
+            <p style="font-size: 1.2rem;">Love Level: <span id="loveValue" style="color:#ff4757; font-weight:bold;">100</span></p>
+            <p id="extraLove" class="hidden" style="font-weight: bold; color: #ff4757; min-height: 25px;"></p>
+            <button class="cute-btn" id="nextBtn">Next ➡️</button>
+        </div>
+
+        <div id="question3" class="hidden">
+            <h2 class="celebration-title">Final Question</h2>
+            <p>Will you be my Valentine, Faria?</p>
+            <div class="btn-group">
+                <button class="cute-btn" id="yesBtn3">Yes!</button>
+                <button class="cute-btn" id="noBtn3">No</button>
+            </div>
+        </div>
+
+        <div id="celebration" class="hidden">
+            <h1 class="celebration-title">Yay! Date Confirmed! 🥳</h1>
+            <p>I'm the luckiest twin ever! ❤️</p>
+            <div style="font-size: 3.5rem;">💖✨🌹</div>
+        </div>
+    </div>
+
+    <script>
+        const music = document.getElementById('bgMusic');
+        const musicToggle = document.getElementById('musicToggle');
+        let totalClicks = 0;
+        let yesScale = 1;
+
+        function nextPage(current, next) {
+            document.getElementById(current).classList.add('hidden');
+            document.getElementById(next).classList.remove('hidden');
+        }
+
+        musicToggle.onclick = () => {
+            if (music.paused) { music.play(); musicToggle.innerText = "🎵"; }
+            else { music.pause(); musicToggle.innerText = "🔇"; }
+        };
+
+        document.getElementById('startValentine').onclick = function() {
+            music.play().catch(() => {});
+            nextPage('page0', 'pageDate');
+        };
+
+        function handleChaos() {
+            totalClicks++;
+            if (navigator.vibrate) navigator.vibrate(50);
+            const yesBtn = document.getElementById('yesBtn1');
+            const noBtn = document.getElementById('noBtn1');
+            if (yesScale < 1.5) { yesScale += 0.15; yesBtn.style.transform = `scale(${yesScale})`; }
+            [yesBtn, noBtn].forEach(btn => {
+                btn.style.position = 'fixed';
+                btn.style.left = (Math.floor(Math.random() * 45) + 20) + 'vw';
+                btn.style.top = (Math.random() * 40 + 30) + 'vh';
+            });
+            if (totalClicks >= 3) {
+                document.getElementById('secretAnswerBtn').classList.remove('hidden');
+            }
+        }
+
+        document.getElementById('yesBtn1').onclick = handleChaos;
+        document.getElementById('noBtn1').onclick = handleChaos;
+
+        document.getElementById('secretAnswerBtn').onclick = function() {
+            document.getElementById('yesBtn1').style.display = 'none';
+            document.getElementById('noBtn1').style.display = 'none';
+            nextPage('question1', 'pageGallery');
+        };
+
+        document.getElementById('loveMeter').oninput = function(e) {
+            const val = e.target.value;
+            document.getElementById('loveValue').innerText = val;
+            const extra = document.getElementById('extraLove');
+            extra.classList.remove('hidden');
+            if (val > 8000) extra.innerText = "EXTREME LOVE! 💖🔥";
+            else if (val > 3000) extra.innerText = "That's a lot! 🥰";
+            else extra.innerText = "Keep going... 😊";
+        };
+
+        document.getElementById('nextBtn').onclick = () => nextPage('question2', 'question3');
+
+        document.getElementById('noBtn3').onclick = function() {
+            this.style.position = 'fixed';
+            this.style.left = (Math.random() * 45 + 20) + 'vw';
+            this.style.top = (Math.random() * 40 + 30) + 'vh';
+        };
+
+        document.getElementById('yesBtn3').onclick = function() {
+            nextPage('question3', 'celebration');
+            launchConfetti();
+        };
+
+        function launchConfetti() {
+            const colors = ['#ff4757', '#ff6b6b', '#ffafbd', '#ffffff', '#ffdada'];
+            for (let i = 0; i < 150; i++) {
+                const confetti = document.createElement('div');
+                confetti.className = 'confetti';
+                confetti.style.backgroundColor = colors[Math.floor(Math.random() * colors.length)];
+                confetti.style.left = Math.random() * 100 + 'vw';
+                confetti.style.top = '-20px';
+                document.body.appendChild(confetti);
+                const fallDuration = Math.random() * 2 + 3;
+                confetti.animate([
+                    { transform: 'translate3d(0, 0, 0) rotate(0deg)', opacity: 1 },
+                    { transform: `translate3d(${(Math.random()*200)-100}px, 105vh, 0) rotate(${Math.random()*720}deg)`, opacity: 0 }
+                ], { duration: fallDuration * 1000, easing: 'cubic-bezier(0.25, 0.46, 0.45, 0.94)' });
+                setTimeout(() => confetti.remove(), fallDuration * 1000);
+            }
+        }
+    </script>
+</body>
+</html>
