@@ -15,17 +15,17 @@
 
         * { box-sizing: border-box; touch-action: manipulation; -webkit-tap-highlight-color: transparent; }
         html, body { height: 100%; margin: 0; padding: 0; background: #ffafbd; font-family: 'Poppins', sans-serif; overflow: hidden; position: fixed; width: 100%; }
-        body { display: flex; justify-content: center; align-items: center; background: var(--bg-grad); transition: background 1s; }
+        body { display: flex; justify-content: center; align-items: center; background: var(--bg-grad); transition: background 0.5s; }
 
         /* --- Music Control --- */
         #musicBtn {
             position: fixed; top: 20px; right: 20px; z-index: 2000;
-            background: rgba(255, 255, 255, 0.5); width: 45px; height: 45px;
+            background: rgba(255, 255, 255, 0.6); width: 45px; height: 45px;
             border-radius: 50%; display: flex; align-items: center; justify-content: center;
             cursor: pointer; font-size: 20px; border: 1px solid rgba(255,255,255,0.4);
         }
 
-        /* --- Envelope Opening Page --- */
+        /* --- Envelope Page --- */
         #envelope-page { position: fixed; inset: 0; display: flex; flex-direction: column; justify-content: center; align-items: center; z-index: 1000; background: var(--bg-grad); transition: 0.8s ease; }
         .envelope-wrapper { cursor: pointer; position: relative; width: 280px; height: 180px; background: #fff; border-radius: 0 0 10px 10px; box-shadow: 0 10px 30px rgba(0,0,0,0.1); }
         .envelope-wrapper::before { 
@@ -39,7 +39,7 @@
             background: #fff; z-index: 2; transition: transform 0.6s ease 0.3s; 
             display: flex; flex-direction: column; justify-content: center; align-items: center; border: 1px solid #eee;
         }
-        .envelope-wrapper.open .letter-preview { transform: translateY(-120px); box-shadow: 0 -5px 15px rgba(0,0,0,0.05); }
+        .envelope-wrapper.open .letter-preview { transform: translateY(-120px); }
 
         /* --- Main Container --- */
         .container {
@@ -47,11 +47,12 @@
             backdrop-filter: blur(15px); -webkit-backdrop-filter: blur(15px);
             padding: 25px; border-radius: 30px; text-align: center; z-index: 10;
             position: relative; min-height: 480px; display: flex; flex-direction: column; justify-content: center;
+            transition: transform 0.1s;
         }
 
         .hidden { display: none !important; }
         .celebration-title { font-family: 'Dancing Script', cursive; font-size: 2.2rem; color: var(--primary); }
-        .husband-gold { color: #d4af37; font-weight: bold; text-shadow: 0 0 8px rgba(212, 175, 55, 0.3); animation: pulse 1.5s infinite; }
+        .husband-gold { color: #d4af37; font-weight: bold; text-shadow: 0 0 8px rgba(212, 175, 55, 0.3); }
 
         .cute-btn { 
             padding: 12px 24px; margin: 8px; border: none; border-radius: 50px; 
@@ -59,37 +60,31 @@
             box-shadow: 0 4px 15px rgba(255, 71, 87, 0.2); transition: 0.3s;
         }
 
-        /* --- Spontaneous Floating Button --- */
         #floatingLoveBtn {
             position: absolute; z-index: 100; font-size: 0.9rem; background: var(--primary);
-            color: white; padding: 12px 20px; border-radius: 50px; border: none;
-            cursor: pointer; box-shadow: 0 10px 20px rgba(0,0,0,0.1); transition: all 0.4s ease;
+            color: white; padding: 12px 20px; border-radius: 50px; border: none; cursor: pointer;
         }
 
-        /* --- Slider --- */
+        /* --- Breakable Love Meter --- */
         .slider-container { position: relative; padding: 40px 0; width: 85%; margin: 0 auto; }
-        .slider-track { height: 4px; background: rgba(255,255,255,0.8); border-radius: 10px; width: 100%; position: relative; }
+        .slider-track { height: 6px; background: rgba(255,255,255,0.7); border-radius: 10px; width: 100%; position: relative; }
         #sliderThumb { 
             width: 45px; height: 45px; position: absolute; top: 50%; left: 0; transform: translate(-50%, -50%); 
             cursor: grab; background: url('data:image/svg+xml;utf8,<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="%23ff4757"><path d="M12 21.35l-1.45-1.32C5.4 15.36 2 12.28 2 8.5 2 5.42 4.42 3 7.5 3c1.74 0 3.41.81 4.5 2.09C13.09 3.81 14.76 3 16.5 3 19.58 3 22 5.42 22 8.5c0 3.78-3.4 6.86-8.55 11.54L12 21.35z"/></svg>') no-repeat center;
             background-size: contain; z-index: 20; 
         }
 
-        /* --- Gallery --- */
+        /* --- Gallery & Checklist --- */
         .photo-grid { display: grid; grid-template-columns: 1fr 1fr; gap: 10px; margin: 15px 0; }
         .photo-box { width: 100%; aspect-ratio: 1/1; border-radius: 12px; overflow: hidden; border: 3px solid white; }
         .photo-box img { width: 100%; height: 100%; object-fit: cover; }
+        .check-item { text-align: left; margin: 10px 0; font-size: 0.85rem; display: flex; align-items: center; }
+        .check-item input { margin-right: 12px; width: 18px; height: 18px; accent-color: var(--primary); }
 
-        /* Future Checklist */
-        .check-item { text-align: left; margin: 12px 0; font-size: 0.9rem; display: flex; align-items: center; }
-        .check-item input { margin-right: 12px; width: 20px; height: 20px; accent-color: var(--primary); }
-
-        /* Effects */
         .trail { position: fixed; pointer-events: none; z-index: 9999; animation: fadeTrail 0.8s forwards; font-size: 20px; }
-        @keyframes fadeTrail { 0% { opacity: 1; transform: scale(1.2); } 100% { opacity: 0; transform: scale(0.5) translateY(-30px); } }
+        @keyframes fadeTrail { 0% { opacity: 1; transform: scale(1); } 100% { opacity: 0; transform: scale(0.5); } }
         .heart-float { position: absolute; pointer-events: none; z-index: 1; animation: floatUp 5s linear infinite; }
-        @keyframes floatUp { 0% { transform: translateY(110vh) rotate(0); opacity: 1; } 100% { transform: translateY(-10vh) rotate(360deg); opacity: 0; } }
-        @keyframes pulse { 0% { transform: scale(1); } 50% { transform: scale(1.05); } 100% { transform: scale(1); } }
+        @keyframes floatUp { 0% { transform: translateY(110vh); opacity: 1; } 100% { transform: translateY(-10vh); opacity: 0; } }
     </style>
 </head>
 <body>
@@ -101,11 +96,11 @@
         <div class="envelope-wrapper" id="envelope" onclick="handleOpen()">
             <div class="letter-preview">
                 <p style="font-family:'Dancing Script'; color:var(--primary); font-size:1.4rem; margin:0;">Happy Valentine's Day!</p>
-                <p style="font-size:0.7rem; color:#888;">Tap to open ❤️</p>
+                <p style="font-size:0.7rem; color:#888;">Click to reveal ❤️</p>
             </div>
         </div>
         <div style="font-family:'Dancing Script'; margin-top:30px; text-align:center;">
-            <p style="margin:0; font-size:1.6rem;">To my twin,</p>
+            <p style="margin:0; font-size:1.5rem;">To my twin,</p>
             <p style="margin:0; opacity:0.7;">From your sunshine 🌻</p>
         </div>
     </div>
@@ -114,20 +109,19 @@
         
         <div id="pageDate">
             <h2 class="celebration-title">27 / 12 / 2025</h2>
-            <p>Our journey officially began. ❤️</p>
+            <p>Our journey began. ❤️</p>
             <button class="cute-btn" onclick="nextPage('pageDate', 'pageCounter')">Continue ➡️</button>
         </div>
 
         <div id="pageCounter" class="hidden">
             <h2 class="celebration-title">338 Days Met</h2>
-            <p>Every single day has been a blessing, Twin. ✨</p>
+            <p>A bond that can't be broken. ✨</p>
             <div style="font-size: 2.5rem; margin: 10px;">❤️🔗❤️</div>
             <button class="cute-btn" onclick="nextPage('pageCounter', 'question1')">Next ➡️</button>
         </div>
 
         <div id="question1" class="hidden">
             <h2 class="celebration-title">Do you like me?</h2>
-            <p style="font-size:0.8rem; margin-bottom: 20px;">I bet you can't click 'No'...</p>
             <div style="height: 250px; position: relative;">
                 <button class="cute-btn" id="yesBtn1" style="position: absolute; left: 10%; top: 10%;">Yes</button>
                 <button class="cute-btn" id="noBtn1" style="position: absolute; right: 10%; top: 10%;" onmouseover="triggerTrap()" onclick="triggerTrap()">No</button>
@@ -143,26 +137,26 @@
                 <div class="photo-box"><img src="pic3.jpg.jpg"></div>
                 <div class="photo-box"><img src="pic4.jpg.jpg"></div>
             </div>
-            <button class="cute-btn" onclick="nextPage('pageGallery', 'pageFuture')">See Our Future ➡️</button>
+            <button class="cute-btn" onclick="nextPage('pageGallery', 'pageFuture')">Goals ➡️</button>
         </div>
 
         <div id="pageFuture" class="hidden">
             <h2 class="celebration-title">Our Checklist</h2>
-            <div class="check-item"><input type="checkbox" class="goal"> Travel the world together ✈️</div>
-            <div class="check-item"><input type="checkbox" class="goal"> Infinite late night talks 🌙</div>
-            <div class="check-item"><input type="checkbox" class="goal"> Build our fairytale home 🏡</div>
-            <div class="check-item"><input type="checkbox" class="goal"> Become Husband & Wife 💍</div>
+            <div class="check-item"><input type="checkbox" class="goal"> Get golden in boards 🏅</div>
+            <div class="check-item"><input type="checkbox" class="goal"> Get into a good college 🎓</div>
+            <div class="check-item"><input type="checkbox" class="goal"> Become independent 💼</div>
+            <div class="check-item"><input type="checkbox"> Become Husband & Wife (Optional) 💍</div>
             <button class="cute-btn" id="futureBtn" disabled style="opacity:0.5; width:100%;">Locked 🔒</button>
         </div>
 
         <div id="question2" class="hidden">
             <h2 class="celebration-title">Love Meter</h2>
-            <p id="meterStatus" style="font-size: 0.8rem;">Break the limit... 😉</p>
+            <p id="meterStatus" style="font-size: 0.8rem;">Slide past the limit... 😉</p>
             <div class="slider-container">
                 <div class="slider-track" id="track"><div id="sliderThumb"></div></div>
             </div>
             <h1 id="loveValue" style="font-size: 3rem; margin: 0; color: var(--primary);">0%</h1>
-            <button class="cute-btn" id="nextBtn" disabled style="background:#bbb; opacity:0.5; width:100%;">Unlock 🔒</button>
+            <button class="cute-btn" id="nextBtn" disabled style="background:#bbb; opacity:0.5; width:100%;">LOCKED 🔒</button>
         </div>
 
         <div id="question3" class="hidden">
@@ -179,7 +173,7 @@
         <div id="pageLetter1" class="hidden">
             <h2 class="celebration-title">My Promise</h2>
             <div style="background:white; padding:18px; border-radius:15px; text-align:left; font-size:0.9rem; line-height:1.6;">
-                I'm not just asking you to be my valentine. I'm not trying to be your boyfriend—I'm trying to be your <span class="husband-gold">Husband</span> someday. 
+                I'm not trying to be just your boyfriend—I'm trying to be your <span class="husband-gold">Husband</span> someday. 
                 <br><br>Wherever the sun rises, I'll think of you. You're my first love, and if Allah wills, my last. 
                 <br><br><b>Loveyou 3000 always.</b>
             </div>
@@ -188,7 +182,6 @@
 
         <div id="celebration" class="hidden">
             <h1 class="celebration-title">Confirmed! 🥳</h1>
-            <p>The luckiest twin in the world. ❤️</p>
             <div style="font-size: 4rem;">💖✨🌻</div>
             <p style="font-size: 0.8rem; opacity: 0.7;">See you soon, Faria.</p>
         </div>
@@ -197,15 +190,15 @@
     <script>
         const music = document.getElementById('bgMusic');
         const musicBtn = document.getElementById('musicBtn');
+        const container = document.getElementById('mainContainer');
         let isMuted = false;
 
         function toggleMusic() {
             isMuted = !isMuted;
             music.muted = isMuted;
-            musicBtn.innerHTML = isMuted ? '<span style="text-decoration:line-through; opacity:0.5;">🔊</span>' : '🔊';
+            musicBtn.innerHTML = isMuted ? '<span style="text-decoration:line-through; opacity:0.4;">🔊</span>' : '🔊';
         }
 
-        // 1. Handle Letter Opening
         function handleOpen() {
             document.getElementById('envelope').classList.add('open');
             music.play().catch(() => {});
@@ -213,36 +206,32 @@
                 document.getElementById('envelope-page').style.opacity = '0';
                 setTimeout(() => {
                     document.getElementById('envelope-page').classList.add('hidden');
-                    document.getElementById('mainContainer').classList.remove('hidden');
+                    container.classList.remove('hidden');
                     setInterval(createHeart, 500);
                 }, 800);
             }, 1800);
         }
 
-        // 2. Navigation
         function nextPage(curr, next) {
             document.getElementById(curr).classList.add('hidden');
             document.getElementById(next).classList.remove('hidden');
             if(next === 'celebration') startConfetti();
         }
 
-        // 3. Spontaneous Button Trap
+        // Trap Button Logic
         const loveBtn = document.getElementById('floatingLoveBtn');
         function triggerTrap() {
             document.getElementById('noBtn1').style.display = 'none';
             loveBtn.classList.remove('hidden');
             moveLoveBtn();
         }
-
         function moveLoveBtn() {
             if(document.getElementById('question1').classList.contains('hidden')) return;
-            const x = Math.random() * 200 - 100;
-            const y = Math.random() * 150 - 75;
-            loveBtn.style.transform = `translate(${x}px, ${y}px)`;
+            loveBtn.style.transform = `translate(${(Math.random()-0.5)*200}px, ${(Math.random()-0.5)*150}px)`;
             setTimeout(moveLoveBtn, 800);
         }
 
-        // 4. Future Checklist
+        // Checklist Logic
         const goals = document.querySelectorAll('.goal');
         goals.forEach(g => g.onchange = () => {
             const all = Array.from(goals).every(i => i.checked);
@@ -252,10 +241,11 @@
         });
         document.getElementById('futureBtn').onclick = () => nextPage('pageFuture', 'question2');
 
-        // 5. Breakable Slider
+        // RE-ADDED: BREAKABLE LOVE METER
         const thumb = document.getElementById('sliderThumb');
         const track = document.getElementById('track');
         let isDragging = false;
+
         thumb.ontouchstart = () => isDragging = true;
         window.ontouchend = () => isDragging = false;
         window.ontouchmove = (e) => {
@@ -264,35 +254,42 @@
             let x = e.touches[0].clientX - rect.left;
             thumb.style.left = x + "px";
             let p = Math.round((x / rect.width) * 100);
-            document.getElementById('loveValue').innerText = p + "%";
+            document.getElementById('loveValue').innerText = (p < 0 ? 0 : p) + "%";
+
+            if(p > 100) {
+                let over = (p - 100) / 2;
+                document.getElementById('meterStatus').innerText = "⚠️ LIMITLESS LOVE DETECTED! ⚠️";
+                container.style.transform = `translate(${(Math.random()-0.5)*over}px, ${(Math.random()-0.5)*over}px)`;
+                document.body.style.background = `rgb(255, ${175-over*2}, ${189-over*2})`;
+            } else {
+                container.style.transform = `translate(0,0)`;
+                document.body.style.background = `var(--bg-grad)`;
+            }
+
             if(p >= 100) {
                 const btn = document.getElementById('nextBtn');
                 btn.disabled = false; btn.innerText = "Unlock ✨"; btn.style.background = "#ff4757"; btn.style.opacity = "1";
             }
         };
 
-        // 6. Sunflower Trail
+        // Effects
         window.addEventListener('touchmove', (e) => {
             const t = document.createElement('div');
             t.className = 'trail'; t.innerText = '🌻';
-            t.style.left = e.touches[0].clientX + 'px';
-            t.style.top = e.touches[0].clientY + 'px';
+            t.style.left = e.touches[0].clientX + 'px'; t.style.top = e.touches[0].clientY + 'px';
             document.body.appendChild(t);
             setTimeout(() => t.remove(), 800);
         });
 
-        // 7. Random No Button
         document.getElementById('noBtnFinal').ontouchstart = function(e) {
             e.preventDefault();
-            this.style.left = Math.random() * 80 + "%";
-            this.style.top = Math.random() * 80 + "%";
+            this.style.left = Math.random() * 80 + "%"; this.style.top = Math.random() * 80 + "%";
         };
 
         function createHeart() {
             const h = document.createElement('div');
             h.className = 'heart-float'; h.innerText = Math.random() > 0.5 ? '❤️' : '🌻';
-            h.style.left = Math.random() * 100 + "vw";
-            h.style.fontSize = Math.random() * 15 + 15 + "px";
+            h.style.left = Math.random() * 100 + "vw"; h.style.fontSize = Math.random() * 15 + 15 + "px";
             document.body.appendChild(h);
             setTimeout(() => h.remove(), 5000);
         }
