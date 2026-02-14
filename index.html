@@ -5,21 +5,27 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
     <title>For My Twin ❤️</title>
     <link href="https://fonts.googleapis.com/css2?family=Dancing+Script:wght@700&family=Poppins:wght@400;600&display=swap" rel="stylesheet">
+    <script src="https://cdn.jsdelivr.net/npm/canvas-confetti@1.6.0/dist/confetti.browser.min.js"></script>
     
     <style>
         :root {
             --primary: #ff4757;
-            --accent: #ff6b6b;
-            --bg-grad: linear-gradient(135deg, #ffafbd 0%, #ffc3a0 100%);
+            --bg-1: #ffafbd; --bg-2: #ffc3a0;
         }
 
         * { box-sizing: border-box; touch-action: manipulation; -webkit-tap-highlight-color: transparent; }
-        body, html { height: 100%; margin: 0; padding: 0; overflow: hidden; font-family: 'Poppins', sans-serif; background: #ffafbd; }
-        body { display: flex; justify-content: center; align-items: center; background: var(--bg-grad); }
+        
+        html, body { 
+            height: 100%; margin: 0; padding: 0; 
+            overflow: hidden; width: 100vw;
+            background: linear-gradient(135deg, var(--bg-1) 0%, var(--bg-2) 100%);
+            display: flex; justify-content: center; align-items: center;
+            transition: background 1s ease;
+        }
 
-        /* --- LUXE ENVELOPE --- */
+        /* --- ENVELOPE --- */
         #opener {
-            position: fixed; inset: 0; z-index: 9999; background: var(--bg-grad);
+            position: fixed; inset: 0; z-index: 9999; 
             display: flex; flex-direction: column; align-items: center; justify-content: center;
             transition: all 0.8s ease-in-out;
         }
@@ -33,7 +39,7 @@
         .envelope-wrapper::before {
             content: ""; position: absolute; top: -100px; left: 0;
             border-left: 140px solid transparent; border-right: 140px solid transparent;
-            border-bottom: 100px solid #ffe4e8; z-index: 2;
+            border-bottom: 100px solid #ffe4e8;
         }
 
         .wax-seal {
@@ -46,60 +52,64 @@
 
         /* --- MAIN CONTAINER --- */
         .container {
-            width: 92%; max-width: 380px; background: rgba(255, 255, 255, 0.6);
+            width: calc(100% - 40px); max-width: 360px; 
+            background: rgba(255, 255, 255, 0.7);
             backdrop-filter: blur(15px); -webkit-backdrop-filter: blur(15px);
-            padding: 20px; border-radius: 35px; text-align: center;
-            min-height: 620px; display: flex; flex-direction: column; justify-content: center;
-            box-shadow: 0 15px 35px rgba(0,0,0,0.1); position: relative; border: 1px solid rgba(255,255,255,0.3);
+            padding: 25px; border-radius: 35px; text-align: center;
+            min-height: 600px; display: flex; flex-direction: column; justify-content: center;
+            box-shadow: 0 15px 35px rgba(0,0,0,0.1); border: 1px solid rgba(255,255,255,0.4);
+            z-index: 10;
         }
 
         .hidden { display: none !important; }
-        .title { font-family: 'Dancing Script', cursive; font-size: 2.3rem; color: var(--primary); margin-bottom: 5px; }
+        .title { font-family: 'Dancing Script', cursive; font-size: 2.2rem; color: var(--primary); margin: 0 0 10px 0; }
         
         .cute-btn { 
-            padding: 15px 20px; margin: 8px 0; border: none; border-radius: 50px; 
+            padding: 16px; margin: 8px 0; border: none; border-radius: 50px; 
             background: var(--primary); color: white; font-weight: 600; width: 100%;
-            box-shadow: 0 5px 15px rgba(255, 71, 87, 0.3); font-size: 0.9rem;
+            box-shadow: 0 5px 15px rgba(255, 71, 87, 0.2); font-size: 0.95rem;
         }
 
-        /* --- DIVINE PORTRAIT WITH BREATH ANIMATION --- */
+        /* --- PORTRAIT --- */
         .single-portrait-frame {
-            width: 100%; height: 380px; background: white; border-radius: 20px;
-            padding: 10px; box-shadow: 0 10px 25px rgba(0,0,0,0.1);
-            margin-bottom: 15px; display: flex; align-items: center; justify-content: center;
-            overflow: hidden;
+            width: 100%; height: 340px; background: white; border-radius: 20px;
+            padding: 8px; box-shadow: 0 8px 20px rgba(0,0,0,0.1);
+            margin: 10px 0; overflow: hidden;
         }
         .single-portrait-frame img {
             width: 100%; height: 100%; object-fit: cover; border-radius: 12px;
             animation: breath 8s ease-in-out infinite;
         }
 
-        @keyframes breath {
-            0% { transform: scale(1); }
-            50% { transform: scale(1.08); }
-            100% { transform: scale(1); }
-        }
-
-        /* --- GALLERY --- */
-        .photo-grid { display: grid; grid-template-columns: 1fr 1fr; gap: 8px; margin: 10px 0; }
-        .photo-frame { background: white; padding: 4px 4px 10px 4px; box-shadow: 0 4px 8px rgba(0,0,0,0.1); transform: rotate(var(--r)); }
-        .photo-frame img { width: 100%; aspect-ratio: 1/1; object-fit: cover; display: block; }
-
-        /* --- METER --- */
+        /* --- SLIDER --- */
         .slider-box { position: relative; padding: 40px 0; width: 100%; }
-        .track { height: 8px; background: rgba(255,255,255,0.8); border-radius: 10px; width: 100%; }
+        .track { height: 10px; background: rgba(255,255,255,0.8); border-radius: 10px; width: 100%; }
         #thumb { 
-            width: 50px; height: 50px; position: absolute; top: 50%; left: 0; transform: translate(-50%, -50%); 
+            width: 60px; height: 60px; position: absolute; top: 50%; left: 0; transform: translate(-50%, -50%); 
             background: url('data:image/svg+xml;utf8,<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="%23ff4757"><path d="M12 21.35l-1.45-1.32C5.4 15.36 2 12.28 2 8.5 2 5.42 4.42 3 7.5 3c1.74 0 3.41.81 4.5 2.09C13.09 3.81 14.76 3 16.5 3 19.58 3 22 5.42 22 8.5c0 3.78-3.4 6.86-8.55 11.54L12 21.35z"/></svg>') no-repeat center;
             background-size: contain; z-index: 10;
         }
 
-        @keyframes pulse { 0% {transform: scale(1);} 50% {transform: scale(1.1);} 100% {transform: scale(1);} }
+        /* --- SECRET MODAL --- */
+        #secretNote {
+            position: fixed; inset: 0; background: rgba(0,0,0,0.8);
+            z-index: 10002; display: flex; align-items: center; justify-content: center;
+            opacity: 0; pointer-events: none; transition: 0.5s;
+        }
+        #secretNote.show { opacity: 1; pointer-events: auto; }
+        .note-card {
+            background: white; padding: 30px; border-radius: 20px; width: 85%; max-width: 300px;
+            font-family: 'Dancing Script', cursive; font-size: 1.5rem; color: #333;
+        }
+
+        @keyframes breath { 0%, 100% { transform: scale(1); } 50% { transform: scale(1.06); } }
+        @keyframes pulse { 0%, 100% {transform: scale(1);} 50% {transform: scale(1.1);} }
+        @keyframes hintPulse { 0%, 100% { opacity: 0.3; } 50% { opacity: 1; } }
     </style>
 </head>
 <body>
 
-    <button id="musicBtn" onclick="toggleMute()">🔊</button>
+    <button id="musicBtn" style="position:fixed; top:15px; right:15px; z-index:10001; background:white; border:none; width:40px; height:40px; border-radius:50%;" onclick="toggleMute()">🔊</button>
     <audio id="bgMusic" loop preload="auto"><source src="music.mp3" type="audio/mpeg"></audio>
 
     <div id="opener" onclick="begin()">
@@ -111,6 +121,7 @@
     </div>
 
     <div id="main" class="container hidden">
+        
         <div id="p1">
             <h2 class="title">27 / 12 / 2024</h2>
             <p>The day my life changed. ❤️</p>
@@ -119,27 +130,27 @@
 
         <div id="p2" class="hidden">
             <h2 class="title">338 Days Met</h2>
-            <p>Building a lifetime of us. ✨</p>
+            <p>Every second counts with you. ✨</p>
             <div style="font-size: 3rem; margin: 10px;">🔗❤️🔗</div>
             <button class="cute-btn" onclick="go('p2','p3')">Next ➡️</button>
         </div>
 
         <div id="p3" class="hidden">
             <h2 class="title">Do you like me?</h2>
-            <div id="btnArea" style="height: 200px; position: relative; width: 100%; display: flex; flex-direction: column; align-items: center; justify-content: center;">
-                <button class="cute-btn" id="yes1" style="width: 140px;" onclick="handleChoice()">Yes</button>
-                <button class="cute-btn" id="no1" style="width: 140px; background: #888;" onclick="handleChoice()">No</button>
-                <button id="floatingLove" class="hidden" onclick="go('p3','p4')">I don't just like you, I LOVE YOU! ❤️</button>
+            <div id="btnArea" style="height: 250px; position: relative; width: 100%;">
+                <button class="cute-btn" id="yes1" style="width: 140px; position: absolute; left: 50%; top: 50%; transform: translate(-50%, -50%);" onclick="handleChoice()">Yes</button>
+                <button class="cute-btn" id="no1" style="width: 140px; background: #999; position: absolute; left: 50%; top: 75%; transform: translate(-50%, -50%);" onclick="handleChoice()">No</button>
+                <button id="floatingLove" class="hidden" style="position:absolute; z-index:100; background:var(--primary); color:white; padding:15px 25px; border-radius:50px; border:2px solid white; font-weight: bold;" onclick="go('p3','p4')">I LOVE YOU! ❤️</button>
             </div>
         </div>
 
         <div id="p4" class="hidden">
             <h2 class="title">Our Memories</h2>
-            <div class="photo-grid">
-                <div class="photo-frame" style="--r: -3deg;"><img src="pic1.jpg.jpg"></div>
-                <div class="photo-frame" style="--r: 2deg;"><img src="pic2.jpg.jpg"></div>
-                <div class="photo-frame" style="--r: -2deg;"><img src="pic3.jpg.jpg"></div>
-                <div class="photo-frame" style="--r: 4deg;"><img src="pic4.jpg.jpg"></div>
+            <div style="display: grid; grid-template-columns: 1fr 1fr; gap: 10px; margin: 15px 0;">
+                <div style="background:white; padding:4px; box-shadow:0 4px 8px rgba(0,0,0,0.1); transform:rotate(-3deg);"><img src="pic1.jpg.jpg" style="width:100%; aspect-ratio:1/1; object-fit:cover;"></div>
+                <div style="background:white; padding:4px; box-shadow:0 4px 8px rgba(0,0,0,0.1); transform:rotate(2deg);"><img src="pic2.jpg.jpg" style="width:100%; aspect-ratio:1/1; object-fit:cover;"></div>
+                <div style="background:white; padding:4px; box-shadow:0 4px 8px rgba(0,0,0,0.1); transform:rotate(-2deg);"><img src="pic3.jpg.jpg" style="width:100%; aspect-ratio:1/1; object-fit:cover;"></div>
+                <div style="background:white; padding:4px; box-shadow:0 4px 8px rgba(0,0,0,0.1); transform:rotate(4deg);"><img src="pic4.jpg.jpg" style="width:100%; aspect-ratio:1/1; object-fit:cover;"></div>
             </div>
             <button class="cute-btn" onclick="go('p4','p5')">Favorite View ➡️</button>
         </div>
@@ -150,7 +161,6 @@
                 <img src="her_face.jpg.jpg">
             </div>
             <p style="font-size: 0.75rem; font-style: italic; line-height: 1.4;">
-                Your hair, your face, and especially <b>those eyes</b>... <br>
                 I see the mother of our children in your soul. 🌻
             </p>
             <button class="cute-btn" onclick="go('p5','p6')">Our Goals ➡️</button>
@@ -158,11 +168,11 @@
 
         <div id="p6" class="hidden">
             <h2 class="title">Our Goals</h2>
-            <div style="text-align: left; margin: 0 auto; display: inline-block;">
-                <div style="display:flex; align-items:center; margin: 8px 0;"><input type="checkbox" class="req" style="width:20px; height:20px; margin-right:10px;"> Get golden in boards 🏅</div>
-                <div style="display:flex; align-items:center; margin: 8px 0;"><input type="checkbox" class="req" style="width:20px; height:20px; margin-right:10px;"> Get into a good college 🎓</div>
-                <div style="display:flex; align-items:center; margin: 8px 0;"><input type="checkbox" class="req" style="width:20px; height:20px; margin-right:10px;"> Become independent 💼</div>
-                <div style="display:flex; align-items:center; margin: 8px 0;"><input type="checkbox" style="width:20px; height:20px; margin-right:10px;"> Become Husband & Wife 💍</div>
+            <div style="text-align: left; display: inline-block;">
+                <div style="margin: 10px 0;"><input type="checkbox" class="req"> Boards Golden 🏅</div>
+                <div style="margin: 10px 0;"><input type="checkbox" class="req"> Good College 🎓</div>
+                <div style="margin: 10px 0;"><input type="checkbox" class="req"> Independence 💼</div>
+                <div style="margin: 10px 0;"><input type="checkbox"> Become Husband & Wife (hopefully one day) 💍</div>
             </div>
             <button class="cute-btn" id="goalNext" disabled style="opacity:0.5; margin-top:15px;" onclick="go('p6','p7')">Locked 🔒</button>
         </div>
@@ -172,45 +182,51 @@
             <div class="slider-box">
                 <div class="track"><div id="thumb"></div></div>
             </div>
-            <h1 id="val" style="font-size: 3rem; margin: 0; color: var(--primary);">0%</h1>
+            <h1 id="val" style="font-size: 4rem; margin: 0; color: var(--primary);">0%</h1>
             <button class="cute-btn" id="meterNext" disabled style="background:#bbb;" onclick="go('p7','p8')">Locked 🔒</button>
         </div>
 
         <div id="p8" class="hidden">
-            <h2 class="title">Be Mine?</h2>
-            <p style="font-size: 0.8rem; margin-bottom: 10px;">Will you be my Valentine forever?</p>
-            <button class="cute-btn" onclick="go('p8','p9')">Yes, A Million Times! ❤️</button>
-            <button class="cute-btn" onclick="go('p8','p9')" style="background:#333; color:gold;">Yes, I'm Yours 💍</button>
-            <button class="cute-btn" onclick="go('p8','p9')" style="background:white; color:var(--primary);">Yes, Take My Heart 🌻</button>
-            <button id="noFinal" class="cute-btn" style="width:auto; position:absolute; bottom:0; left:35%; background:#888;">No</button>
+            <h2 class="title">Be my Valentine?</h2>
+            <button class="cute-btn" onclick="go('p8','p9')">YES - Forever & Always ❤️</button>
+            <button class="cute-btn" onclick="go('p8','p9')" style="background:#333; color:gold;">YES - I am yours 💍</button>
+            <button class="cute-btn" onclick="go('p8','p9')" style="background:white; color:var(--primary); border: 1px solid var(--primary);">YES - Take my heart 🌻</button>
+            <button id="noFinal" class="cute-btn" style="width:auto; position:absolute; bottom:20px; left:40%; background:#888; padding: 10px 20px;">No</button>
         </div>
 
         <div id="p9" class="hidden">
             <h2 class="title">My Promise</h2>
-            <div style="background:white; padding:15px; border-radius:15px; text-align:left; font-size:0.8rem; line-height:1.5; max-height: 250px; overflow-y: auto;">
-                Faria, I'm not trying to be just your boyfriend—I'm trying to be your <b style="color:#d4af37">Husband</b> someday. 
-                <br><br>
-                From the moment we met, you've been the sunshine that brightens my darkest days. You're my twin, my better half, and my greatest blessing. No matter what life throws at us, I want to be the one standing by your side.
-                <br><br>
-                Wherever the sun rises, I'll think of you. You're my first real love, and if Allah wills, I want you to be my last. I promise to support you in your goals, to be there for every board exam and every victory.
-                <br><br>
-                <b>I love you 3000, always and forever.</b>
+            <div style="background:white; padding:15px; border-radius:15px; text-align:left; font-size:0.8rem; line-height:1.5; max-height: 220px; overflow-y: auto;">
+                Faria, I'm trying to be your <b style="color:#d4af37">Husband</b> someday. 
+                Wherever the sun rises, I'll think of you. You're my first and my last.
+                <b>I love you 3000.</b>
             </div>
-            <button class="cute-btn" onclick="go('p9','p10')">One last thing... ✨</button>
+            <button class="cute-btn" onclick="go('p9','p10'); celebrate();">Final Note ✨</button>
         </div>
 
         <div id="p10" class="hidden">
             <h2 class="title">Thank You, Twin</h2>
-            <p>For choosing me every day.</p>
-            <div style="font-size: 5rem; margin: 10px;">🌻❤️🌻</div>
-            <button class="cute-btn" onclick="location.reload()">Replay ✨</button>
+            <p>For being my everything.</p>
+            <div id="flowerClicker" style="font-size: 5rem; margin: 10px; cursor: pointer;">🌻❤️🌻</div>
+            <p style="font-size: 0.6rem; color: #ff4757; animation: hintPulse 1.5s infinite;">(Tap our flowers 3 times for a secret...)</p>
+            <button class="cute-btn" onclick="location.reload()" style="margin-top:20px;">Replay ✨</button>
+        </div>
+    </div>
+
+    <div id="secretNote" onclick="this.classList.remove('show')">
+        <div class="note-card">
+            "Every day I spend with you, I realize more and more that you aren't just my twin... you're my home. I can't wait to grow old with you. ❤️"
         </div>
     </div>
 
     <script>
         const audio = document.getElementById('bgMusic');
         const main = document.getElementById('main');
-        let clickCount = 0; let yesSize = 1; let noSize = 1;
+        let clicks = 0; let ySize = 1;
+        let flowerClicks = 0;
+        
+        const colors = [['#ffafbd', '#ffc3a0'], ['#2193b0', '#6dd5ed'], ['#ee9ca7', '#ffdde1'], ['#7b4397', '#dc2430'], ['#ff9a9e', '#fad0c4'], ['#a18cd1', '#fbc2eb']];
+        let colorIdx = 0;
 
         function toggleMute() {
             audio.muted = !audio.muted;
@@ -220,30 +236,26 @@
         function begin() {
             audio.play().catch(() => {});
             document.getElementById('opener').style.opacity = '0';
-            setTimeout(() => {
-                document.getElementById('opener').classList.add('hidden');
-                main.classList.remove('hidden');
-            }, 600);
+            setTimeout(() => { document.getElementById('opener').classList.add('hidden'); main.classList.remove('hidden'); }, 600);
         }
 
         function go(c, n) {
             document.getElementById(c).classList.add('hidden');
             document.getElementById(n).classList.remove('hidden');
+            colorIdx = (colorIdx + 1) % colors.length;
+            document.body.style.background = `linear-gradient(135deg, ${colors[colorIdx][0]} 0%, ${colors[colorIdx][1]} 100%)`;
         }
 
         function handleChoice() {
-            clickCount++; yesSize += 0.5; noSize -= 0.2;
-            document.getElementById('yes1').style.transform = `scale(${yesSize})`;
-            document.getElementById('no1').style.transform = `scale(${noSize})`;
-            if (clickCount >= 3) {
-                document.getElementById('yes1').classList.add('hidden');
+            clicks++; ySize += 0.5;
+            const yes = document.getElementById('yes1');
+            yes.style.transform = `translate(-50%, -50%) scale(${ySize})`;
+            if (clicks >= 4) {
+                yes.classList.add('hidden');
                 document.getElementById('no1').classList.add('hidden');
                 const f = document.getElementById('floatingLove');
                 f.classList.remove('hidden');
-                setInterval(() => {
-                    f.style.left = Math.random() * 60 + 10 + "%";
-                    f.style.top = Math.random() * 60 + 10 + "%";
-                }, 800);
+                setInterval(() => { f.style.left = Math.random() * 50 + 5 + "%"; f.style.top = Math.random() * 60 + 10 + "%"; }, 700);
             }
         }
 
@@ -263,13 +275,11 @@
             if (!active) return;
             const rect = track.getBoundingClientRect();
             let p = Math.round(((x - rect.left) / rect.width) * 100);
-            if (p < 0) p = 0;
-            thumb.style.left = p + "%";
-            document.getElementById('val').innerText = (p > 100 ? "∞" : p) + "%";
-            if (p >= 100) {
-                const btn = document.getElementById('meterNext');
-                btn.disabled = false; btn.innerText = "Unlock ✨"; btn.style.background = "#ff4757";
-            }
+            p = Math.max(0, p);
+            thumb.style.left = Math.min(p, 100) + "%";
+            if (p > 100) { document.getElementById('val').innerText = "∞%"; document.getElementById('val').style.color = "gold"; }
+            else { document.getElementById('val').innerText = p + "%"; }
+            if (p >= 100) { const btn = document.getElementById('meterNext'); btn.disabled = false; btn.innerText = "Unlock ✨"; btn.style.background = "var(--primary)"; }
         };
 
         thumb.addEventListener('touchstart', () => active = true);
@@ -279,8 +289,27 @@
         document.getElementById('noFinal').addEventListener('touchstart', function(e) {
             e.preventDefault();
             this.style.left = Math.random() * 70 + "%";
-            this.style.top = Math.random() * 50 + 20 + "%";
+            this.style.top = Math.random() * 60 + 10 + "%";
         });
+
+        document.getElementById('flowerClicker').addEventListener('click', () => {
+            flowerClicks++;
+            if(flowerClicks === 3) { document.getElementById('secretNote').classList.add('show'); flowerClicks = 0; }
+        });
+
+        function celebrate() {
+            var duration = 5 * 1000;
+            var animationEnd = Date.now() + duration;
+            var defaults = { startVelocity: 30, spread: 360, ticks: 60, zIndex: 0 };
+            function randomInRange(min, max) { return Math.random() * (max - min) + min; }
+            var interval = setInterval(function() {
+                var timeLeft = animationEnd - Date.now();
+                if (timeLeft <= 0) { return clearInterval(interval); }
+                var particleCount = 50 * (timeLeft / duration);
+                confetti(Object.assign({}, defaults, { particleCount, origin: { x: randomInRange(0.1, 0.3), y: Math.random() - 0.2 } }));
+                confetti(Object.assign({}, defaults, { particleCount, origin: { x: randomInRange(0.7, 0.9), y: Math.random() - 0.2 } }));
+            }, 250);
+        }
     </script>
 </body>
 </html>
