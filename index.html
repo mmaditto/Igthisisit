@@ -14,270 +14,236 @@
         }
 
         * { box-sizing: border-box; touch-action: manipulation; -webkit-tap-highlight-color: transparent; }
-        body, html { height: 100%; margin: 0; padding: 0; overflow: hidden; font-family: 'Poppins', sans-serif; background: #ffafbd; width: 100%; }
+        body, html { height: 100%; margin: 0; padding: 0; overflow: hidden; font-family: 'Poppins', sans-serif; background: #ffafbd; }
         body { display: flex; justify-content: center; align-items: center; background: var(--bg-grad); }
 
-        #musicBtn {
-            position: fixed; top: 20px; right: 20px; z-index: 9999;
-            background: rgba(255, 255, 255, 0.7); width: 45px; height: 45px;
-            border-radius: 50%; display: flex; align-items: center; justify-content: center;
-            font-size: 20px; box-shadow: 0 4px 10px rgba(0,0,0,0.1);
-        }
-
-        /* --- STABLE PREMIUM ENVELOPE --- */
-        #envelope-page {
-            position: fixed; inset: 0; z-index: 5000; background: var(--bg-grad);
+        /* --- PRE-LOADER / ENVELOPE --- */
+        #opener {
+            position: fixed; inset: 0; z-index: 9999; background: var(--bg-grad);
             display: flex; flex-direction: column; align-items: center; justify-content: center;
-            transition: opacity 0.6s ease;
+            transition: transform 0.8s cubic-bezier(0.77, 0, 0.175, 1);
         }
 
-        .env-box {
-            position: relative; width: 280px; height: 180px; background: #fff;
-            border-radius: 0 0 10px 10px; box-shadow: 0 20px 40px rgba(0,0,0,0.1);
-            cursor: pointer;
+        .premium-card {
+            width: 280px; padding: 40px; background: white; border-radius: 25px;
+            box-shadow: 0 20px 40px rgba(0,0,0,0.1); text-align: center;
+            cursor: pointer; position: relative;
         }
 
-        /* The Top Flap */
-        .env-flap {
-            position: absolute; top: 0; left: 0; width: 0; height: 0;
-            border-left: 140px solid transparent; border-right: 140px solid transparent;
-            border-top: 100px solid #f3f3f3; transform-origin: top;
-            transition: transform 0.5s ease; z-index: 3;
-        }
+        .heart-icon { font-size: 50px; display: block; margin-bottom: 15px; animation: heartBeat 1.5s infinite; }
+        @keyframes heartBeat { 0% {transform: scale(1);} 14% {transform: scale(1.1);} 28% {transform: scale(1);} }
 
-        /* The Paper */
-        .env-paper {
-            position: absolute; top: 5px; left: 10px; width: 260px; height: 160px;
-            background: #fffcf5; border: 1px solid #eee; border-radius: 5px;
-            display: flex; flex-direction: column; align-items: center; justify-content: center;
-            padding: 20px; text-align: center; z-index: 1;
-            transition: transform 0.7s cubic-bezier(0.175, 0.885, 0.32, 1.275);
-        }
-
-        /* Open State */
-        .env-box.is-open .env-flap { transform: rotateX(180deg); z-index: 0; }
-        .env-box.is-open .env-paper { transform: translateY(-130px); z-index: 4; box-shadow: 0 -10px 20px rgba(0,0,0,0.05); }
-
-        /* --- MAIN CONTENT --- */
+        /* --- MAIN CONTAINER --- */
         .container {
-            width: 90%; max-width: 380px; background: rgba(255, 255, 255, 0.4);
-            backdrop-filter: blur(15px); -webkit-backdrop-filter: blur(15px);
-            padding: 25px; border-radius: 30px; text-align: center;
-            position: relative; min-height: 500px; display: flex; flex-direction: column; justify-content: center;
+            width: 90%; max-width: 380px; background: rgba(255, 255, 255, 0.5);
+            backdrop-filter: blur(10px); -webkit-backdrop-filter: blur(10px);
+            padding: 30px; border-radius: 30px; text-align: center;
+            min-height: 500px; display: flex; flex-direction: column; justify-content: center;
             box-shadow: 0 10px 30px rgba(0,0,0,0.05); transition: transform 0.1s;
         }
 
         .hidden { display: none !important; }
-        .celebration-title { font-family: 'Dancing Script', cursive; font-size: 2.2rem; color: var(--primary); margin: 10px 0; }
-        .cute-btn { 
-            padding: 14px 25px; margin: 8px; border: none; border-radius: 50px; 
-            background: var(--accent); color: white; font-weight: 600; cursor: pointer;
-            box-shadow: 0 4px 15px rgba(255, 71, 87, 0.2);
-        }
-
-        #floatingLoveBtn {
-            position: absolute; z-index: 1000; background: var(--primary); color: white;
-            padding: 12px 20px; border-radius: 50px; border: none; font-size: 0.9rem;
-            box-shadow: 0 8px 15px rgba(0,0,0,0.1);
-        }
-
-        /* --- SLIDER --- */
-        .slider-container { position: relative; padding: 40px 0; width: 85%; margin: 0 auto; }
-        .slider-track { height: 6px; background: rgba(255,255,255,0.7); border-radius: 10px; position: relative; }
-        #sliderThumb { 
-            width: 45px; height: 45px; position: absolute; top: 50%; left: 0; transform: translate(-50%, -50%); 
-            background: url('data:image/svg+xml;utf8,<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="%23ff4757"><path d="M12 21.35l-1.45-1.32C5.4 15.36 2 12.28 2 8.5 2 5.42 4.42 3 7.5 3c1.74 0 3.41.81 4.5 2.09C13.09 3.81 14.76 3 16.5 3 19.58 3 22 5.42 22 8.5c0 3.78-3.4 6.86-8.55 11.54L12 21.35z"/></svg>') no-repeat center;
-            background-size: contain; z-index: 20;
-        }
-
-        .check-item { text-align: left; margin: 10px 0; font-size: 0.85rem; display: flex; align-items: center; }
-        .check-item input { margin-right: 12px; width: 18px; height: 18px; accent-color: var(--primary); }
+        .title { font-family: 'Dancing Script', cursive; font-size: 2.3rem; color: var(--primary); margin-bottom: 10px; }
         
-        .photo-grid { display: grid; grid-template-columns: 1fr 1fr; gap: 10px; margin: 15px 0; }
-        .photo-box { width: 100%; aspect-ratio: 1/1; border-radius: 12px; overflow: hidden; border: 3px solid white; }
-        .photo-box img { width: 100%; height: 100%; object-fit: cover; }
+        .cute-btn { 
+            padding: 15px 25px; margin: 10px 0; border: none; border-radius: 50px; 
+            background: var(--primary); color: white; font-weight: 600; width: 100%;
+            box-shadow: 0 5px 15px rgba(255, 71, 87, 0.3);
+        }
 
-        .trail { position: fixed; pointer-events: none; z-index: 9999; animation: fade 0.8s forwards; font-size: 20px; }
-        @keyframes fade { 0% { opacity: 1; } 100% { opacity: 0; transform: scale(0.5) translateY(-20px); } }
+        /* --- LOVE METER (BREAKABLE) --- */
+        .slider-box { position: relative; padding: 40px 0; width: 100%; }
+        .track { height: 8px; background: rgba(255,255,255,0.8); border-radius: 10px; width: 100%; }
+        #thumb { 
+            width: 50px; height: 50px; position: absolute; top: 50%; left: 0; transform: translate(-50%, -50%); 
+            background: url('data:image/svg+xml;utf8,<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="%23ff4757"><path d="M12 21.35l-1.45-1.32C5.4 15.36 2 12.28 2 8.5 2 5.42 4.42 3 7.5 3c1.74 0 3.41.81 4.5 2.09C13.09 3.81 14.76 3 16.5 3 19.58 3 22 5.42 22 8.5c0 3.78-3.4 6.86-8.55 11.54L12 21.35z"/></svg>') no-repeat center;
+            background-size: contain; z-index: 10;
+        }
+
+        .check-row { display: flex; align-items: center; text-align: left; margin: 12px 0; font-size: 0.9rem; }
+        .check-row input { width: 20px; height: 20px; margin-right: 12px; accent-color: var(--primary); }
+
+        #floatingLove {
+            position: absolute; z-index: 2000; padding: 12px 20px; border-radius: 50px;
+            background: var(--primary); color: white; border: none; font-weight: bold;
+        }
+
+        #musicBtn {
+            position: fixed; top: 20px; right: 20px; z-index: 10000;
+            background: white; width: 40px; height: 40px; border-radius: 50%;
+            border: none; display: flex; align-items: center; justify-content: center;
+        }
+
+        .trail { position: fixed; pointer-events: none; z-index: 9999; animation: fadeOut 0.8s forwards; font-size: 20px; }
+        @keyframes fadeOut { 0% {opacity:1;} 100% {opacity:0; transform: scale(0.5) translateY(-20px);} }
     </style>
 </head>
 <body>
 
-    <div id="musicBtn" onclick="toggleMute()">🔊</div>
+    <button id="musicBtn" onclick="toggleMute()">🔊</button>
     <audio id="bgMusic" loop preload="auto"><source src="music.mp3" type="audio/mpeg"></audio>
 
-    <div id="envelope-page">
-        <div class="env-box" onclick="openMe(this)">
-            <div class="env-flap"></div>
-            <div class="env-paper">
-                <p style="font-family:'Dancing Script'; color:var(--primary); font-size:1.3rem; margin:0;">Happy Valentine's Day!</p>
-                <p style="font-size:0.7rem; color:#888; margin-top:10px;">Click to Open ❤️</p>
-            </div>
-        </div>
-        <div style="font-family:'Dancing Script'; margin-top:50px; text-align:center;">
-            <p style="margin:0; font-size:1.6rem;">To my twin,</p>
-            <p style="margin:0; opacity:0.7;">From your sunshine 🌻</p>
+    <div id="opener" onclick="begin()">
+        <div class="premium-card">
+            <span class="heart-icon">💌</span>
+            <p style="font-family:'Dancing Script'; font-size:1.5rem; margin:0; color:#444;">To my twin,</p>
+            <p style="font-size:0.8rem; color:#888; margin-top:10px;">Tap to unlock my heart</p>
         </div>
     </div>
 
-    <div class="container hidden" id="mainApp">
-        <div id="step1">
-            <h2 class="celebration-title">27 / 12 / 2025</h2>
+    <div id="main" class="container hidden">
+        <div id="p1">
+            <h2 class="title">27 / 12 / 2025</h2>
             <p>Our journey began. ❤️</p>
-            <button class="cute-btn" onclick="next('step1','step2')">Continue ➡️</button>
+            <button class="cute-btn" onclick="go('p1','p2')">Continue ➡️</button>
         </div>
 
-        <div id="step2" class="hidden">
-            <h2 class="celebration-title">338 Days Met</h2>
-            <p>A bond like no other. ✨</p>
-            <div style="font-size: 3rem; margin: 10px;">❤️🔗❤️</div>
-            <button class="cute-btn" onclick="next('step2','step3')">Next ➡️</button>
+        <div id="p2" class="hidden">
+            <h2 class="title">338 Days Met</h2>
+            <p>A bond that stays forever. ✨</p>
+            <div style="font-size: 3rem; margin: 15px;">❤️🔗❤️</div>
+            <button class="cute-btn" onclick="go('p2','p3')">Next ➡️</button>
         </div>
 
-        <div id="step3" class="hidden">
-            <h2 class="celebration-title">Do you like me?</h2>
-            <div style="height: 250px; position: relative;">
-                <button class="cute-btn" id="yes1" style="position: absolute; left: 10%; top: 10%;">Yes</button>
-                <button class="cute-btn" id="no1" style="position: absolute; right: 10%; top: 10%;" onclick="startFloating()">No</button>
-                <button id="floatingLoveBtn" class="hidden" onclick="next('step3','step4')">I don't like... I LOVE YOU! ❤️</button>
+        <div id="p3" class="hidden">
+            <h2 class="title">Do you like me?</h2>
+            <div style="height: 200px; position: relative; width: 100%;">
+                <button class="cute-btn" id="yes1" style="width: auto; padding: 10px 30px;">Yes</button>
+                <button class="cute-btn" id="no1" style="width: auto; padding: 10px 30px;" onclick="trap()">No</button>
+                <button id="floatingLove" class="hidden" onclick="go('p3','p4')">I LOVE YOU! ❤️</button>
             </div>
         </div>
 
-        <div id="step4" class="hidden">
-            <h2 class="celebration-title">Our Moments</h2>
-            <div class="photo-grid">
-                <div class="photo-box"><img src="pic1.jpg.jpg"></div>
-                <div class="photo-box"><img src="pic2.jpg.jpg"></div>
-                <div class="photo-box"><img src="pic3.jpg.jpg"></div>
-                <div class="photo-box"><img src="pic4.jpg.jpg"></div>
+        <div id="p4" class="hidden">
+            <h2 class="title">Our Goals</h2>
+            <div class="check-row"><input type="checkbox" class="req"> Get golden in boards 🏅</div>
+            <div class="check-row"><input type="checkbox" class="req"> Get into a good college 🎓</div>
+            <div class="check-row"><input type="checkbox" class="req"> Become independent 💼</div>
+            <div class="check-row"><input type="checkbox"> Become Husband & Wife (Optional) 💍</div>
+            <button class="cute-btn" id="goalNext" disabled style="opacity:0.5;">Locked 🔒</button>
+        </div>
+
+        <div id="p5" class="hidden">
+            <h2 class="title">Love Meter</h2>
+            <p id="meterHint" style="font-size: 0.75rem;">Break the limit... 😉</p>
+            <div class="slider-box">
+                <div class="track"><div id="thumb"></div></div>
             </div>
-            <button class="cute-btn" onclick="next('step4','step5')">Goals ➡️</button>
+            <h1 id="val" style="font-size: 3.5rem; margin: 0; color: var(--primary);">0%</h1>
+            <button class="cute-btn" id="meterNext" disabled style="background:#bbb;">Locked 🔒</button>
         </div>
 
-        <div id="step5" class="hidden">
-            <h2 class="celebration-title">Checklist</h2>
-            <div class="check-item"><input type="checkbox" class="must"> Get golden in boards 🏅</div>
-            <div class="check-item"><input type="checkbox" class="must"> Get into a good college 🎓</div>
-            <div class="check-item"><input type="checkbox" class="must"> Become independent 💼</div>
-            <div class="check-item"><input type="checkbox"> Become Husband & Wife (Optional) 💍</div>
-            <button class="cute-btn" id="goalBtn" disabled style="opacity:0.5; width:100%;">Locked 🔒</button>
-        </div>
-
-        <div id="step6" class="hidden">
-            <h2 class="celebration-title">Love Meter</h2>
-            <p id="mStatus" style="font-size: 0.75rem;">Push the limit... 😉</p>
-            <div class="slider-container">
-                <div class="slider-track" id="track"><div id="sliderThumb"></div></div>
-            </div>
-            <h1 id="lVal" style="font-size: 3.5rem; margin: 0; color: var(--primary);">0%</h1>
-            <button class="cute-btn" id="mBtn" disabled style="background:#bbb; width:100%;">Locked 🔒</button>
-        </div>
-
-        <div id="step7" class="hidden">
-            <h2 class="celebration-title">Be my Valentine?</h2>
-            <div style="height: 200px; position: relative;">
-                <button class="cute-btn" onclick="next('step7','step8')">Yes (Red)</button>
-                <button class="cute-btn" style="color:gold; background:#333;" onclick="next('step7','step8')">Yes (Yellow)</button>
-                <button class="cute-btn" id="noFinal" style="position: absolute; bottom:0; left:30%;">No</button>
+        <div id="p6" class="hidden">
+            <h2 class="title">Be my Valentine?</h2>
+            <div style="height: 150px; position: relative;">
+                <button class="cute-btn" onclick="go('p6','p7')" style="background:red;">Yes (Red)</button>
+                <button class="cute-btn" onclick="go('p6','p7')" style="background:#333; color:gold;">Yes (Yellow)</button>
+                <button id="noFinal" class="cute-btn" style="width:auto; position:absolute; bottom:0; left:35%;">No</button>
             </div>
         </div>
 
-        <div id="step8" class="hidden">
-            <h2 class="celebration-title">My Promise</h2>
+        <div id="p7" class="hidden">
+            <h2 class="title">My Promise</h2>
             <div style="background:white; padding:15px; border-radius:15px; text-align:left; font-size:0.85rem; line-height:1.5;">
                 I'm trying to be your <b style="color:#d4af37">Husband</b> someday. 
                 <br><br>Wherever the sun rises, I'll think of you. You're my first love, and if Allah wills, my last. 
-                <br><br><b>Loveyou 3000.</b>
+                <br><br><b>Loveyou 3000, Faria.</b>
             </div>
-            <button class="cute-btn" onclick="location.reload()">Finish ✨</button>
+            <button class="cute-btn" onclick="location.reload()" style="margin-top:20px;">Finished ✨</button>
         </div>
     </div>
 
     <script>
-        const music = document.getElementById('bgMusic');
-        const main = document.getElementById('mainApp');
+        const audio = document.getElementById('bgMusic');
+        const main = document.getElementById('main');
 
         function toggleMute() {
-            music.muted = !music.muted;
-            document.getElementById('musicBtn').innerHTML = music.muted ? '🔇' : '🔊';
+            audio.muted = !audio.muted;
+            document.getElementById('musicBtn').innerText = audio.muted ? '🔇' : '🔊';
         }
 
-        function openMe(el) {
-            el.classList.add('is-open');
-            music.play().catch(() => {});
+        function begin() {
+            audio.play().catch(() => {});
+            document.getElementById('opener').style.transform = 'translateY(-100%)';
             setTimeout(() => {
-                document.getElementById('envelope-page').style.opacity = '0';
-                setTimeout(() => {
-                    document.getElementById('envelope-page').style.display = 'none';
-                    main.classList.remove('hidden');
-                }, 600);
-            }, 2000);
+                document.getElementById('opener').classList.add('hidden');
+                main.classList.remove('hidden');
+            }, 600);
         }
 
-        function next(c, n) {
+        function go(c, n) {
             document.getElementById(c).classList.add('hidden');
             document.getElementById(n).classList.remove('hidden');
         }
 
-        function startFloating() {
-            document.getElementById('no1').style.display = 'none';
-            const f = document.getElementById('floatingLoveBtn');
+        // Floating Trap Logic
+        function trap() {
+            document.getElementById('no1').classList.add('hidden');
+            const f = document.getElementById('floatingLove');
             f.classList.remove('hidden');
             setInterval(() => {
-                f.style.left = Math.random() * 60 + 20 + "%";
-                f.style.top = Math.random() * 60 + 20 + "%";
-            }, 1000);
+                f.style.left = Math.random() * 60 + 10 + "%";
+                f.style.top = Math.random() * 60 + 10 + "%";
+            }, 800);
         }
 
-        // Checklist
+        // Checklist Logic
         document.querySelectorAll('input').forEach(i => {
             i.onchange = () => {
-                const ok = Array.from(document.querySelectorAll('.must')).every(m => m.checked);
-                const b = document.getElementById('goalBtn');
+                const ok = Array.from(document.querySelectorAll('.req')).every(r => r.checked);
+                const b = document.getElementById('goalNext');
                 b.disabled = !ok; b.style.opacity = ok ? "1" : "0.5";
                 b.innerText = ok ? "Continue ➡️" : "Locked 🔒";
             };
         });
-        document.getElementById('goalBtn').onclick = () => next('step5','step6');
+        document.getElementById('goalNext').onclick = () => go('p4','p5');
 
-        // Meter
-        const thumb = document.getElementById('sliderThumb');
-        const track = document.getElementById('track');
-        let drag = false;
-        thumb.ontouchstart = () => drag = true;
-        window.ontouchend = () => drag = false;
-        window.ontouchmove = (e) => {
-            if (!drag) return;
+        // BREAKABLE METER LOGIC
+        const thumb = document.getElementById('thumb');
+        const track = document.querySelector('.track');
+        let active = false;
+
+        const move = (x) => {
+            if (!active) return;
             const rect = track.getBoundingClientRect();
-            let p = Math.round(((e.touches[0].clientX - rect.left) / rect.width) * 100);
+            let p = Math.round(((x - rect.left) / rect.width) * 100);
+            if (p < 0) p = 0;
             thumb.style.left = p + "%";
-            document.getElementById('lVal').innerText = (p < 0 ? 0 : p) + "%";
-            if(p > 100) {
-                document.getElementById('mStatus').innerText = "LIMITLESS LOVE! ⚠️";
-                main.style.transform = `translate(${(Math.random()-0.5)*10}px, ${(Math.random()-0.5)*10}px)`;
+            document.getElementById('val').innerText = p + "%";
+
+            if (p > 100) {
+                document.getElementById('meterHint').innerText = "LIMITLESS LOVE! ⚠️";
+                main.style.transform = `translate(${(Math.random()-0.5)*15}px, ${(Math.random()-0.5)*15}px)`;
+            } else {
+                main.style.transform = "translate(0,0)";
             }
-            if(p >= 100) {
-                const b = document.getElementById('mBtn');
-                b.disabled = false; b.innerText = "Unlock ✨"; b.style.background = "#ff4757";
+
+            if (p >= 100) {
+                const btn = document.getElementById('meterNext');
+                btn.disabled = false; btn.innerText = "Unlock ✨"; btn.style.background = "#ff4757";
             }
         };
-        document.getElementById('mBtn').onclick = () => next('step6','step7');
 
-        // No Run
-        document.getElementById('noFinal').ontouchstart = function(e) {
+        thumb.addEventListener('touchstart', () => active = true);
+        window.addEventListener('touchend', () => { active = false; main.style.transform = "translate(0,0)"; });
+        window.addEventListener('touchmove', (e) => move(e.touches[0].clientX));
+        document.getElementById('meterNext').onclick = () => go('p5','p6');
+
+        // No Run logic for final screen
+        document.getElementById('noFinal').addEventListener('touchstart', function(e) {
             e.preventDefault();
-            this.style.left = Math.random() * 80 + "%";
-            this.style.top = Math.random() * 80 + "%";
-        };
+            this.style.left = Math.random() * 70 + "%";
+            this.style.top = Math.random() * 60 + 20 + "%";
+        });
 
-        // Trail
-        window.ontouchmove = (e) => {
+        // Sunflower Trail
+        window.addEventListener('touchmove', (e) => {
             const t = document.createElement('div');
             t.className = 'trail'; t.innerText = '🌻';
             t.style.left = e.touches[0].clientX + 'px'; t.style.top = e.touches[0].clientY + 'px';
             document.body.appendChild(t);
             setTimeout(() => t.remove(), 800);
-        };
+        });
     </script>
 </body>
 </html>
