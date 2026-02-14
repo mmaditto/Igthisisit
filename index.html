@@ -51,7 +51,6 @@
             padding: 20px; border-radius: 35px; text-align: center;
             min-height: 620px; display: flex; flex-direction: column; justify-content: center;
             box-shadow: 0 15px 35px rgba(0,0,0,0.1); position: relative; border: 1px solid rgba(255,255,255,0.3);
-            overflow: hidden;
         }
 
         .hidden { display: none !important; }
@@ -63,16 +62,22 @@
             box-shadow: 0 5px 15px rgba(255, 71, 87, 0.3); font-size: 0.9rem;
         }
 
-        /* --- MEGA PORTRAIT COLLAGE --- */
-        .portrait-collage {
+        /* --- DIVINE PORTRAIT WITH BREATH ANIMATION --- */
+        .single-portrait-frame {
             width: 100%; height: 380px; background: white; border-radius: 20px;
-            padding: 10px; box-shadow: inset 0 0 10px rgba(0,0,0,0.1);
-            display: grid; grid-template-columns: repeat(2, 1fr); gap: 8px;
-            overflow-y: scroll; margin-bottom: 10px;
+            padding: 10px; box-shadow: 0 10px 25px rgba(0,0,0,0.1);
+            margin-bottom: 15px; display: flex; align-items: center; justify-content: center;
+            overflow: hidden;
         }
-        .portrait-collage img {
-            width: 100%; aspect-ratio: 1/1.2; object-fit: cover; border-radius: 10px;
-            border: 2px solid #fff; box-shadow: 0 2px 5px rgba(0,0,0,0.1);
+        .single-portrait-frame img {
+            width: 100%; height: 100%; object-fit: cover; border-radius: 12px;
+            animation: breath 8s ease-in-out infinite;
+        }
+
+        @keyframes breath {
+            0% { transform: scale(1); }
+            50% { transform: scale(1.08); }
+            100% { transform: scale(1); }
         }
 
         /* --- GALLERY --- */
@@ -89,13 +94,6 @@
             background-size: contain; z-index: 10;
         }
 
-        #floatingLove {
-            position: absolute; z-index: 2000; padding: 15px 25px; border-radius: 50px;
-            background: var(--primary); color: white; border: 2px solid white; font-weight: bold;
-            box-shadow: 0 10px 20px rgba(0,0,0,0.2); width: auto; white-space: nowrap;
-        }
-
-        #musicBtn { position: fixed; top: 20px; right: 20px; z-index: 10000; background: white; width: 40px; height: 40px; border-radius: 50%; border: none; display: flex; align-items: center; justify-content: center; }
         @keyframes pulse { 0% {transform: scale(1);} 50% {transform: scale(1.1);} 100% {transform: scale(1);} }
     </style>
 </head>
@@ -148,18 +146,12 @@
 
         <div id="p5" class="hidden">
             <h2 class="title">My Divine Twin</h2>
-            <div class="portrait-collage">
+            <div class="single-portrait-frame">
                 <img src="her_face.jpg.jpg">
-                <img src="her_face1.jpg.jpg">
-                <img src="her_face2.jpg.jpg">
-                <img src="her_face3.jpg.jpg">
-                <img src="her_face4.jpg.jpg">
-                <img src="her_face5.jpg.jpg">
-                <img src="her_face6.jpg.jpg">
-                <img src="her_face7.jpg.jpg">
             </div>
-            <p style="font-size: 0.7rem; font-style: italic;">
-                Your hair, your face, and especially <b>those eyes</b>... I see the mother of our children in your soul. 🌻
+            <p style="font-size: 0.75rem; font-style: italic; line-height: 1.4;">
+                Your hair, your face, and especially <b>those eyes</b>... <br>
+                I see the mother of our children in your soul. 🌻
             </p>
             <button class="cute-btn" onclick="go('p5','p6')">Our Goals ➡️</button>
         </div>
