@@ -13,16 +13,12 @@
             --bg-1: #ffafbd; --bg-2: #ffc3a0;
         }
 
-        /* Prevent iPhone scrolling/bouncing */
-        * { 
-            box-sizing: border-box; 
-            touch-action: manipulation; 
-            -webkit-tap-highlight-color: transparent; 
-        }
+        /* Essential iPhone Reset */
+        * { box-sizing: border-box; touch-action: manipulation; -webkit-tap-highlight-color: transparent; }
         
         html, body { 
             height: 100%; margin: 0; padding: 0; 
-            overflow: hidden; width: 100vw; position: fixed; /* Essential for iOS */
+            overflow: hidden; width: 100vw; position: fixed;
             background: linear-gradient(135deg, var(--bg-1) 0%, var(--bg-2) 100%);
             display: flex; justify-content: center; align-items: center;
             transition: background 1.2s ease-in-out;
@@ -32,8 +28,7 @@
         /* Elegant Page Transitions */
         .page {
             animation: slideIn 0.8s cubic-bezier(0.23, 1, 0.32, 1) forwards;
-            width: 100%; height: 100%;
-            display: flex; flex-direction: column; justify-content: center;
+            width: 100%; display: flex; flex-direction: column; justify-content: center;
         }
 
         @keyframes slideIn {
@@ -65,6 +60,7 @@
             box-shadow: 0 8px 20px rgba(255, 71, 87, 0.3); font-size: 0.95rem;
         }
 
+        /* Golden Husband Glow */
         .gold-glow {
             color: #FFD700; font-weight: bold;
             text-shadow: 0 0 8px rgba(255, 215, 0, 0.7);
@@ -75,6 +71,7 @@
             50% { text-shadow: 0 0 15px rgba(255, 215, 0, 1); }
         }
 
+        /* Nuclear Animation */
         .nuclear-mode { animation: nuclear 0.1s infinite !important; }
         @keyframes nuclear {
             0%, 100% { transform: translate(0,0); }
@@ -91,6 +88,12 @@
 
         .portrait { width: 100%; height: 280px; background: white; border-radius: 20px; padding: 8px; margin: 10px 0; overflow: hidden; }
         .portrait img { width: 100%; height: 100%; object-fit: cover; border-radius: 12px; }
+
+        .icon-pulse { animation: iconBreath 2s ease-in-out infinite; display: inline-block; }
+        @keyframes iconBreath {
+            0%, 100% { transform: scale(1); }
+            50% { transform: scale(1.1); }
+        }
 
         #secretNote {
             position: fixed; inset: 0; background: rgba(0,0,0,0.85);
@@ -168,7 +171,6 @@
 
         <div id="p7" class="page hidden">
             <h2 class="title">Love Meter</h2>
-            <p style="font-size: 0.8rem; color: var(--primary);">Slide to see my heart level...</p>
             <div class="slider-box">
                 <div class="track"><div id="thumb"></div></div>
             </div>
@@ -200,14 +202,17 @@
         <div id="p10" class="page hidden">
             <h2 class="title">Thank You, Twin</h2>
             <p>For being my home.</p>
-            <div id="flowerClicker" style="font-size: 4rem; margin: 10px; cursor: pointer;">🥀❤️🌻</div>
-            <button class="cute-btn" onclick="location.reload()">Replay ✨</button>
-            <p style="font-size: 0.6rem; color: #888; font-style: italic; padding-bottom: env(safe-area-inset-bottom);">(had to be nerd enough to build this😭)</p>
+            <div id="flowerClicker" class="icon-pulse" style="font-size: 4rem; margin: 10px 0; cursor: pointer;">🥀❤️🌻</div>
+            <div style="margin-top: 5px;">
+                <p style="font-size: 0.7rem; color: var(--primary); font-weight: 600; margin-bottom: 5px;">[ Triple-tap the icons for a secret ]</p>
+                <div id="dots" style="font-family: monospace; font-size: 0.8rem; color: #888; letter-spacing: 5px;">_ _ _</div>
+            </div>
+            <button class="cute-btn" onclick="location.reload()" style="margin-top: 20px;">Replay ✨</button>
         </div>
     </div>
 
     <div id="secretNote" onclick="this.classList.remove('show')">
-        <div class="note-card" style="background:white; padding:30px; border-radius:30px; width:85%; text-align:center;" onclick="event.stopPropagation()">
+        <div class="note-card" style="background:white; padding:30px; border-radius:30px; width:85%; max-width:320px; text-align:center;" onclick="event.stopPropagation()">
             <p style="font-family:'Dancing Script'; font-size:1.4rem;">"Every day I spend with you, I realize more and more that you aren't just my twin... you're my home. ❤️"</p>
             <button class="cute-btn" onclick="document.getElementById('secretNote').classList.remove('show')" style="padding: 10px;">Close</button>
         </div>
@@ -224,11 +229,8 @@
         }
 
         function begin() {
-            audio.volume = 0.6;
-            audio.play().catch(() => {
-                // iPhone low power mode fallback
-                console.log("Audio waiting for interaction");
-            });
+            audio.volume = 0.6; // Set to 60%
+            audio.play().catch(() => {});
             document.getElementById('opener').style.transform = 'translateY(-100%)';
             setTimeout(() => { 
                 document.getElementById('opener').classList.add('hidden'); 
@@ -302,9 +304,18 @@
             this.style.top = Math.random() * 60 + 10 + "%";
         });
 
+        const dots = document.getElementById('dots');
         document.getElementById('flowerClicker').addEventListener('click', () => {
             flowerClicks++;
-            if(flowerClicks === 3) { document.getElementById('secretNote').classList.add('show'); flowerClicks = 0; }
+            if (flowerClicks === 1) dots.innerText = "❤️ _ _";
+            else if (flowerClicks === 2) dots.innerText = "❤️ ❤️ _";
+            else if (flowerClicks === 3) {
+                dots.innerText = "❤️ ❤️ ❤️";
+                setTimeout(() => {
+                    document.getElementById('secretNote').classList.add('show');
+                    flowerClicks = 0; dots.innerText = "_ _ _";
+                }, 300);
+            }
         });
 
         function celebrate() { confetti({ particleCount: 150, spread: 70, origin: { y: 0.6 } }); }
