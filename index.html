@@ -2,7 +2,7 @@
 <html lang="en">
 <head>
     <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no, viewport-fit=cover">
     <title>For My Twin ❤️</title>
     <link href="https://fonts.googleapis.com/css2?family=Dancing+Script:wght@700&family=Poppins:wght@400;600&display=swap" rel="stylesheet">
     <script src="https://cdn.jsdelivr.net/npm/canvas-confetti@1.6.0/dist/confetti.browser.min.js"></script>
@@ -13,21 +13,27 @@
             --bg-1: #ffafbd; --bg-2: #ffc3a0;
         }
 
-        * { box-sizing: border-box; touch-action: manipulation; -webkit-tap-highlight-color: transparent; }
+        /* Prevent iPhone scrolling/bouncing */
+        * { 
+            box-sizing: border-box; 
+            touch-action: manipulation; 
+            -webkit-tap-highlight-color: transparent; 
+        }
         
         html, body { 
             height: 100%; margin: 0; padding: 0; 
-            overflow: hidden; width: 100vw;
+            overflow: hidden; width: 100vw; position: fixed; /* Essential for iOS */
             background: linear-gradient(135deg, var(--bg-1) 0%, var(--bg-2) 100%);
             display: flex; justify-content: center; align-items: center;
             transition: background 1.2s ease-in-out;
             font-family: 'Poppins', sans-serif;
         }
 
-        /* --- ELEGANT TRANSITIONS --- */
+        /* Elegant Page Transitions */
         .page {
             animation: slideIn 0.8s cubic-bezier(0.23, 1, 0.32, 1) forwards;
-            width: 100%;
+            width: 100%; height: 100%;
+            display: flex; flex-direction: column; justify-content: center;
         }
 
         @keyframes slideIn {
@@ -35,37 +41,32 @@
             100% { opacity: 1; transform: translateY(0); filter: blur(0); }
         }
 
+        .exit { animation: fadeOut 0.5s ease forwards !important; }
         @keyframes fadeOut {
-            from { opacity: 1; transform: translateY(0); filter: blur(0); }
             to { opacity: 0; transform: translateY(-30px); filter: blur(10px); }
         }
-
-        .exit { animation: fadeOut 0.5s ease forwards !important; }
 
         .container {
             width: calc(100% - 40px); max-width: 360px; 
             background: rgba(255, 255, 255, 0.75);
             backdrop-filter: blur(20px); -webkit-backdrop-filter: blur(20px);
             padding: 30px; border-radius: 40px; text-align: center;
-            min-height: 580px; display: flex; flex-direction: column; justify-content: center;
+            height: 85vh; max-height: 650px;
             box-shadow: 0 25px 50px rgba(0,0,0,0.1); border: 1px solid rgba(255,255,255,0.4);
             z-index: 10; position: relative;
         }
 
         .hidden { display: none !important; }
-        .title { font-family: 'Dancing Script', cursive; font-size: 2.4rem; color: var(--primary); margin-bottom: 15px; }
+        .title { font-family: 'Dancing Script', cursive; font-size: 2.2rem; color: var(--primary); margin-bottom: 10px; }
         
         .cute-btn { 
             padding: 16px; margin: 10px 0; border: none; border-radius: 50px; 
             background: var(--primary); color: white; font-weight: 600; width: 100%;
             box-shadow: 0 8px 20px rgba(255, 71, 87, 0.3); font-size: 0.95rem;
-            transition: transform 0.2s;
         }
 
-        /* Golden Glow Effect */
         .gold-glow {
-            color: #FFD700;
-            font-weight: bold;
+            color: #FFD700; font-weight: bold;
             text-shadow: 0 0 8px rgba(255, 215, 0, 0.7);
             animation: goldPulse 2s infinite;
         }
@@ -74,23 +75,21 @@
             50% { text-shadow: 0 0 15px rgba(255, 215, 0, 1); }
         }
 
-        /* Nuclear State */
+        .nuclear-mode { animation: nuclear 0.1s infinite !important; }
         @keyframes nuclear {
             0%, 100% { transform: translate(0,0); }
-            10%, 30%, 50%, 70%, 90% { transform: translate(-8px, 8px); }
-            20%, 40%, 60%, 80% { transform: translate(8px, -8px); }
+            20% { transform: translate(-8px, 8px); }
+            40% { transform: translate(8px, -8px); }
         }
-        .nuclear-mode { animation: nuclear 0.1s infinite !important; background: #ff3333 !important; }
 
-        .slider-box { position: relative; padding: 40px 0; width: 100%; }
-        .track { height: 10px; background: rgba(255,255,255,0.8); border-radius: 10px; width: 100%; }
+        .track { height: 10px; background: rgba(255,255,255,0.8); border-radius: 10px; width: 100%; position: relative; }
         #thumb { 
             width: 50px; height: 50px; position: absolute; top: 50%; left: 0; transform: translate(-50%, -50%); 
             background: url('data:image/svg+xml;utf8,<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="%23ff4757"><path d="M12 21.35l-1.45-1.32C5.4 15.36 2 12.28 2 8.5 2 5.42 4.42 3 7.5 3c1.74 0 3.41.81 4.5 2.09C13.09 3.81 14.76 3 16.5 3 19.58 3 22 5.42 22 8.5c0 3.78-3.4 6.86-8.55 11.54L12 21.35z"/></svg>') no-repeat center;
             background-size: contain; z-index: 10;
         }
 
-        .portrait { width: 100%; height: 320px; background: white; border-radius: 20px; padding: 8px; margin: 10px 0; overflow: hidden; }
+        .portrait { width: 100%; height: 280px; background: white; border-radius: 20px; padding: 8px; margin: 10px 0; overflow: hidden; }
         .portrait img { width: 100%; height: 100%; object-fit: cover; border-radius: 12px; }
 
         #secretNote {
@@ -103,13 +102,13 @@
 </head>
 <body>
 
-    <button id="musicBtn" style="position:fixed; top:20px; right:20px; z-index:10001; background:rgba(255,255,255,0.8); border:none; width:45px; height:45px; border-radius:50%;" onclick="toggleMute()">🔊</button>
-    <audio id="bgMusic" loop preload="auto"><source src="music.mp3" type="audio/mpeg"></audio>
+    <button id="musicBtn" style="position:fixed; top:env(safe-area-inset-top, 20px); right:20px; z-index:10001; background:rgba(255,255,255,0.8); border:none; width:45px; height:45px; border-radius:50%;" onclick="toggleMute()">🔊</button>
+    <audio id="bgMusic" loop playsinline><source src="music.mp3" type="audio/mpeg"></audio>
 
     <div id="opener" onclick="begin()" style="position:fixed; inset:0; z-index:9999; display:flex; flex-direction:column; align-items:center; justify-content:center; background:linear-gradient(135deg, #ffafbd 0%, #ffc3a0 100%); transition: 1s ease-in-out;">
         <div style="width:280px; height:180px; background:#fff3f5; border-radius:0 0 20px 20px; position:relative; display:flex; align-items:center; justify-content:center; box-shadow: 0 30px 60px rgba(0,0,0,0.15);">
             <div style="position:absolute; top:-100px; left:0; border-left:140px solid transparent; border-right:140px solid transparent; border-bottom:100px solid #ffe4e8;"></div>
-            <div style="font-size:35px; animation: pulse 2s infinite;">❤️</div>
+            <div style="font-size:35px;">❤️</div>
         </div>
         <p style="font-family:'Dancing Script'; font-size:2rem; margin-top:40px; color: white;">Open for a surprise, Twin</p>
     </div>
@@ -140,7 +139,7 @@
 
         <div id="p4" class="page hidden">
             <h2 class="title">Our Memories</h2>
-            <div style="display: grid; grid-template-columns: 1fr 1fr; gap: 12px; margin: 15px 0;">
+            <div style="display: grid; grid-template-columns: 1fr 1fr; gap: 10px; margin: 10px 0;">
                 <div style="background:white; padding:5px; transform:rotate(-4deg);"><img src="pic1.jpg.jpg" style="width:100%; aspect-ratio:1/1; object-fit:cover;"></div>
                 <div style="background:white; padding:5px; transform:rotate(3deg);"><img src="pic2.jpg.jpg" style="width:100%; aspect-ratio:1/1; object-fit:cover;"></div>
                 <div style="background:white; padding:5px; transform:rotate(-2deg);"><img src="pic3.jpg.jpg" style="width:100%; aspect-ratio:1/1; object-fit:cover;"></div>
@@ -158,22 +157,22 @@
 
         <div id="p6" class="page hidden">
             <h2 class="title">Our Goals</h2>
-            <div style="text-align: left; display: inline-block; width: 80%;">
-                <div style="margin: 12px 0;"><input type="checkbox" class="req"> Boards Golden 🏅</div>
-                <div style="margin: 12px 0;"><input type="checkbox" class="req"> Good College 🎓</div>
-                <div style="margin: 12px 0;"><input type="checkbox" class="req"> Independence 💼</div>
-                <div style="margin: 12px 0; opacity: 0.6;"><input type="checkbox"> Husband & Wife (someday) 💍</div>
+            <div style="text-align: left; display: inline-block; width: 85%;">
+                <div style="margin: 10px 0;"><input type="checkbox" class="req"> Boards Golden 🏅</div>
+                <div style="margin: 10px 0;"><input type="checkbox" class="req"> Good College 🎓</div>
+                <div style="margin: 10px 0;"><input type="checkbox" class="req"> Independence 💼</div>
+                <div style="margin: 10px 0; opacity: 0.6;"><input type="checkbox"> Husband & Wife (someday) 💍</div>
             </div>
             <button class="cute-btn" id="goalNext" disabled style="opacity:0.4;" onclick="go('p6','p7')">Locked 🔒</button>
         </div>
 
         <div id="p7" class="page hidden">
             <h2 class="title">Love Meter</h2>
-            <p id="meterHint" style="font-size: 0.9rem; color: var(--primary);">Slide to see my heart level...</p>
+            <p style="font-size: 0.8rem; color: var(--primary);">Slide to see my heart level...</p>
             <div class="slider-box">
                 <div class="track"><div id="thumb"></div></div>
             </div>
-            <h1 id="val" style="font-size: 3rem; margin: 0; color: var(--primary);">0%</h1>
+            <h1 id="val" style="font-size: 2.5rem; margin: 0; color: var(--primary);">0%</h1>
             <button class="cute-btn" id="meterNext" disabled style="background:#ccc;" onclick="go('p7','p8')">Locked 🔒</button>
         </div>
 
@@ -186,7 +185,7 @@
 
         <div id="p9" class="page hidden">
             <h2 class="title">My Promise</h2>
-            <div style="background:rgba(255,255,255,0.5); padding:20px; border-radius:20px; text-align:left; font-size:0.85rem; line-height:1.6; max-height: 260px; overflow-y: auto; border: 1px solid white;">
+            <div style="background:rgba(255,255,255,0.5); padding:15px; border-radius:20px; text-align:left; font-size:0.8rem; line-height:1.5; height: 260px; overflow-y: scroll; -webkit-overflow-scrolling: touch; border: 1px solid white;">
                 To my fairytale princess, happy Valentine’s Day. I won’t ask you to be my valentine—I’m not trying to be your boyfriend, just your <span class="gold-glow">husband</span> someday. 
                 <br><br>
                 No matter where life takes you, whenever the sun rises, I’ll think of you and love you completely. I’m better with words in texts, but my feelings are real. You’re my first love, and if Allah wills, my last. 
@@ -201,16 +200,15 @@
         <div id="p10" class="page hidden">
             <h2 class="title">Thank You, Twin</h2>
             <p>For being my home.</p>
-            <div id="flowerClicker" style="font-size: 5rem; margin: 15px; cursor: pointer;">🥀❤️🌻</div>
-            <p style="font-size: 0.65rem; color: #ff4757; opacity: 0.8;">(Tap the icons 3 times for a secret...)</p>
+            <div id="flowerClicker" style="font-size: 4rem; margin: 10px; cursor: pointer;">🥀❤️🌻</div>
             <button class="cute-btn" onclick="location.reload()">Replay ✨</button>
-            <p style="font-size: 0.65rem; color: #888; font-style: italic; margin-top: -5px;">(had to be nerd enough to build this😭)</p>
+            <p style="font-size: 0.6rem; color: #888; font-style: italic; padding-bottom: env(safe-area-inset-bottom);">(had to be nerd enough to build this😭)</p>
         </div>
     </div>
 
     <div id="secretNote" onclick="this.classList.remove('show')">
-        <div class="note-card" style="background:white; padding:35px; border-radius:30px; width:85%; max-width:320px; text-align:center;" onclick="event.stopPropagation()">
-            <p style="font-family:'Dancing Script'; font-size:1.5rem;">"Every day I spend with you, I realize more and more that you aren't just my twin... you're my home. I can't wait to grow old with you. ❤️"</p>
+        <div class="note-card" style="background:white; padding:30px; border-radius:30px; width:85%; text-align:center;" onclick="event.stopPropagation()">
+            <p style="font-family:'Dancing Script'; font-size:1.4rem;">"Every day I spend with you, I realize more and more that you aren't just my twin... you're my home. ❤️"</p>
             <button class="cute-btn" onclick="document.getElementById('secretNote').classList.remove('show')" style="padding: 10px;">Close</button>
         </div>
     </div>
@@ -226,8 +224,11 @@
         }
 
         function begin() {
-            audio.volume = 0.6; // Forces volume to 60%
-            audio.play().catch(() => {});
+            audio.volume = 0.6;
+            audio.play().catch(() => {
+                // iPhone low power mode fallback
+                console.log("Audio waiting for interaction");
+            });
             document.getElementById('opener').style.transform = 'translateY(-100%)';
             setTimeout(() => { 
                 document.getElementById('opener').classList.add('hidden'); 
@@ -236,16 +237,11 @@
         }
 
         function go(curr, next) {
-            const currentEl = document.getElementById(curr);
-            const nextEl = document.getElementById(next);
-            currentEl.classList.add('exit');
+            document.getElementById(curr).classList.add('exit');
             setTimeout(() => {
-                currentEl.classList.add('hidden');
-                currentEl.classList.remove('exit');
-                nextEl.classList.remove('hidden');
-                const colors = [['#ffafbd', '#ffc3a0'], ['#fbc2eb', '#a6c1ee'], ['#fdcbf1', '#e6dee9']];
-                const rand = colors[Math.floor(Math.random() * colors.length)];
-                document.body.style.background = `linear-gradient(135deg, ${rand[0]} 0%, ${rand[1]} 100%)`;
+                document.getElementById(curr).classList.add('hidden');
+                document.getElementById(curr).classList.remove('exit');
+                document.getElementById(next).classList.remove('hidden');
             }, 500);
         }
 
@@ -257,8 +253,7 @@
                 yes.classList.add('hidden'); document.getElementById('no1').classList.add('hidden');
                 const f = document.getElementById('floatingLove'); f.classList.remove('hidden');
                 setInterval(() => { 
-                    f.style.left = Math.random() * 50 + 5 + "%"; 
-                    f.style.top = Math.random() * 60 + 10 + "%"; 
+                    f.style.left = Math.random() * 50 + 5 + "%"; f.style.top = Math.random() * 60 + 10 + "%"; 
                 }, 700);
             }
         }
@@ -266,16 +261,18 @@
         const thumb = document.getElementById('thumb');
         const track = document.querySelector('.track');
         let active = false;
-        const move = (x) => {
+
+        const handleMove = (e) => {
             if (!active) return;
+            const clientX = e.touches ? e.touches[0].clientX : e.clientX;
             const rect = track.getBoundingClientRect();
-            let p = Math.round(((x - rect.left) / rect.width) * 100);
+            let p = Math.round(((clientX - rect.left) / rect.width) * 100);
             p = Math.max(0, p);
             if (p > 100) {
                 document.getElementById('val').innerText = "NUCLEAR OVERLOAD! ⚠️";
                 document.getElementById('val').style.color = "red";
                 document.body.classList.add('nuclear-mode');
-                thumb.style.left = "110%";
+                thumb.style.left = "105%";
             } else {
                 document.getElementById('val').innerText = p + "%";
                 thumb.style.left = p + "%";
@@ -289,14 +286,13 @@
 
         thumb.addEventListener('touchstart', () => active = true);
         window.addEventListener('touchend', () => { active = false; document.body.classList.remove('nuclear-mode'); });
-        window.addEventListener('touchmove', (e) => move(e.touches[0].clientX));
+        window.addEventListener('touchmove', handleMove);
 
         document.querySelectorAll('.req').forEach(i => {
             i.onchange = () => {
                 const ok = Array.from(document.querySelectorAll('.req')).every(r => r.checked);
                 const b = document.getElementById('goalNext');
                 b.disabled = !ok; b.style.opacity = ok ? "1" : "0.4";
-                b.innerText = ok ? "Continue ➡️" : "Locked 🔒";
             };
         });
 
@@ -308,10 +304,7 @@
 
         document.getElementById('flowerClicker').addEventListener('click', () => {
             flowerClicks++;
-            if(flowerClicks === 3) { 
-                document.getElementById('secretNote').classList.add('show'); 
-                flowerClicks = 0; 
-            }
+            if(flowerClicks === 3) { document.getElementById('secretNote').classList.add('show'); flowerClicks = 0; }
         });
 
         function celebrate() { confetti({ particleCount: 150, spread: 70, origin: { y: 0.6 } }); }
